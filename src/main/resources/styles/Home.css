@@ -1,0 +1,97 @@
+.ambient {
+    -fx-text-fill: #1eb43c;
+}
+
+.bed {
+    -fx-text-fill: #ffc800;
+}
+
+.filament-description {
+    -fx-text-fill: #000000;
+    -fx-font-size: 12pt;
+    -fx-background-color: #ffffff;
+}
+
+.filament-type {
+    -fx-font-size: 24pt;
+}
+
+.job-cancel {
+    -fx-graphic: url("/image/job-cancel-white.png");
+}
+
+.job-panel {
+    -fx-background-color: #009ee3;
+}
+
+.job-pause {
+    -fx-graphic: url("/image/job-pause-white.png");
+}
+
+.job-pause:paused {
+    -fx-graphic: url("/image/job-resume-white.png");
+}
+
+.job-remaining-icon {
+    -fx-graphic: url("/image/job-remaining-icon.png");
+}
+
+.job-status-icon {
+    -fx-graphic: null;
+}
+
+.job-status-icon:playing {
+    -fx-graphic: url("/image/job-play-icon.png");
+}
+
+.job-status-icon:idle {
+    -fx-graphic: url("/image/job-ready-icon.png");
+}
+
+.job-status-icon:paused {
+    -fx-graphic: url("/image/job-pause-icon.png");
+}
+
+.job-tweak {
+    -fx-graphic: url("/image/job-tweak-white.png");
+}
+
+.machine-address {
+    -fx-font-weight: bold;
+    -fx-font-size: 12pt;
+}
+
+.machine-model {
+    -fx-text-fill: #009ee3;
+    -fx-font-weight: bold;
+    -fx-font-size: 12pt;
+}
+
+.machine-name {
+    -fx-font-weight: bold;
+    -fx-font-size: 18pt;
+}
+
+.material-1 {
+    -fx-text-fill: #009ee3;
+}
+
+.material-1-eject {
+    -fx-graphic: url("/image/material-1-eject.png");
+    -fx-background-color: transparent;
+}
+
+.material-2 {
+    -fx-text-fill: #eb672a;
+}
+
+.material-2-eject {
+    -fx-graphic: url("/image/material-2-eject.png");
+    -fx-background-color: transparent;
+}
+
+.reel-image {
+    -fx-background-position: top center;
+    -fx-background-insets: 5 0 0 0;
+    -fx-background-repeat: no-repeat;
+}

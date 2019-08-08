@@ -1,0 +1,29 @@
+.main-menu-button {
+    -fx-text-fill: #009ee3;
+    -fx-font-size: 18pt;
+    -fx-background-color: #303030;
+}
+
+.main-menu-calibration {
+    -fx-graphic: url("/image/main-menu-calibration.png");
+}
+
+.main-menu-console {
+    -fx-graphic: url("/image/main-menu-console.png");
+}
+
+.main-menu-control {
+    -fx-graphic: url("/image/main-menu-control.png");
+}
+
+.main-menu-maintenance {
+    -fx-graphic: url("/image/main-menu-maintenance.png");
+}
+
+.main-menu-print {
+    -fx-graphic: url("/image/main-menu-print.png");
+}
+
+.main-menu-purge {
+    -fx-graphic: url("/image/main-menu-purge.png");
+}

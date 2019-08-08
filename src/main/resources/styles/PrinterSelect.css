@@ -1,0 +1,9 @@
+.printer-button-dark {
+    -fx-text-fill: #000000;
+    -fx-font-size: 24pt;
+}
+
+.printer-button-light {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 24pt;
+}

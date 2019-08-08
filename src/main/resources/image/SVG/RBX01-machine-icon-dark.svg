@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   height="7.5vh "
+   viewBox="0 0 120 92.39"
+   version="1.1"
+   id="svg2003"
+   sodipodi:docname="RBX01-machine-icon-dark.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <metadata
+     id="metadata2009">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs2007" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2690"
+     inkscape:window-height="1513"
+     id="namedview2005"
+     showgrid="false"
+     inkscape:zoom="2.554389"
+     inkscape:cx="61.565932"
+     inkscape:cy="46.195"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2003" />
+  <path
+     class="robox-icon"
+     d="M17,65.63S6.11,61.35,5.69,61.08,3,59.65,2.15,55.31c0,0-.16-.92-.22-1.61L0,29.4A23,23,0,0,1,2.84,18c3.16-5.63,6.35-6.49,9.49-7.64L39.58.39A5.32,5.32,0,0,1,42.46.08l7.93,1.41L53.27,2a3,3,0,0,0-1.56.22L22.86,14.11s-10,3.1-10.05,19.82L14.07,57.8C14.41,63.78,17,65.63,17,65.63Z"
+     id="path1991"
+     style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+  <path
+     class="robox-icon"
+     d="M55,2.24l52.5,9.48a3.6,3.6,0,0,0-.94.49L102.46,15,48.07,4.65l5.07-2.16A4.2,4.2,0,0,1,55,2.24Z"
+     id="path1993"
+     style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+  <path
+     class="robox-icon"
+     d="M16.16,62.66a8.51,8.51,0,0,0,2.29,3.52l55.36,22s-.93-.89-1.3-3.63Z"
+     id="path1995"
+     style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+  <path
+     class="robox-icon"
+     d="M88.37,55.82c-.16,1.31-.21,2.1-.21,2.14V58c0,.08-.32,3-.73,7l6.94-7.5Z"
+     id="path1997"
+     style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+  <path
+     class="robox-icon"
+     d="M74.59,55.17c0-.19.08-1.34.29-3.07L48.07,44.7l-20.26,13,45.37,16.1Z"
+     id="path1999"
+     style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+  <path
+     class="robox-icon"
+     d="M119.95,17.47a3.87,3.87,0,0,0-1.73-3.54l-8.37-1.61a1.46,1.46,0,0,0-1.23.26c-.76.46-6.56,4.78-6.56,4.78L85.76,29.54s-3.85,2.57-7.16,11.93a55.29,55.29,0,0,0-2.74,13.78L74,80.1s-.38,7.55,1.94,8.62c3.08,1.42,9.55,3.63,9.51,3.59a5.66,5.66,0,0,0,.66.08,4.1,4.1,0,0,0,2.64-1.17c.2-.26,20.44-26.11,21.57-27.57A19,19,0,0,1,113.95,60l.15-.1,0-.18c.28-2.32.71-5.41.71-5.41,0-.23,3.51-22.61,4.76-30.08A30.61,30.61,0,0,0,119.95,17.47Zm-1.16,6.63C117.53,31.56,114.06,54,114,54.19c0,0-.41,3-.69,5.26a20.25,20.25,0,0,0-3.67,3.71c-1.13,1.46-21.36,27.31-21.54,27.53a3.19,3.19,0,0,1-2.1.9,2.48,2.48,0,0,1-1.77-.94,7.2,7.2,0,0,1-.38-3.29c.44-5,3-29.47,3-29.47s.85-15,8.44-25l21.93-18.35.63.1a3.19,3.19,0,0,1,1.26,2.83A30.58,30.58,0,0,1,118.79,24.09Z"
+     id="path2001"
+     style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+</svg>

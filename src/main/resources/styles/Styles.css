@@ -1,0 +1,60 @@
+.bottom-bar-back {
+    -fx-graphic: url("/image/bottom-bar-back.png");
+}
+
+.bottom-bar-console {
+    -fx-graphic: url("/image/bottom-bar-console.png");
+}
+
+.bottom-bar-home {
+    -fx-graphic: url("/image/bottom-bar-home.png");
+}
+
+.bottom-bar-main-menu {
+    -fx-graphic: url("/image/bottom-bar-main-menu.png");
+}
+
+.bottom-bar-settings {
+    -fx-graphic: url("/image/bottom-bar-settings.png");
+}
+
+.bottom-bar-unlock {
+    -fx-graphic: url("/image/bottom-bar-unlock.png");
+}
+
+.bottom-bar {
+    -fx-background-color: #000000;
+}
+
+.button {
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.centered-background-image {
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+}
+
+.label {
+    -fx-font-family: "Source Sans Pro";
+    -fx-text-fill: #ffffff;
+}
+
+.large-text {
+    -fx-font-size: 24pt;
+}
+
+.medium-text {
+    -fx-font-size: 12pt;
+}
+
+.panel {
+    -fx-background-color: #303030;
+}
+
+.root {
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #a8a8a8;
+    -fx-font-family: "Source Sans Pro";
+}
