@@ -24,10 +24,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class HomeController implements Initializable {
+public class HomeController implements Initializable, Page {
     
     @FXML
-    private StackPane homeStackPane;
+    private StackPane homePane;
     @FXML
     private HBox printerHBox;
     @FXML
@@ -143,8 +143,7 @@ public class HomeController implements Initializable {
     private String nozzleTitle = I18n.t("home.nozzle");
     
     @FXML
-    void printerButtonAction(ActionEvent event)
-    {
+    void printerButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
 //            stopUpdates();
 //            rootController.showPrinterMenu();
@@ -152,15 +151,13 @@ public class HomeController implements Initializable {
     }
     
     @FXML
-    void ejectButtonAction(ActionEvent event)
-    {
+    void ejectButtonAction(ActionEvent event) {
         int filamentNumber = (event.getSource() == filament1EjectButton ? 1 : 2);
         printer.runEjectFilamentTask(filamentNumber);
     }
     
     @FXML
-    void tweakButtonAction(ActionEvent event)
-    {
+    void tweakButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
             //stopUpdates();
             //rootController.showTweakPage(printer);
@@ -168,8 +165,7 @@ public class HomeController implements Initializable {
     }
 
     @FXML
-    void pauseButtonAction(ActionEvent event)
-    {
+    void pauseButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
             PrinterStatusResponse status = printer.getCurrentStatusProperty().get();
             if (status.isCanPause() && !status.isCanResume())
@@ -180,8 +176,7 @@ public class HomeController implements Initializable {
     }
 
     @FXML
-    void cancelButtonAction(ActionEvent event)
-    {
+    void cancelButtonAction(ActionEvent event) {
         if (rootController != null &&
             event.getSource() instanceof Button &&
             printer.getCurrentStatusProperty().get().isCanCancel()) {
@@ -190,29 +185,23 @@ public class HomeController implements Initializable {
     }
 
     @FXML
-    void leftButtonAction(ActionEvent event)
-    {
-        if (rootController != null && event.getSource() instanceof Button) {
-            stopUpdates();
-            rootController.showPrinterSelectPage();
-        }
+    void leftButtonAction(ActionEvent event) {
+        if (rootController != null && event.getSource() instanceof Button)
+            rootController.showPrinterSelectPage(this);
     }
     
     @FXML
     void middleButtonAction(ActionEvent event)
     {
-        if (rootController != null && event.getSource() instanceof Button) {
-            stopUpdates();
-            rootController.showMainMenu(printer);
-        }
+        if (rootController != null && event.getSource() instanceof Button)
+            rootController.showMainMenu(this, printer);
     }
 
     @FXML
     void rightButtonAction(ActionEvent event)
     {
-        if (rootController != null && event.getSource() instanceof Button) {
+        if (rootController != null && event.getSource() instanceof Button)
            printer.runUnlockDoorTask();
-        }
     }
 
     private ChangeListener<ServerStatusResponse> serverStatusListener = (ob, ov, nv) -> {
@@ -230,15 +219,11 @@ public class HomeController implements Initializable {
         updatePrinterStatus(nv);
     };
     
-    protected void setRootStackController(RootStackController rootController) {
+    @Override
+    public void setRootStackController(RootStackController rootController) {
         this.rootController = rootController;
     }
     
-    protected void setPrinter(RootPrinter printer) {
-        this.printer = printer;
-        startUpdates();
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Translate text on page.
@@ -263,10 +248,7 @@ public class HomeController implements Initializable {
         jobControlHBox.setManaged(false);
     }
     
-    public void stop() {
-        stopUpdates();
-    }  
-    
+    @Override
     public void startUpdates() {
         printer.getRootServer().getCurrentStatusProperty().addListener(serverStatusListener);
         printer.getRootServer().getCurrentPrinterMap().addListener(printerMapListener);
@@ -276,6 +258,7 @@ public class HomeController implements Initializable {
         checkPrinterExists();
     }
     
+    @Override
     public void stopUpdates() {
         // Printer can be null if
         // the home page has never been shown.
@@ -283,7 +266,21 @@ public class HomeController implements Initializable {
             printer.getRootServer().getCurrentStatusProperty().removeListener(serverStatusListener);
             printer.getRootServer().getCurrentPrinterMap().removeListener(printerMapListener);
             printer.getCurrentStatusProperty().removeListener(printerStatusListener);
+            printer = null;
         }
+    }
+
+        @Override
+    public void displayPage(RootPrinter printer) {
+        this.printer = printer;
+        startUpdates();
+        homePane.setVisible(true);
+    }
+    
+    @Override
+    public void hidePage() {
+        stopUpdates();
+        homePane.setVisible(false);
     }
 
     private void updateServerStatus(ServerStatusResponse serverStatus) {
@@ -300,7 +297,7 @@ public class HomeController implements Initializable {
     private void checkPrinterExists() {
         Map<String, RootPrinter> currentPrinterMap = rootController.getRootServer().getCurrentPrinterMap();
         if (!currentPrinterMap.containsKey(printer.getPrinterId()))
-            rootController.showPrinterSelectPage();
+            rootController.showPrinterSelectPage(this);
         else {
             boolean showBackButton = (currentPrinterMap.size() > 1);
             Platform.runLater(() -> {
@@ -311,29 +308,31 @@ public class HomeController implements Initializable {
     }
     
     private void updatePrinterStatus(PrinterStatusResponse printerStatus) {
-        MachineDetails md = MachineDetails.machineDetailsMap.getOrDefault(printerStatus.getPrinterTypeCode(),
-                                                                          MachineDetails.defaultDetails);
-        
-        Platform.runLater(() -> {
-            printerButton.setStyle("-fx-background-color: "
-                                   + printerStatus.getPrinterWebColourString()
-                                   + ";"
-                                   + "-fx-background-image: "
-                                   + md.getMachineIcon(printerStatus.getPrinterWebColourString())
-                                   + ";");
-            nameLabel.setText(printerStatus.getPrinterName());
-            modelLabel.setText(I18n.t(md.model));
-            idleVBox.setStyle("-fx-background-image: "
-                             + md.getIdleIcon()
-                             + ";");
-            updateFilamentStatus(printerStatus, 0);
-            updateFilamentStatus(printerStatus, 1);
-            updateFilamentEjectStatus(printerStatus);
-            updateHeadStatus(printerStatus);
-            updatePrintStatus(printerStatus);
-            updateJobStatus(printerStatus);
-            updateControlStatus(printerStatus);
-        });
+        if (printerStatus != null) {
+            MachineDetails md = MachineDetails.machineDetailsMap.getOrDefault(printerStatus.getPrinterTypeCode(),
+                                                                              MachineDetails.defaultDetails);
+
+            Platform.runLater(() -> {
+                printerButton.setStyle("-fx-background-color: "
+                                       + printerStatus.getPrinterWebColourString()
+                                       + ";"
+                                       + "-fx-background-image: "
+                                       + md.getMachineIcon(printerStatus.getPrinterWebColourString())
+                                       + ";");
+                nameLabel.setText(printerStatus.getPrinterName());
+                modelLabel.setText(I18n.t(md.model));
+                idleVBox.setStyle("-fx-background-image: "
+                                 + md.getIdleIcon()
+                                 + ";");
+                updateFilamentStatus(printerStatus, 0);
+                updateFilamentStatus(printerStatus, 1);
+                updateFilamentEjectStatus(printerStatus);
+                updateHeadStatus(printerStatus);
+                updatePrintStatus(printerStatus);
+                updateJobStatus(printerStatus);
+                updateControlStatus(printerStatus);
+            });
+        }
     }
     
     private void updateFilamentStatus(PrinterStatusResponse printerStatus, int filamentIndex) {

@@ -2,11 +2,17 @@ package celuk.groot.controllers;
 
 import celuk.groot.remote.RootPrinter;
 import celuk.groot.remote.RootServer;
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
@@ -16,107 +22,122 @@ public class RootStackController implements Initializable {
 
     @FXML
     private AnchorPane rootAnchorPane;
-    StackPane printerSelectPane = null;
-    PrinterSelectController printerSelectController = null;
-    StackPane homePane = null;
-    HomeController homeController = null;
-    StackPane mainMenuPane = null;
-    MainMenuController mainMenuController = null;
-    StackPane controlPane = null;
-    ControlController controlController = null;
-    RootServer server = null;
+    
+    private ControlController controlPage = null;
+    private HomeController homePage = null;
+    private MainMenuController mainMenu = null;
+    private PrinterSelectController printerSelectPage = null;
+    private TweakController tweakPage = null;
+    private final List<Page> pages = new ArrayList<>();
+
+    private RootServer server = null;
+    private Insets offsets = new Insets(0.0, 0.0, 0.0, 0.0); 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         //System.out.println("Starting server updating");
-        URL printerSelectPaneURL = getClass().getResource(FXML_RESOURCE_PATH + "PrinterSelect.fxml");
-        URL homePaneURL = getClass().getResource(FXML_RESOURCE_PATH + "Home.fxml");
-        URL mainMenuPaneURL = getClass().getResource(FXML_RESOURCE_PATH + "MainMenu.fxml");
-        URL controlPaneURL = getClass().getResource(FXML_RESOURCE_PATH + "Control.fxml");
+        URL controlPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Control.fxml");
+        URL homePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Home.fxml");
+        URL mainMenuURL = getClass().getResource(FXML_RESOURCE_PATH + "MainMenu.fxml");
+        URL printerSelectPageURL = getClass().getResource(FXML_RESOURCE_PATH + "PrinterSelect.fxml");
+        URL tweakPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Tweak.fxml");
         try
         {
-            FXMLLoader printerSelectPaneLoader =  new FXMLLoader(printerSelectPaneURL, null);
-            printerSelectPane = printerSelectPaneLoader.load();
-            printerSelectController = (PrinterSelectController)(printerSelectPaneLoader.getController());
-            printerSelectController.setRootStackController(this);
-
-            FXMLLoader homePaneLoader =  new FXMLLoader(homePaneURL, null);
-            homePane = homePaneLoader.load();
-            homeController = (HomeController)(homePaneLoader.getController());
-            homeController.setRootStackController(this);
-
-            FXMLLoader mainMenuPaneLoader =  new FXMLLoader(mainMenuPaneURL, null);
-            mainMenuPane = mainMenuPaneLoader.load();
-            mainMenuController = (MainMenuController)(mainMenuPaneLoader.getController());
-            mainMenuController.setRootStackController(this);
-
-            FXMLLoader controlPaneLoader =  new FXMLLoader(controlPaneURL, null);
-            controlPane = controlPaneLoader.load();
-            controlController = (ControlController)(controlPaneLoader.getController());
-            controlController.setRootStackController(this);
-
-            rootAnchorPane.getChildren().addAll(printerSelectPane, homePane, mainMenuPane, controlPane);
-            printerSelectPane.setVisible(true);
-            printerSelectController.startUpdates();
-            homePane.setVisible(false);
-            mainMenuPane.setVisible(false);
-            controlPane.setVisible(false);
-        } catch (Exception ex)
-        {
+            controlPage = (ControlController)(loadPage(controlPageURL));
+            homePage = (HomeController)(loadPage(homePageURL));
+            mainMenu = (MainMenuController)(loadPage(mainMenuURL));
+            printerSelectPage = (PrinterSelectController)(loadPage(printerSelectPageURL));
+            tweakPage = (TweakController)(loadPage(tweakPageURL));
+            hidePages(printerSelectPage);
+            printerSelectPage.displayPage(null);
+        }
+        catch (IOException ex) {
             System.out.println(ex);
             ex.printStackTrace(System.err);
+            System.exit(1);
         }
     }
     
-    public void showCalibrationPage(RootPrinter printer) {
+    public void showCalibrationPage(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            //previousPage.hidePage();
+            //calibrationPage.displayPage(null);
+        });
     }
 
-    public void showConsolePage(RootPrinter printer) {
+    public void showConsolePage(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            //previousPage.hidePage();
+            //consolePage.displayPage(null);
+        });
     }
 
-    public void showControlPage(RootPrinter printer) {
-        printerSelectPane.setVisible(false);
-        mainMenuPane.setVisible(false);
-        homePane.setVisible(false);
-        controlPane.setVisible(true);
-        controlController.setPrinter(printer);
+    public void showControlPage(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            previousPage.hidePage();
+            controlPage.displayPage(printer);
+        });
     }
 
-    public void showHomePage(RootPrinter printer) {
-        printerSelectPane.setVisible(false);
-        mainMenuPane.setVisible(false);
-        controlPane.setVisible(false);
-        homePane.setVisible(true);
-        homeController.setPrinter(printer);
+    public void showHomePage(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            previousPage.hidePage();
+            homePage.displayPage(printer);
+        });
     }
     
-    public void showPrinterSelectPage() {
-        homePane.setVisible(false);
-        mainMenuPane.setVisible(false);
-        controlPane.setVisible(false);
-        printerSelectPane.setVisible(true);
-        printerSelectController.startUpdates();
+    public void showPrinterSelectPage(Page previousPage) {
+        Platform.runLater(() -> {
+            previousPage.hidePage();
+            printerSelectPage.displayPage(null);
+        });
     }
     
-    public void showMaintenancePage(RootPrinter printer) {
+    public void showMainMenu(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            previousPage.hidePage();
+            mainMenu.displayPage(printer);
+        });
     }
 
-    public void showPrintMenu(RootPrinter printer) {
+    public void showMaintenancePage(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            //previousPage.hidePage();
+            //maintenancePage.displayPage(null);
+        });
     }
 
-    public void showPurgePage(RootPrinter printer) {
+    public void showPrintMenu(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            //previousPage.hidePage();
+            //printMenuPage.displayPage(null);
+        });
     }
 
-    public void showMainMenu(RootPrinter printer) {
-        homePane.setVisible(false);
-        controlPane.setVisible(false);
-        printerSelectPane.setVisible(false);
-        mainMenuPane.setVisible(true);
-        mainMenuController.setPrinter(printer);
+    public void showPurgePage(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            // previousPage.hidePage();
+            //purgePage.displayPage(null);
+        });
     }
 
-    public void showSettingsMenu(RootPrinter printer) {
+    public void showSettingsMenu(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            // previousPage.hidePage();
+            //settingsMenuPage.displayPage(null);
+        });
+    }
+    
+    public void showTweakPage(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            previousPage.hidePage();
+            tweakPage.displayPage(printer);
+        });
+    }
+
+    public void setOffsets(double top, double right, double bottom, double left) {
+        offsets = new Insets(top, right, bottom, left);
     }
     
     public RootServer getRootServer() {
@@ -128,9 +149,33 @@ public class RootStackController implements Initializable {
     }
 
     public void stop() {
-        if (printerSelectController != null)
-            printerSelectController.stop();
-        if (homeController != null)
-            homeController.stop();
+        if (printerSelectPage != null)
+            printerSelectPage.stopUpdates();
+        if (homePage != null)
+            homePage.stopUpdates();
+    }
+    
+    private void hidePages(Page pageToShow) {
+        pages.stream()
+             .filter(p -> p != pageToShow)
+             .forEach(p -> p.hidePage());
+    }
+    
+    private Page loadPage(URL pageURL) throws IOException {
+            FXMLLoader pageLoader =  new FXMLLoader(pageURL, null);
+            StackPane pagePane = pageLoader.load();
+            setAnchors(pagePane);
+            Page page = (Page)(pageLoader.getController());
+            page.setRootStackController(this);
+            pages.add(page);
+            rootAnchorPane.getChildren().add(pagePane);
+            return page;
+    }
+    
+    private void setAnchors(Node n) {
+        AnchorPane.setBottomAnchor(n, offsets.getBottom());
+        AnchorPane.setTopAnchor(n, offsets.getTop());
+        AnchorPane.setLeftAnchor(n, offsets.getLeft());
+        AnchorPane.setRightAnchor(n, offsets.getRight());
     }
 }

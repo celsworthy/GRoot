@@ -13,10 +13,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class MainMenuController implements Initializable {
+public class MainMenuController implements Initializable, Page {
     
     @FXML
-    private StackPane MainMenuPane;
+    private StackPane mainMenuPane;
     @FXML
     private VBox menuGridVBox;
     @FXML
@@ -45,84 +45,61 @@ public class MainMenuController implements Initializable {
     private Button[] buttonArray = null;
     
     @FXML
-    void menuAction(ActionEvent event)
-    {
-        if (rootController != null && event.getSource() instanceof Button)
-        {
-            try {
-                Button b = (Button)event.getSource();
-                switch (b.getId()) {
-                    case "calibration":
-                        rootController.showCalibrationPage(printer);
-                        break;
-                    case "control":
-                        rootController.showControlPage(printer);
-                        break;
-                    case "console":
-                        rootController.showConsolePage(printer);
-                        break;
-                    case "maintenance":
-                        rootController.showMaintenancePage(printer);
-                        break;
-                    case "print":
-                        rootController.showPrintMenu(printer);
-                        break;
-                    case "purge":
-                        rootController.showPurgePage(printer);
-                        break;
-                    default:
-                        rootController.showHomePage(printer);
-                        break;
-                }
-                stopUpdates();
-            }
-            catch (Exception ex) {
+    void menuAction(ActionEvent event) {
+        if (rootController != null && event.getSource() instanceof Button) {
+            Button b = (Button)event.getSource();
+            switch (b.getId()) {
+                case "calibration":
+                    rootController.showCalibrationPage(this, printer);
+                    break;
+                case "control":
+                    rootController.showControlPage(this, printer);
+                    break;
+                case "console":
+                    rootController.showConsolePage(this, printer);
+                    break;
+                case "maintenance":
+                    rootController.showTweakPage(this, printer);
+                    break;
+                case "print":
+                    rootController.showPrintMenu(this, printer);
+                    break;
+                case "purge":
+                    rootController.showPurgePage(this, printer);
+                    break;
+                default:
+                    rootController.showHomePage(this, printer);
+                    break;
             }
         }
     }
     
     @FXML
-    void leftButtonAction(ActionEvent event)
-    {
+    void leftButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-        {
-            stopUpdates();
-            rootController.showHomePage(printer);
-        }
+            rootController.showHomePage(this, printer);
     }
     
     @FXML
-    void middleButtonAction(ActionEvent event)
-    {
+    void middleButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-        {
-            stopUpdates();
-            rootController.showHomePage(printer);
-        }
+            rootController.showHomePage(this, printer);
     }
 
     @FXML
-    void rightButtonAction(ActionEvent event)
-    {
+    void rightButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-        {
-            stopUpdates();
-            rootController.showSettingsMenu(printer);
-        }
+            rootController.showSettingsMenu(this, printer);
     }
 
     private RootStackController rootController = null;
     private RootPrinter printer = null;
     
-    protected void setRootStackController(RootStackController rootController) {
+    @Override
+    public void setRootStackController(RootStackController rootController) {
         this.rootController = rootController;
     }
     
-    protected void setPrinter(RootPrinter printer) {
-        this.printer = printer;
-        startUpdates();
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         menu00Button.setText(I18n.t(menu00Button.getText()));
@@ -136,13 +113,25 @@ public class MainMenuController implements Initializable {
         leftButton.setDisable(true);
     }
     
-    public void stop() {
-        stopUpdates();
-    }       
-
+    @Override
     public void startUpdates() {
     }
     
+    @Override
     public void stopUpdates() {
+        printer = null;
+    }
+
+    @Override
+    public void displayPage(RootPrinter printer) {
+        this.printer = printer;
+        startUpdates();
+        mainMenuPane.setVisible(true);
+    }
+
+    @Override
+    public void hidePage() {
+        stopUpdates();
+        mainMenuPane.setVisible(false);
     }
 }

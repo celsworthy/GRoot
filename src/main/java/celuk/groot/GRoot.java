@@ -1,7 +1,6 @@
 package celuk.groot;
 
 import celuk.groot.controllers.RootStackController;
-import celuk.groot.controllers.PrinterSelectController;
 import celuk.groot.remote.RootServer;
 import celuk.language.I18n;
 import com.beust.jcommander.JCommander;
@@ -11,11 +10,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.scenicview.ScenicView;
 
 public class GRoot extends Application {
 
-    private static GRootCommandLineArgs commandLineArgs = new GRootCommandLineArgs();
+    private static final GRootCommandLineArgs commandLineArgs = new GRootCommandLineArgs();
     private Parent root = null;
     RootStackController rootController = null;
     RootServer server = null;
@@ -27,8 +25,12 @@ public class GRoot extends Application {
         FXMLLoader rootLoader =  new FXMLLoader(getClass().getResource("/fxml/RootStack.fxml"), null);
         rootController = new RootStackController();
         rootController.setRootServer(server);
+        rootController.setOffsets(commandLineArgs.offsetTop,
+                                  commandLineArgs.offsetRight,
+                                  commandLineArgs.offsetBottom,
+                                  commandLineArgs.offsetLeft);
         rootLoader.setController(rootController);
-        Parent root = rootLoader.load();
+        root = rootLoader.load();
 
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
@@ -37,7 +39,7 @@ public class GRoot extends Application {
         stage.setScene(scene);
         stage.show();
         
-        //ScenicView.show(scene);
+        //org.scenicview.ScenicView.show(scene);
     }
 
     @Override

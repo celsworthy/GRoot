@@ -9,7 +9,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -26,13 +25,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class ControlController implements Initializable {
+public class ControlController implements Initializable, Page {
     
     static final String NO_HEAD_KEY = "<none>";
     static final String DEFAULT_HEAD_KEY = "<default>";
 
     @FXML
-    private StackPane ControlPane;
+    private StackPane controlPane;
     @FXML
     private VBox controlVBox;
     @FXML
@@ -82,15 +81,11 @@ public class ControlController implements Initializable {
     @FXML
     private Button ambientLightButton;
     @FXML
-    private VBox zAxisVBox;
-    @FXML
     private Button zp10Button;
     @FXML
     private Button zHomeButton;
     @FXML
     private Button zm10Button;
-    @FXML
-    private GridPane bedGridPane;
     @FXML
     private Button yp10Button;
     @FXML
@@ -102,8 +97,6 @@ public class ControlController implements Initializable {
     @FXML
     private Button unlockButton;
     @FXML
-    private HBox headHBox;
-    @FXML
     private ImageView headImageView;
     @FXML
     private Button selectButton;
@@ -113,8 +106,6 @@ public class ControlController implements Initializable {
     private Button headlightButton;
     @FXML
     private Button fanButton;
-    @FXML
-    private HBox bottomBarHBox;
     @FXML
     private Button leftButton;
     @FXML
@@ -144,10 +135,8 @@ public class ControlController implements Initializable {
     private final SimpleBooleanProperty valveState = new SimpleBooleanProperty(false);
 
     @FXML
-    void controlAction(ActionEvent event)
-    {
-        if (rootController != null && event.getSource() instanceof Button)
-        {
+    void controlAction(ActionEvent event) {
+        if (rootController != null && event.getSource() instanceof Button) {
             try {
                 Button b = (Button)event.getSource();
                 switch(b.getId()) {
@@ -252,33 +241,21 @@ public class ControlController implements Initializable {
     }
     
     @FXML
-    void leftButtonAction(ActionEvent event)
-    {
+    void leftButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-        {
-            stopUpdates();
-            rootController.showMainMenu(printer);
-        }
+            rootController.showMainMenu(this, printer);
     }
     
     @FXML
-    void middleButtonAction(ActionEvent event)
-    {
+    void middleButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-        {
-            stopUpdates();
-            rootController.showHomePage(printer);
-        }
+            rootController.showHomePage(this, printer);
     }
 
     @FXML
-    void rightButtonAction(ActionEvent event)
-    {
+    void rightButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-        {
-            stopUpdates();
-            rootController.showSettingsMenu(printer);
-        }
+            rootController.showSettingsMenu(this, printer);
     }
 
     private RootStackController rootController = null;
@@ -295,16 +272,11 @@ public class ControlController implements Initializable {
         updatePrinterStatus(nv);
     };
     
-
-    protected void setRootStackController(RootStackController rootController) {
+    @Override
+    public void setRootStackController(RootStackController rootController) {
         this.rootController = rootController;
     }
     
-    protected void setPrinter(RootPrinter printer) {
-        this.printer = printer;
-        startUpdates();
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ejectLabel.setText(I18n.t(ejectLabel.getText()));
@@ -341,10 +313,7 @@ public class ControlController implements Initializable {
         headImageMap.put(DEFAULT_HEAD_KEY, new Image(getClass().getResourceAsStream("/image/control-head-default.png")));
     }
     
-    public void stop() {
-        stopUpdates();
-    }       
-
+    @Override
     public void startUpdates() {
         printer.getRootServer().getCurrentPrinterMap().addListener(printerMapListener);
         printer.getCurrentStatusProperty().addListener(printerStatusListener);
@@ -352,19 +321,33 @@ public class ControlController implements Initializable {
         checkPrinterExists();
     }
     
+    @Override
     public void stopUpdates() {
         // Printer can be null if
         // the home page has never been shown.
         if (printer != null) {
             printer.getRootServer().getCurrentPrinterMap().removeListener(printerMapListener);
             printer.getCurrentStatusProperty().removeListener(printerStatusListener);
+            printer = null;
         }
     }
     
+    @Override
+    public void displayPage(RootPrinter printer) {
+        this.printer = printer;
+        startUpdates();
+        controlPane.setVisible(true);
+    }
+    
+    @Override
+    public void hidePage() {
+        stopUpdates();
+        controlPane.setVisible(false);
+    }
+
     private void checkPrinterExists() {
         if (!rootController.getRootServer().checkPrinterExists(printer.getPrinterId())) {
-            stopUpdates();
-            rootController.showPrinterSelectPage();
+            rootController.showPrinterSelectPage(this);
         }
     }
 
@@ -385,7 +368,6 @@ public class ControlController implements Initializable {
             
             // Update headImageView
             headImageView.setImage(headImageMap.get(NO_HEAD_KEY));
-            // $('#head-icon').attr('src', imageRoot + 'Icon-NoHead.svg');
         }
         else {
             // Head attached.
@@ -394,12 +376,19 @@ public class ControlController implements Initializable {
             String headCode = printerStatus.getHeadTypeCode().toLowerCase();
             Image headImage = headImageMap.get(headCode);
             if (headImage == null) {
-                InputStream imageStream = getClass().getResourceAsStream("/image/control-head-" + headCode + ".png");
-                if (imageStream != null)
-                    headImage = new Image(imageStream);
-                else
-                    headImage = headImageMap.get(DEFAULT_HEAD_KEY);
+                try {
+                    InputStream imageStream = getClass().getResourceAsStream("/image/control-head-" + headCode + ".png");
+                    if (imageStream != null) {
+                        headImage = new Image(imageStream);
+                        headImageMap.put(headCode, headImage);
+                   }
+                }
+                catch (Exception ex)
+                {
+                }
             }
+            if (headImage == null)
+                headImage = headImageMap.get(DEFAULT_HEAD_KEY);
             headImageView.setImage(headImage);
             isDualMaterialHeadProperty.set(printerStatus.isDualMaterialHead());
             // Length of the nozzle temperature array is the number of nozzles.

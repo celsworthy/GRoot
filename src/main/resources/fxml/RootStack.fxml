@@ -3,5 +3,4 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane id="RootPane" fx:id="rootAnchorPane" prefHeight="800" prefWidth="480.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
-</AnchorPane>
+<AnchorPane id="RootPane" fx:id="rootAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800" prefWidth="480.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" />

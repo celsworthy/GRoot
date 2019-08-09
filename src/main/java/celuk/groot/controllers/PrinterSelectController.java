@@ -6,11 +6,10 @@ import celuk.groot.remote.RootServer;
 import celuk.groot.remote.ServerStatusResponse;
 import celuk.language.I18n;
 import java.net.URL;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
 import java.util.stream.Collectors;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -26,9 +25,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
-public class PrinterSelectController implements Initializable {
+public class PrinterSelectController implements Initializable, Page {
     
     @FXML
     private StackPane printerSelectPane;
@@ -72,15 +70,15 @@ public class PrinterSelectController implements Initializable {
         if (rootController != null && event.getSource() instanceof Button)
         {
             Button b = (Button)event.getSource();
-            stopUpdates();
-            rootController.showHomePage((RootPrinter)b.getUserData());
+            rootController.showHomePage(this, (RootPrinter)b.getUserData());
         }
     }
     
     private RootStackController rootController = null;
     private RootServer rootServer = null;
     
-    protected void setRootStackController(RootStackController rootController) {
+    @Override
+    public void setRootStackController(RootStackController rootController) {
         this.rootController = rootController;
         this.rootServer = rootController.getRootServer();
     }
@@ -98,10 +96,6 @@ public class PrinterSelectController implements Initializable {
             button.setGraphic(new ImageView());
     }
     
-    public void stop() {
-        stopUpdates();
-    }       
-
     private ChangeListener<ServerStatusResponse> serverStatusListener = (ob, ov, nv) -> {
         //System.out.println("RemoteServer::serverStatusListener");
         updateServerStatus(nv);
@@ -117,6 +111,7 @@ public class PrinterSelectController implements Initializable {
         updatePrinterStatus(nv);
     };
 
+    @Override
     public void startUpdates() {
         rootServer.getCurrentStatusProperty().addListener(serverStatusListener);
         rootServer.getCurrentPrinterMap().addListener(printerMapListener);
@@ -124,9 +119,22 @@ public class PrinterSelectController implements Initializable {
         updatePrinterGrid();
     }
     
+    @Override
     public void stopUpdates() {
         rootServer.getCurrentStatusProperty().removeListener(serverStatusListener);
         rootServer.getCurrentPrinterMap().removeListener(printerMapListener);
+    }
+
+    @Override
+    public void displayPage(RootPrinter printer) {
+        startUpdates();
+        printerSelectPane.setVisible(true);
+    }
+    
+    @Override
+    public void hidePage() {
+        stopUpdates();
+        printerSelectPane.setVisible(false);
     }
 
     private void updateServerStatus(ServerStatusResponse response) {
@@ -170,41 +178,38 @@ public class PrinterSelectController implements Initializable {
                 noPrintersVBox.setManaged(false);
                 noPrintersVBox.setVisible(false);
 
-                Set<RootPrinter> knownPrinterSet = new HashSet<RootPrinter>();
-                for (int index = 0; index < 6; ++index) {
-                    Button b = buttonArray[index];
-                    RootPrinter printer = (RootPrinter)b.getUserData();
-                    if (printer != null)
-                        knownPrinterSet.add(printer);
+                List<RootPrinter> printerList = currentPrinterMap.entrySet()
+                                                                 .stream()
+                                                                 .map(e -> e.getValue())
+                                                                 .collect(Collectors.toList());
+                if (printerList.size() == 1) {
+                    // Only one printer connected so go straight to the printer home page.
+                    rootController.showHomePage(this, printerList.get(0));
                 }
-                
-                List<RootPrinter> foundPrinterList = currentPrinterMap.entrySet()
-                                 .stream()
-                                 .filter(e -> !knownPrinterSet.contains(e.getValue()))
-                                 .map(e -> e.getValue())
-                                 .collect(Collectors.toList());
-                
-                if (!foundPrinterList.isEmpty()) {
-                    int fIndex = 0;
+                else {
+                    Collections.sort(printerList,
+                                     (p1, p2) -> p1.getCurrentStatusProperty()
+                                                   .get()
+                                                   .getPrinterName()
+                                                   .compareToIgnoreCase(p2.getCurrentStatusProperty()
+                                                                          .get()
+                                                                          .getPrinterName()));
+                    int pIndex = 0;
                     for (int index = 0; index < 6; ++index) {
                         Button b = buttonArray[index];
-                        RootPrinter printer = (RootPrinter)b.getUserData();
-                        if (printer == null) {
-                            if (fIndex < foundPrinterList.size()) {
-                                printer = foundPrinterList.get(fIndex);
-                                b.setUserData(printer);
-                                printer.getCurrentStatusProperty().addListener(printerStatusListener);
-                                updatePrinterStatus(printer.getCurrentStatusProperty().get());
-                                b.setVisible(true);
-                                ++fIndex;
-                            }
-                            else
-                            {
-                                b.setVisible(false);
-                                b.setUserData(null);
-                                b.setText("-");
-                                b.setStyle("");
-                            }
+                        if (pIndex < printerList.size()) {
+                            RootPrinter printer = printerList.get(pIndex);
+                            b.setUserData(printerList);
+                            printer.getCurrentStatusProperty().addListener(printerStatusListener);
+                            updatePrinterStatus(printer.getCurrentStatusProperty().get());
+                            b.setVisible(true);
+                            ++pIndex;
+                        }
+                        else {
+                            b.setVisible(false);
+                            b.setUserData(null);
+                            b.setText("-");
+                            b.setStyle("");
                         }
                     }
                 }
