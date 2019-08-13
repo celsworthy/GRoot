@@ -19,26 +19,18 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 
 public class RootServer extends Updater {
     
-    public static final int readTimeOutShort = 1500;
-    public static final int connectTimeOutShort = 300;
-    public static final int readTimeOutLong = 15000;
-    public static final int connectTimeOutLong = 2000;
+    public static final int CONNECT_TIMEOUT_LONG = 2000;
+    public static final int CONNECT_TIMEOUT_SHORT = 300;
+    public static final int READ_TIMEOUT_LONG = 15000;
+    public static final int READ_TIMEOUT_SHORT = 1500;
     protected static final String USER_AGENT = "CEL Robox";
     protected static final String HTTP_PREFIX = "http://";
     //protected static final String LOCAL_HOST = "localhost";
@@ -137,8 +129,8 @@ public class RootServer extends Updater {
             con.setRequestProperty("User-Agent", USER_AGENT);
             con.setRequestProperty("Authorization", "Basic " + StringToBase64Encoder.encode("root:" + getPIN()));
 
-            con.setConnectTimeout(connectTimeOutShort);
-            con.setReadTimeout(readTimeOutShort);
+            con.setConnectTimeout(CONNECT_TIMEOUT_SHORT);
+            con.setReadTimeout(READ_TIMEOUT_SHORT);
 
             if (content != null) {
                 con.setDoOutput(true);
@@ -166,7 +158,7 @@ public class RootServer extends Updater {
             System.out.println("Timeout whilst making request \"" + request + "\" from @" + hostAddress + ":" + hostPort + " - time taken = " + Long.toString(t2 - t1));
         }
         catch (IOException ex) {
-            System.out.println("Error whilst making request \"" + request + "\" from @" + hostAddress + ":" + hostPort + " - " + ex);;
+            System.out.println("Error whilst making request \"" + request + "\" from @" + hostAddress + ":" + hostPort + " - " + ex);
         }
         
         return requestData;
@@ -183,7 +175,7 @@ public class RootServer extends Updater {
                 }
             }
             catch (Exception ex) {
-                System.out.println("Error whilst requesting \"" + command + "\" from @" + hostAddress + ":" + hostPort + " - " + ex);;
+                System.out.println("Error whilst requesting \"" + command + "\" from @" + hostAddress + ":" + hostPort + " - " + ex);
             }
             return response;
         });
@@ -219,7 +211,7 @@ public class RootServer extends Updater {
                     }
                 }
                 catch (IOException ex) {
-                    System.out.println("Error whilst decoding printer list from @" + hostAddress + ":" + hostPort + " - " + ex);;
+                    System.out.println("Error whilst decoding printer list from @" + hostAddress + ":" + hostPort + " - " + ex);
                 }
                 return currentPrinterMap;
             });
@@ -237,7 +229,7 @@ public class RootServer extends Updater {
                     }
                 }
                 catch (IOException ex) {
-                    System.out.println("Error whilst decoding printer list from @" + hostAddress + ":" + hostPort + " - " + ex);;
+                    System.out.println("Error whilst decoding printer list from @" + hostAddress + ":" + hostPort + " - " + ex);
                 }
                 return serverStatus;
             });

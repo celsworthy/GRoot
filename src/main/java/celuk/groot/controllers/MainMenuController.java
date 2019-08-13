@@ -59,7 +59,7 @@ public class MainMenuController implements Initializable, Page {
                     rootController.showConsolePage(this, printer);
                     break;
                 case "maintenance":
-                    rootController.showTweakPage(this, printer);
+                    rootController.showMaintenanceMenu(this, printer);
                     break;
                 case "print":
                     rootController.showPrintMenu(this, printer);

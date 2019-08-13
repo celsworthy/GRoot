@@ -1,11 +1,3 @@
-.ambient {
-    -fx-text-fill: #1eb43c;
-}
-
-.bed {
-    -fx-text-fill: #ffc800;
-}
-
 .filament-description {
     -fx-text-fill: #000000;
     -fx-font-size: 12pt;
@@ -72,17 +64,9 @@
     -fx-font-size: 18pt;
 }
 
-.material-1 {
-    -fx-text-fill: #009ee3;
-}
-
 .material-1-eject {
     -fx-graphic: url("/image/material-1-eject.png");
     -fx-background-color: transparent;
-}
-
-.material-2 {
-    -fx-text-fill: #eb672a;
 }
 
 .material-2-eject {

@@ -1,0 +1,67 @@
+.bed-decrement {
+    -fx-graphic:url("/image/tweak-dec-yellow.png");
+    -fx-background-color: transparent;
+}
+
+.bed-icon {
+    -fx-image:url("/image/tweak-bed.png");
+}
+.bed-increment {
+    -fx-graphic:url("/image/tweak-inc-yellow.png");
+    -fx-background-color: transparent;
+}
+
+.field-label {
+    -fx-font-size: 16pt;
+}
+
+.field-value {
+    -fx-font-weight: 200;
+    -fx-font-size: 16pt;
+}
+
+.field-suffix {
+    -fx-font-size: 16pt;
+}
+
+.m1-decrement {
+    -fx-graphic:url("/image/tweak-dec-blue.png");
+    -fx-background-color: transparent;
+}
+
+.m1-icon {
+    -fx-image:url("/image/tweak-m1.png");
+}
+
+.m1-increment {
+    -fx-graphic:url("/image/tweak-inc-blue.png");
+    -fx-background-color: transparent;
+}
+
+.m2-decrement {
+    -fx-graphic:url("/image/tweak-dec-orange.png");
+    -fx-background-color: transparent;
+}
+
+.m2-icon {
+    -fx-image:url("/image/tweak-m2.png");
+}
+
+.m2-increment {
+    -fx-graphic:url("/image/tweak-inc-orange.png");
+    -fx-background-color: transparent;
+}
+
+.panel-description {
+    -fx-font-size: 18pt;
+    -fx-font-style: italic;
+}
+
+.panel-material {
+    -fx-font-size: 18pt;
+}
+
+.panel-title {
+    -fx-font-weight: 200;
+    -fx-font-size: 18pt;
+}

@@ -101,10 +101,10 @@ public class RootStackController implements Initializable {
         });
     }
 
-    public void showMaintenancePage(Page previousPage, RootPrinter printer) {
+    public void showMaintenanceMenu(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
             //previousPage.hidePage();
-            //maintenancePage.displayPage(null);
+            //maintenanceMenu.displayPage(null);
         });
     }
 

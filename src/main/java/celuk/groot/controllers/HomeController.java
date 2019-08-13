@@ -29,19 +29,13 @@ public class HomeController implements Initializable, Page {
     @FXML
     private StackPane homePane;
     @FXML
-    private HBox printerHBox;
-    @FXML
     private Button printerButton;
-    @FXML
-    private VBox printerNameVBox;
     @FXML
     private Label modelLabel;
     @FXML
     private Label nameLabel;
     @FXML
     private Label addressLabel;
-    @FXML
-    private GridPane filamentGrid;
     @FXML
     private Label filament1DescriptionLabel;
     @FXML
@@ -63,8 +57,6 @@ public class HomeController implements Initializable, Page {
     @FXML
     private Button filament2EjectButton;
     @FXML
-    private GridPane temperatureGrid;
-    @FXML
     private Label leftNozzleTempLabel;
     @FXML
     private Label leftNozzleTitleLabel;
@@ -84,8 +76,6 @@ public class HomeController implements Initializable, Page {
     private VBox idleVBox;
     @FXML
     private VBox jobVBox;
-    @FXML
-    private HBox jobStatusHBox;
     @FXML
     private Pane jobStatusIcon;
     @FXML
@@ -125,8 +115,6 @@ public class HomeController implements Initializable, Page {
     @FXML
     private Label jobProfileLabel;
     @FXML
-    private HBox bottomBarHBox;
-    @FXML
     private Button leftButton;
     @FXML
     private Button middleButton;
@@ -145,8 +133,7 @@ public class HomeController implements Initializable, Page {
     @FXML
     void printerButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
-//            stopUpdates();
-//            rootController.showPrinterMenu();
+//            rootController.showPrinterMenu(this, printer);
         }
     }
     
@@ -159,8 +146,7 @@ public class HomeController implements Initializable, Page {
     @FXML
     void tweakButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
-            //stopUpdates();
-            //rootController.showTweakPage(printer);
+            rootController.showTweakPage(this, printer);
         }
     }
 

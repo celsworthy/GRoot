@@ -258,13 +258,13 @@ public class PrinterStatusResponse
         this.headTypeCode = headTypeCode;
     }
 
-    @JsonProperty
+    @JsonProperty("areValvesFitted")
     public boolean areValvesFitted()
     {
         return valvesFitted;
     }
 
-    @JsonProperty
+    @JsonProperty("areValvesFitted")
     public void setValvesFitted(boolean valvesFitted)
     {
         this.valvesFitted = valvesFitted;
