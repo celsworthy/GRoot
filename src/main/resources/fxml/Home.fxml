@@ -44,58 +44,64 @@
                   <ColumnConstraints halignment="CENTER" hgrow="NEVER" minWidth="10.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label fx:id="filament1TypeLabel" styleClass="material-1, filament-type, large-text" text="Label">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></Label>
-                  <Label fx:id="filament1DescriptionLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="filament-description, medium-text" text="Label" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
+                  <Label fx:id="filament1DescriptionLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="filament-description, medium-text" text="Label" GridPane.columnSpan="3" GridPane.rowIndex="1">
                      <GridPane.margin>
-                        <Insets bottom="10.0" left="5.0" right="5.0" />
+                        <Insets bottom="5.0" left="5.0" />
                      </GridPane.margin></Label>
                   <Label fx:id="filament1RemainingLabel" styleClass="medium-text" text="Label" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></Label>
-                  <VBox fx:id="filament1VBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefWidth="94.0" styleClass="reel-image" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.rowSpan="2" GridPane.vgrow="SOMETIMES">
+                  <VBox fx:id="filament1VBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="95.0" prefWidth="100.0" styleClass="reel-image" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.rowSpan="2" GridPane.vgrow="SOMETIMES">
                      <children>
                         <Button fx:id="filament1EjectButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#ejectButtonAction" prefHeight="48.0" prefWidth="48.0" text="Eject">
                            <styleClass>
                               <String fx:value="centered-background-image" />
                               <String fx:value="material-1-eject" />
-                           </styleClass></Button>
+                           </styleClass>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin></Button>
                      </children>
                      <GridPane.margin>
-                        <Insets />
+                        <Insets top="5.0" />
                      </GridPane.margin>
                   </VBox>
                   <Label fx:id="filament2TypeLabel" styleClass="material-2, filament-type, large-text" text="Label" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></Label>
-                  <Label fx:id="filament2DescriptionLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="filament-description, medium-text" text="Label" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
+                  <Label fx:id="filament2DescriptionLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="filament-description, medium-text" text="Label" GridPane.columnSpan="3" GridPane.rowIndex="3">
                      <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" />
+                        <Insets bottom="5.0" left="5.0" />
                      </GridPane.margin></Label>
                   <Label fx:id="filament2RemainingLabel" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" styleClass="medium-text" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></Label>
-                  <VBox fx:id="filament2VBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefWidth="94.0" styleClass="reel-image" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.vgrow="SOMETIMES">
+                  <VBox fx:id="filament2VBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="95.0" prefWidth="100.0" styleClass="reel-image" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.vgrow="SOMETIMES">
                      <children>
                         <Button fx:id="filament2EjectButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#ejectButtonAction" prefHeight="48.0" prefWidth="48.0" text="Eject">
                            <styleClass>
                               <String fx:value="centered-background-image" />
                               <String fx:value="material-2-eject" />
-                           </styleClass></Button>
+                           </styleClass>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin></Button>
                      </children>
                      <GridPane.margin>
-                        <Insets />
+                        <Insets top="5.0" />
                      </GridPane.margin>
                   </VBox>
                </children>
@@ -119,13 +125,17 @@
               </rowConstraints>
                <children>
                   <Label fx:id="leftNozzleTempLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="material-1, large-text" text="-" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                  <Label fx:id="leftNozzleTitleLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="material-1, medium-text" text="home.leftNozzle" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                  <Label fx:id="leftNozzleTitleLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="material-1, medium-text" text="common.leftNozzle" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
                   <Label fx:id="rightNozzleTempLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="material-2, large-text" text="-" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                  <Label fx:id="rightNozzleTitleLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="material-2, medium-text" text="home.rightNozzle" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                  <Label fx:id="rightNozzleTitleLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="material-2, medium-text" text="common.rightNozzle" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
                   <Label fx:id="bedTempLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="bed, large-text" text="-" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                  <Label fx:id="bedTitleLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="bed, medium-text" text="home.bed" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                  <Label fx:id="bedTitleLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="common.bed" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <styleClass>
+                        <String fx:value="bed" />
+                        <String fx:value="medium-text" />
+                     </styleClass></Label>
                   <Label fx:id="ambientTempLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="ambient, large-text" text="-" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                  <Label fx:id="ambientTitleLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="ambient, medium-text" text="home.ambient" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                  <Label fx:id="ambientTitleLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="ambient, medium-text" text="common.ambient" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -149,13 +159,13 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label fx:id="jobNameTitleLabel" text="home.jobName" />
-                        <Label fx:id="jobCreatedTitleLabel" text="home.jobCreated" GridPane.rowIndex="1" />
-                        <Label fx:id="jobDurationTitleLabel" text="home.jobDuration" GridPane.rowIndex="2" />
+                        <Label fx:id="jobNameTitleLabel" text="printJob.name" />
+                        <Label fx:id="jobCreatedTitleLabel" text="printJob.created" GridPane.rowIndex="1" />
+                        <Label fx:id="jobDurationTitleLabel" text="printJob.duration" GridPane.rowIndex="2" />
                         <Label fx:id="jobNameLabel" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="2" />
                         <Label fx:id="jobCreatedLabel" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
                         <Label fx:id="jobDurationLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label fx:id="jobProfileTitleLabel" text="home.jobProfile" GridPane.rowIndex="3" />
+                        <Label fx:id="jobProfileTitleLabel" text="printJob.profile" GridPane.rowIndex="3" />
                         <Label fx:id="jobProfileLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Pane fx:id="jobProfileIcon" prefHeight="48.0" prefWidth="48.0" styleClass="jobProfileIcon" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.rowSpan="2" />
                      </children>
@@ -241,31 +251,39 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </VBox>
-            <HBox fx:id="bottomBarHBox" styleClass="bottom-bar" VBox.vgrow="NEVER">
+            <GridPane styleClass="bottom-bar">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="33.333" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="33.333" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="33.333" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
                <children>
-                  <Button fx:id="leftButton" contentDisplay="GRAPHIC_ONLY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#leftButtonAction" prefHeight="63.0" text="Left" HBox.hgrow="SOMETIMES">
+                  <Button fx:id="leftButton" contentDisplay="GRAPHIC_ONLY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#leftButtonAction" prefHeight="63.0" text="Left">
                      <styleClass>
                         <String fx:value="bottom-bar" />
                         <String fx:value="centered-background-image" />
                         <String fx:value="bottom-bar-back" />
-                     </styleClass></Button>
-                  <Button fx:id="middleButton" contentDisplay="GRAPHIC_ONLY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#middleButtonAction" prefHeight="63.0" text="Middle" HBox.hgrow="SOMETIMES">
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="middleButton" contentDisplay="GRAPHIC_ONLY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#middleButtonAction" prefHeight="63.0" text="Middle" GridPane.columnIndex="1">
                      <styleClass>
                         <String fx:value="bottom-bar" />
                         <String fx:value="centered-background-image" />
                         <String fx:value="bottom-bar-main-menu" />
-                     </styleClass></Button>
-                  <Button fx:id="rightButton" contentDisplay="GRAPHIC_ONLY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#rightButtonAction" prefHeight="63.0" text="Right" HBox.hgrow="SOMETIMES">
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="rightButton" contentDisplay="GRAPHIC_ONLY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#rightButtonAction" prefHeight="63.0" text="Right" GridPane.columnIndex="2">
                      <styleClass>
                         <String fx:value="bottom-bar" />
                         <String fx:value="centered-background-image" />
                         <String fx:value="bottom-bar-unlock" />
-                     </styleClass></Button>
+                     </styleClass>
+                  </Button>
                </children>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </HBox>
+            </GridPane>
          </children>
       </VBox>
    </children>

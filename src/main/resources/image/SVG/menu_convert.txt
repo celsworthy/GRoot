@@ -1,0 +1,194 @@
+//
+// File and path settings
+//
+PathExport "D:\CEL\Java11\GRoot\src\main\resources\image"
+FilePrefix "menu-"
+PathClear false
+FileFormat png
+
+ExportWidth 32
+ExportHeight 32
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Speed-Test-Grey.svg"
+FileName "test-speed-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Speed-Test-White.svg"
+FileName "test-speed-white.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Axis-Test-Grey.svg"
+FileName "test-axis-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Axis-Test-White.svg"
+FileName "test-axis-white.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Clean-Grey.svg"
+FileName "right-nozzle-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Clean-White.svg"
+FileName "right-nozzle-white.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Clean-Grey.svg"
+FileName "left-nozzle-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Clean-White.svg"
+FileName "left-nozzle-white.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Eject-Grey.svg"
+FileName "eject-stuck-1-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Eject-White.svg"
+FileName "eject-stuck-1-white.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Eject-Grey.svg"
+FileName "eject-stuck-2-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Eject-White.svg"
+FileName "eject-stuck-2-white.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Rename-Grey.svg"
+FileName "printer-name-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Rename-White.svg"
+FileName "printer-name-white.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Colour-Grey.svg"
+FileName "printer-colour-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Colour-White.svg"
+FileName "printer-colour-white.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Purge-Grey.svg"
+FileName "purge-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Purge-White.svg"
+FileName "purge-white.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Eject-Grey.svg"
+FileName "eject-stuck-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Eject-White.svg"
+FileName "eject-stuck-white.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Clean-Grey.svg"
+FileName "clean-nozzles-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Clean-White.svg"
+FileName "clean-nozzles-white.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Remove-Grey.svg"
+FileName "remove-head-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Remove-White.svg"
+FileName "remove-head-white.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Level-Grey.svg"
+FileName "level-gantry-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Level-White.svg"
+FileName "level-gantry-white.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Test-Grey.svg"
+FileName "test-axis-speed-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Test-White.svg"
+FileName "test-axis-speed-white.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Reprint-Grey.svg"
+FileName "reprint-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-Reprint-White.svg"
+FileName "reprint-white.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-USB-Print-Grey.svg"
+FileName "usb-print-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-USB-Print-White.svg"
+FileName "usb-print-white.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-PIN-Grey.svg"
+FileName "access-pin-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Menu-PIN-White.svg"
+FileName "access-pin-white.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-NameColour-Grey.svg"
+FileName "identity-settings-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-NameColour-White.svg"
+FileName "identity-settings-white.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Rubbish-Bin-Grey.svg"
+FileName "trash-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Rubbish-Bin-White.svg"
+FileName "trash-white.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-NameColour-Grey.svg"
+FileName "server-name-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-NameColour-White.svg"
+FileName "server-name-white.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Wireless-Grey.svg"
+FileName "wireless-settings-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Wireless-White.svg"
+FileName "wireless-settings-white.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Security-Grey.svg"
+FileName "security-settings-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Security-White.svg"
+FileName "security-settings-white.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-About-Grey.svg"
+FileName "about-grey.png"
+Convert
+
+FileSvg "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-About-White.svg"
+FileName "about-white.png"
+Convert

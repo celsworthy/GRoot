@@ -12,7 +12,6 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.collections.MapChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -113,7 +112,6 @@ public class ControlController implements Initializable, Page {
     @FXML
     private Button rightButton;
 
-    private Button[] buttonArray = null;
     private final SimpleBooleanProperty headAttachedProperty = new SimpleBooleanProperty(false);
     private final SimpleBooleanProperty hasMultipleNozzlesProperty = new SimpleBooleanProperty(false);
     private final SimpleBooleanProperty isDualMaterialHeadProperty = new SimpleBooleanProperty(false);
@@ -262,11 +260,6 @@ public class ControlController implements Initializable, Page {
     private RootPrinter printer = null;
     private static final Map<String, Image> headImageMap = new HashMap<>();
     
-    private final MapChangeListener<String, RootPrinter> printerMapListener = (c) ->  {
-        //System.out.println("RemoteServer::printerMapListener");
-        checkPrinterExists();
-    };
-
     private final ChangeListener<PrinterStatusResponse> printerStatusListener = (ob, ov, nv) -> {
         //System.out.println("RemotePrinter \"" + printer.getPrinterId() + "\"printerStatusListener");
         updatePrinterStatus(nv);
@@ -279,15 +272,14 @@ public class ControlController implements Initializable, Page {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ejectLabel.setText(I18n.t(ejectLabel.getText()));
-        extrudeLabel.setText(I18n.t(extrudeLabel.getText()));
-        heatLabel.setText(I18n.t(heatLabel.getText()));
-        retractLabel.setText(I18n.t(retractLabel.getText()));
-
-        selectButton.setText(I18n.t(selectButton.getText()));
-        valveButton.setText(I18n.t(valveButton.getText()));
-        headlightButton.setText(I18n.t(headlightButton.getText()));
-        fanButton.setText(I18n.t(fanButton.getText()));
+        translateLabels(ejectLabel,
+                        extrudeLabel,
+                        heatLabel,
+                        retractLabel,
+                        selectButton,
+                        valveButton,
+                        headlightButton,
+                        fanButton);
 
         filamentProperties = new SimpleBooleanProperty[][] {{canEject1Property, canExtrude1Property, canRetract1Property}, {canEject2Property, canExtrude2Property, canRetract2Property}};
         e1m50Button.disableProperty().bind(canRetract1Property.not());
@@ -315,10 +307,8 @@ public class ControlController implements Initializable, Page {
     
     @Override
     public void startUpdates() {
-        printer.getRootServer().getCurrentPrinterMap().addListener(printerMapListener);
         printer.getCurrentStatusProperty().addListener(printerStatusListener);
         updatePrinterStatus(printer.getCurrentStatusProperty().get());
-        checkPrinterExists();
     }
     
     @Override
@@ -326,7 +316,6 @@ public class ControlController implements Initializable, Page {
         // Printer can be null if
         // the home page has never been shown.
         if (printer != null) {
-            printer.getRootServer().getCurrentPrinterMap().removeListener(printerMapListener);
             printer.getCurrentStatusProperty().removeListener(printerStatusListener);
             printer = null;
         }
@@ -343,12 +332,6 @@ public class ControlController implements Initializable, Page {
     public void hidePage() {
         stopUpdates();
         controlPane.setVisible(false);
-    }
-
-    private void checkPrinterExists() {
-        if (!rootController.getRootServer().checkPrinterExists(printer.getPrinterId())) {
-            rootController.showPrinterSelectPage(this);
-        }
     }
 
     private void updatePrinterStatus(PrinterStatusResponse printerStatus) {

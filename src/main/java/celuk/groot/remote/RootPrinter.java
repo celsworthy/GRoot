@@ -1,39 +1,45 @@
 package celuk.groot.remote;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
-import java.util.stream.Collectors;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 
 public class RootPrinter extends Updater {
     
     private static final String CANCEL_COMMAND = "/remoteControl/cancel";
+    private static final String COMMAND_PREFIX = "/api/";
     private static final String EJECT_FILAMENT_COMMAND = "/remoteControl/ejectFilament";
+    private static final String ERROR_STATUS_COMMAND = "/remoteControl/activeErrorStatus";
     private static final String EXECUTE_GCODE_COMMAND = "/remoteControl/executeGCode";
+    private static final String HEAD_EEPROM_COMMAND = "/remoteControl/headEEPROM";
+    private static final String LIST_REPRINTABLE_JOBS_COMMAND = "/remoteControl/listReprintableJobs";
+    private static final String LIST_USB_PRINTABLE_JOBS_COMMAND = "/remoteControl/listUSBPrintableJobs";
     private static final String MACRO_COMMAND = "/remoteControl/runMacro";
     private static final String PAUSE_COMMAND = "/remoteControl/pause";
     private static final String PRINT_ADJUST_COMMAND = "/remoteControl/printAdjust";
-    private static final String SET_PRINT_ADJUST_COMMAND = "/remoteControl/setPrintAdjust";
+    private static final String PRINT_USB_JOB_COMMAND = "/remoteControl/printUSBJob";
     private static final String REMOTE_CONTROL_COMMAND = "/remoteControl";
+    private static final String REMOVE_HEAD_COMMAND = "/remoteControl/removeHead";
+    private static final String REPRINT_JOB_COMMAND = "/remoteControl/reprintJob";
     private static final String RESUME_COMMAND = "/remoteControl/resume";
+    private static final String SET_PRINT_ADJUST_COMMAND = "/remoteControl/setPrintAdjust";
     private static final String SWITCH_AMBIENT_LIGHT_COMMAND = "/remoteControl/setAmbientLED";
-    private static final String ERROR_STATUS_COMMAND = "/remoteControl/activeErrorStatus";
-    
-    private static final String COMMAND_PREFIX = "/api/";
     private final RootServer rootServer;
     private final String printerId;
     private final SimpleObjectProperty<PrinterStatusResponse> currentStatusProperty = new SimpleObjectProperty<>();
     private final SimpleObjectProperty<PrintAdjustData> currentPrintAdjustDataProperty = new SimpleObjectProperty<>();
+    private final SimpleObjectProperty<HeadEEPROMData> currentHeadEEPROMDataProperty = new SimpleObjectProperty<>();
     private final SimpleObjectProperty<Map<Integer, ErrorDetails>> activeErrorMapProperty = new SimpleObjectProperty<>();
-    private Map<Integer, ErrorDetails> acknowledgedErrorMap = new HashMap<>();
+    private Set<Integer> acknowledgedErrorSet = new HashSet<>();
     private boolean safetiesOn = true;
     
     public RootPrinter(RootServer rootServer, String printerId) {
@@ -54,6 +60,18 @@ public class RootPrinter extends Updater {
         return currentPrintAdjustDataProperty;
     }
 
+    public SimpleObjectProperty<HeadEEPROMData> getCurrentHeadEEPROMDataProperty() {
+        return currentHeadEEPROMDataProperty;
+    }
+
+    public SimpleObjectProperty<Map<Integer, ErrorDetails>> getActiveErrorMapProperty() {
+        return activeErrorMapProperty;
+    }
+
+    public void acknowledgeError(ErrorDetails error) {
+        acknowledgedErrorSet.add(error.getErrorCode());
+    }
+
     public RootServer getRootServer() {
         return rootServer;
     }
@@ -61,7 +79,7 @@ public class RootPrinter extends Updater {
     public Future<PrinterStatusResponse> runRequestPrinterStatusTask() {
         //System.out.println("Requesting status of printer \"" + printerId + "\"");
         return rootServer.runRequestTask(COMMAND_PREFIX + printerId + REMOTE_CONTROL_COMMAND, true, null,
-            (byte[] requestData, ObjectMapper jMapper) -> {
+            (var requestData, var jMapper) -> {
                 PrinterStatusResponse statusResponse = null;
                 try {
                     if (requestData.length > 0) {
@@ -79,7 +97,7 @@ public class RootPrinter extends Updater {
                         }
                         else
                         {
-                            // There is a race condition between this and any activ.e requestPrintAdjustDataTask
+                            // There is a race condition between this and any active requestPrintAdjustDataTask
                             // which could result in out-of-date data being available. I don't think this matters
                             // and should be cleared by the next update.
                             currentPrintAdjustDataProperty.set(null);
@@ -87,14 +105,18 @@ public class RootPrinter extends Updater {
                     }
                 }
                 catch (IOException ex) {
-                    System.err.println("Error whilst decoding status response from @" + rootServer.getHostAddress() + ":" + rootServer.getHostPort() + " - " + ex);;
+                    System.err.println("Error whilst decoding status response from @" 
+                                       + rootServer.getHostAddress()
+                                       + ":" 
+                                       + rootServer.getHostPort() 
+                                       + " - " 
+                                       + ex.getMessage());
                 }
                 return statusResponse;
             });
     }
     
     private Future<PrintAdjustData> runRequestPrintAdjustDataTask() {
-        //System.out.println("Requesting status of printer \"" + printerId + "\"");
         return rootServer.runRequestTask(COMMAND_PREFIX + printerId + PRINT_ADJUST_COMMAND, true, null,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 PrintAdjustData adjustData = null;
@@ -105,7 +127,11 @@ public class RootPrinter extends Updater {
                     }
                 }
                 catch (IOException ex) {
-                    System.err.println("Error whilst decoding print adjust data from @" + getRootServer().getHostAddress() + ":" + getRootServer().getHostPort() + " - " + ex);;
+                    System.err.println("Error whilst decoding print adjust data from @" 
+                                       + getRootServer().getHostAddress() 
+                                       + ":" + getRootServer().getHostPort()
+                                       + " - " 
+                                       + ex.getMessage());
                 }
                 currentPrintAdjustDataProperty.set(adjustData);
                 return adjustData;
@@ -114,21 +140,27 @@ public class RootPrinter extends Updater {
 
     private void processErrorList(List<ErrorDetails> errorList) {
         Map<Integer, ErrorDetails> activeMap = new HashMap<>();
-        Map<Integer, ErrorDetails> ackMap = new HashMap<>();
+        Set<Integer> ackSet = new HashSet<>();
         if (errorList != null) {
             errorList.forEach(e -> {
-                if (acknowledgedErrorMap.containsKey(e.getErrorCode()))
-                    ackMap.put(e.getErrorCode(), e);
+                if (acknowledgedErrorSet.contains(e.getErrorCode()))
+                    ackSet.add(e.getErrorCode());
                 else
                     activeMap.put(e.getErrorCode(), e);
             });
         }
-        acknowledgedErrorMap = ackMap;
+        acknowledgedErrorSet = ackSet;
         activeErrorMapProperty.set(activeMap);
         if (!activeMap.isEmpty()) {
-            System.err.println("Errors on printer \"" + currentStatusProperty.get().getPrinterName() + "\"");
+            System.err.println("Errors on printer \"" 
+                               + currentStatusProperty.get().getPrinterName()
+                               + "\"");
             activeMap.forEach((ec, e) -> {
-                System.err.println("    Error " + Integer.toString(ec) + ": " + e.getErrorTitle() + " - " + e.getErrorMessage());
+                System.err.println("    Error "
+                                   + Integer.toString(ec)
+                                   + ": " + e.getErrorTitle()
+                                   + " - " 
+                                   + e.getErrorMessage());
             });
         }
     }
@@ -146,7 +178,11 @@ public class RootPrinter extends Updater {
                     }
                 }
                 catch (IOException ex) {
-                    System.err.println("Error whilst decoding error status of @" + getRootServer().getHostAddress() + ":" + getRootServer().getHostPort() + " - " + ex);;
+                    System.err.println("Error whilst decoding error status of @"
+                                       + getRootServer().getHostAddress() 
+                                       + ":" + getRootServer().getHostPort() 
+                                       + " - " 
+                                       + ex.getMessage());
                 }
                 return activeErrorData;
             });
@@ -176,12 +212,18 @@ public class RootPrinter extends Updater {
                 String response = "";
                 try {
                     if (requestData.length > 0) {
-                        //System.out.println("Updating printer status of \"" + printerId + "\"");
                         response = jMapper.readValue(requestData, String.class);
                     }
                 }
                 catch (IOException ex) {
-                    System.err.println("Error when executing GCode command \"" + gCode + "\" on @" + rootServer.getHostAddress() + ":" + rootServer.getHostPort() + " - " + ex);;
+                    System.err.println("Error when executing GCode command \""
+                                        + gCode
+                                        + "\" on @"
+                                        + rootServer.getHostAddress()
+                                        + ":"
+                                        + rootServer.getHostPort()
+                                        + " - "
+                                        + ex.getMessage());
                 }
                 return response;
             });
@@ -210,7 +252,8 @@ public class RootPrinter extends Updater {
     }
 
     public Future<Boolean> runCancelTask() {
-        return runBooleanTask(CANCEL_COMMAND, safetiesOn ? "\"true\"" : "\"false\"");
+        return runBooleanTask(CANCEL_COMMAND, safetiesOn ? "\"true\""
+                                                         : "\"false\"");
     }
 
     public Future<Boolean> runMacroTask(String macro) {
@@ -223,5 +266,81 @@ public class RootPrinter extends Updater {
 
     public Future<Boolean> runSetPrintAdjustDataTask(String data) {
         return runBooleanTask(SET_PRINT_ADJUST_COMMAND, data);
+    }
+    
+    public Future<Boolean> runReprintJobTask(String printJobID) {
+        return runBooleanTask(REPRINT_JOB_COMMAND, printJobID);
+    }
+    
+    public Future<Boolean> runPrintUSBJobTask(String printJobID, String printJobPath) {
+        String data = String.format("{\"printJobID\":\"%s\",\"printJobPath\":\"%s\"}", printJobID, printJobPath);
+        return runBooleanTask(PRINT_USB_JOB_COMMAND, data);
+    }
+
+    public Future<Boolean> runRemoveHeadTask() {
+        return runBooleanTask(REMOVE_HEAD_COMMAND, safetiesOn ? "\"true\""
+                                                         : "\"false\"");
+    }
+
+    public Future<PrintJobListData> runListPrintableJobsTask(boolean reprintableMode) {
+        String command = reprintableMode ? LIST_REPRINTABLE_JOBS_COMMAND : LIST_USB_PRINTABLE_JOBS_COMMAND;
+        return rootServer.runRequestTask(COMMAND_PREFIX + printerId + command,
+            false,
+            null,
+            (byte[] requestData, ObjectMapper jMapper) -> {
+                PrintJobListData printJobList = null;
+                try {
+                    if (requestData.length > 0) {
+                        //System.out.println("Listing printable jobs from \"" + getPrinterId() + "\" - \"" + new String(requestData) + "\"");
+                        printJobList = jMapper.readValue(requestData, PrintJobListData.class);
+                    }
+                }
+                catch (IOException ex) {
+                    System.err.println("Error whilst decoding print job list from @"
+                                       + getRootServer().getHostAddress()
+                                       + ":"
+                                       + getRootServer().getHostPort()
+                                       + " - "
+                                       + ex.getMessage());
+                }
+                return printJobList;
+            });
+    }
+    
+    public Future<HeadEEPROMData> runRequestHeadEEPROMDataTask() {
+        //System.out.println("Requesting head EEPROM data from printer \"" + printerId + "\"");
+        return rootServer.runRequestTask(COMMAND_PREFIX + printerId + HEAD_EEPROM_COMMAND, true, null,
+            (byte[] requestData, ObjectMapper jMapper) -> {
+                HeadEEPROMData headData = null;
+                try {
+                    if (requestData.length > 0) {
+                        //System.out.println("Updating print adjust data of \"" + getPrinterId() + "\" - \"" + new String(requestData) + "\"");
+                        headData = jMapper.readValue(requestData, HeadEEPROMData.class);
+                    }
+                }
+                catch (IOException ex) {
+                    System.err.println("Error whilst decoding print adjust data from @" 
+                                       + getRootServer().getHostAddress() 
+                                       + ":" + getRootServer().getHostPort()
+                                       + " - " 
+                                       + ex.getMessage());
+                }
+                currentHeadEEPROMDataProperty.set(headData);
+                return headData;
+            });
+    }
+    
+    public Future<Boolean> runWriteHeadEEPROMDataTask(HeadEEPROMData headData) {
+        //System.out.println("Requesting head EEPROM data from printer \"" + printerId + "\"");
+        Future<Boolean> f;
+        try {
+            String mappedData = rootServer.getMapper().writeValueAsString(headData);
+            f = runBooleanTask(RESUME_COMMAND, mappedData);
+        } 
+        catch (JsonProcessingException ex) {
+            f = new CompletableFuture<>();
+            ((CompletableFuture)f).complete(false);
+        }
+        return f;
     }
 }

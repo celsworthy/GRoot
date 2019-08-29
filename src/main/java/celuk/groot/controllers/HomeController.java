@@ -6,7 +6,6 @@ import celuk.groot.remote.RootPrinter;
 import celuk.groot.remote.ServerStatusResponse;
 import celuk.language.I18n;
 import java.net.URL;
-import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -123,12 +122,12 @@ public class HomeController implements Initializable, Page {
 
     private RootStackController rootController = null;
     private RootPrinter printer = null;
-    private PseudoClass pausedPS = PseudoClass.getPseudoClass("paused");
-    private PseudoClass playingPS = PseudoClass.getPseudoClass("playing");
-    private PseudoClass idlePS = PseudoClass.getPseudoClass("idle");
-    private String rightNozzleTitle = I18n.t("home.rightNozzle");
-    private String nozzlesTitle = I18n.t("home.nozzles");
-    private String nozzleTitle = I18n.t("home.nozzle");
+    private final PseudoClass pausedPS = PseudoClass.getPseudoClass("paused");
+    private final PseudoClass playingPS = PseudoClass.getPseudoClass("playing");
+    private final PseudoClass idlePS = PseudoClass.getPseudoClass("idle");
+    private final String rightNozzleTitle = I18n.t("common.rightNozzle");
+    private final String nozzlesTitle = I18n.t("common.nozzles");
+    private final String nozzleTitle = I18n.t("common.nozzle");
     
     @FXML
     void printerButtonAction(ActionEvent event) {
@@ -197,7 +196,7 @@ public class HomeController implements Initializable, Page {
 
     private MapChangeListener<String, RootPrinter> printerMapListener = (c) ->  {
         //System.out.println("RemoteServer::printerMapListener");
-        checkPrinterExists();
+        configureBackButton();
     };
 
     private ChangeListener<PrinterStatusResponse> printerStatusListener = (ob, ov, nv) -> {
@@ -213,16 +212,14 @@ public class HomeController implements Initializable, Page {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Translate text on page.
-        
-        leftNozzleTitleLabel.setText(I18n.t(leftNozzleTitleLabel.getText()));
-        rightNozzleTitleLabel.setText(rightNozzleTitle);
-        bedTitleLabel.setText(I18n.t(bedTitleLabel.getText()));
-        ambientTitleLabel.setText(I18n.t(ambientTitleLabel.getText()));
-        
-        jobNameTitleLabel.setText(I18n.t(jobNameTitleLabel.getText()));
-        jobCreatedTitleLabel.setText(I18n.t(jobCreatedTitleLabel.getText()));
-        jobDurationTitleLabel.setText(I18n.t(jobDurationTitleLabel.getText()));
-        jobProfileTitleLabel.setText(I18n.t(jobProfileTitleLabel.getText()));
+        translateLabels(leftNozzleTitleLabel,
+                        rightNozzleTitleLabel,
+                        bedTitleLabel,
+                        ambientTitleLabel,
+                        jobNameTitleLabel,
+                        jobCreatedTitleLabel,
+                        jobDurationTitleLabel,
+                        jobProfileTitleLabel);
         
         jobVBox.setVisible(false);
         jobVBox.setManaged(false);
@@ -241,7 +238,7 @@ public class HomeController implements Initializable, Page {
         printer.getCurrentStatusProperty().addListener(printerStatusListener);
         updateServerStatus(printer.getRootServer().getCurrentStatusProperty().get());
         updatePrinterStatus(printer.getCurrentStatusProperty().get());
-        checkPrinterExists();
+        configureBackButton();
     }
     
     @Override
@@ -280,23 +277,17 @@ public class HomeController implements Initializable, Page {
         });
     }
     
-    private void checkPrinterExists() {
-        Map<String, RootPrinter> currentPrinterMap = rootController.getRootServer().getCurrentPrinterMap();
-        if (!currentPrinterMap.containsKey(printer.getPrinterId()))
-            rootController.showPrinterSelectPage(this);
-        else {
-            boolean showBackButton = (currentPrinterMap.size() > 1);
-            Platform.runLater(() -> {
-                leftButton.setDisable(!showBackButton);
-                leftButton.setVisible(showBackButton);
-            });
-        }
+    private void configureBackButton() {
+        boolean showBackButton = (rootController.getRootServer().getCurrentPrinterMap().size() > 1);
+        Platform.runLater(() -> {
+            leftButton.setDisable(!showBackButton);
+            leftButton.setVisible(showBackButton);
+        });
     }
     
     private void updatePrinterStatus(PrinterStatusResponse printerStatus) {
         if (printerStatus != null) {
-            MachineDetails md = MachineDetails.machineDetailsMap.getOrDefault(printerStatus.getPrinterTypeCode(),
-                                                                              MachineDetails.defaultDetails);
+            MachineDetails md = MachineDetails.getDetails(printerStatus.getPrinterTypeCode());
 
             Platform.runLater(() -> {
                 printerButton.setStyle("-fx-background-color: "
@@ -539,16 +530,6 @@ public class HomeController implements Initializable, Page {
         }
     }
 
-    private String secondsToHMS(int secondsInput) {
-        int minutes = (int)Math.floor(secondsInput / 60);
-        int seconds = (int)Math.floor(secondsInput - (minutes * 60));
-        int hours = (int)Math.floor(minutes / 60);
-        minutes = minutes - (60 * hours);
-        
-        String hms = String.format("%d:%02d:%02d", hours, minutes, seconds);
-        return hms;
-    }
-    
     private void updatePrintStatus(PrinterStatusResponse printerStatus)
     {
         boolean paused = false;

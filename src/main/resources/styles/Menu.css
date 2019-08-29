@@ -1,0 +1,13 @@
+.menu-button {
+    -fx-text-fill: #009ee3;
+    -fx-font-size: 24pt;
+    -fx-background-color: #303030;
+}
+
+.menu-model {
+}
+
+.menu-title {
+    -fx-text-fill: #009ee3;
+    -fx-font-size: 32pt;
+}

@@ -1,5 +1,5 @@
 .bed-decrement {
-    -fx-graphic:url("/image/tweak-dec-yellow.png");
+    -fx-graphic:url("/image/dec-yellow.png");
     -fx-background-color: transparent;
 }
 
@@ -7,7 +7,7 @@
     -fx-image:url("/image/tweak-bed.png");
 }
 .bed-increment {
-    -fx-graphic:url("/image/tweak-inc-yellow.png");
+    -fx-graphic:url("/image/inc-yellow.png");
     -fx-background-color: transparent;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .m1-decrement {
-    -fx-graphic:url("/image/tweak-dec-blue.png");
+    -fx-graphic:url("/image/dec-blue.png");
     -fx-background-color: transparent;
 }
 
@@ -34,12 +34,12 @@
 }
 
 .m1-increment {
-    -fx-graphic:url("/image/tweak-inc-blue.png");
+    -fx-graphic:url("/image/inc-blue.png");
     -fx-background-color: transparent;
 }
 
 .m2-decrement {
-    -fx-graphic:url("/image/tweak-dec-orange.png");
+    -fx-graphic:url("/image/dec-orange.png");
     -fx-background-color: transparent;
 }
 
@@ -48,7 +48,7 @@
 }
 
 .m2-increment {
-    -fx-graphic:url("/image/tweak-inc-orange.png");
+    -fx-graphic:url("/image/inc-orange.png");
     -fx-background-color: transparent;
 }
 

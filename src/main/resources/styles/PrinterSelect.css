@@ -1,3 +1,17 @@
+.no-printers-icon {
+    -fx-background-image: url("/image/no-printers.png");
+}
+
+.no-printers-title {
+    -fx-font-size: 24pt;
+    -fx-text-fill: #009ee3;
+}
+
+.no-printers-description {
+    -fx-font-size: 18pt;
+    -fx-text-fill: white;
+}
+
 .printer-button-dark {
     -fx-text-fill: #000000;
     -fx-font-size: 24pt;
@@ -7,3 +21,4 @@
     -fx-text-fill: #ffffff;
     -fx-font-size: 24pt;
 }
+

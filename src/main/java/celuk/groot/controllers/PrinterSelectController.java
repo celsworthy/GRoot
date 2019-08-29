@@ -61,7 +61,8 @@ public class PrinterSelectController implements Initializable, Page {
     @FXML
     private Label rootAddressLabel;
     @FXML
-    private Button settingsButton;
+    private Button serverSettingsButton;
+    
     private Button[] buttonArray = null;
     
     @FXML
@@ -71,6 +72,15 @@ public class PrinterSelectController implements Initializable, Page {
         {
             Button b = (Button)event.getSource();
             rootController.showHomePage(this, (RootPrinter)b.getUserData());
+        }
+    }
+    
+    @FXML
+    void serverSettingsAction(ActionEvent event)
+    {
+        if (rootController != null && event.getSource() instanceof Button)
+        {
+            rootController.showServerSettingsMenu(this);
         }
     }
     
@@ -85,8 +95,7 @@ public class PrinterSelectController implements Initializable, Page {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        noPrintersLabel.setText(I18n.t(noPrintersLabel.getText()));
-        noPrintersDetailLabel.setText(I18n.t(noPrintersDetailLabel.getText()));
+        translateLabels(noPrintersLabel, noPrintersDetailLabel);
         printerGrid.setManaged(false);
         printerGrid.setVisible(false);
         noPrintersVBox.setManaged(true);
@@ -199,7 +208,7 @@ public class PrinterSelectController implements Initializable, Page {
                         Button b = buttonArray[index];
                         if (pIndex < printerList.size()) {
                             RootPrinter printer = printerList.get(pIndex);
-                            b.setUserData(printerList);
+                            b.setUserData(printer);
                             printer.getCurrentStatusProperty().addListener(printerStatusListener);
                             updatePrinterStatus(printer.getCurrentStatusProperty().get());
                             b.setVisible(true);
@@ -222,9 +231,7 @@ public class PrinterSelectController implements Initializable, Page {
             Button b = buttonArray[index];
             RootPrinter p = (RootPrinter)b.getUserData();
             if (p != null && printerStatus != null && p.getPrinterId().equalsIgnoreCase(printerStatus.getPrinterID())) {
-                MachineDetails md = MachineDetails.machineDetailsMap
-                                                  .getOrDefault(printerStatus.getPrinterTypeCode(),
-                                                                MachineDetails.defaultDetails);
+                MachineDetails md = MachineDetails.getDetails(printerStatus.getPrinterTypeCode());
                 String statusIcon = md.getStatusIcon(printerStatus.getPrinterWebColourString());
                 Image statusImage = new Image(getClass().getResourceAsStream(statusIcon));
                 String buttonStyle = md.getComplimentaryOption(printerStatus.getPrinterWebColourString(), "printer-button-dark", "printer-button-light");

@@ -1,9 +1,7 @@
-.ambient {
-    -fx-text-fill: #1eb43c;
-}
-
-.bed {
-    -fx-text-fill: #ffc800;
+.button {
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: inherit;
 }
 
 .bottom-bar-back {
@@ -16,6 +14,10 @@
 
 .bottom-bar-home {
     -fx-graphic: url("/image/bottom-bar-home.png");
+}
+
+.bottom-bar-save {
+    -fx-graphic: url("/image/bottom-bar-save.png");
 }
 
 .bottom-bar-main-menu {
@@ -34,11 +36,6 @@
     -fx-background-color: #000000;
 }
 
-.button {
-    -fx-font-weight: bold;
-    -fx-text-fill: #ffffff;
-}
-
 .centered-background-image {
     -fx-background-position: center center;
     -fx-background-repeat: no-repeat;
@@ -47,6 +44,14 @@
 .label {
     -fx-font-family: "Source Sans Pro";
     -fx-text-fill: #ffffff;
+}
+
+.ambient {
+    -fx-text-fill: #1eb43c;
+}
+
+.bed {
+    -fx-text-fill: #ffc800;
 }
 
 .large-text {
@@ -67,6 +72,11 @@
 
 .panel {
     -fx-background-color: #303030;
+}
+
+.panel-title {
+    -fx-text-fill: #009ee3;
+    -fx-font-size: 32pt;
 }
 
 .root {

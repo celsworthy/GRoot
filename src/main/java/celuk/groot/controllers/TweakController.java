@@ -11,8 +11,6 @@ import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.MapChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,8 +26,27 @@ public class TweakController implements Initializable, Page {
     
     static final String NO_HEAD_KEY = "<none>";
     static final String DEFAULT_HEAD_KEY = "<default>";
+    static final UnaryOperator<Change> NUMERIC_FILTER = (change) -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("-?([1-9][0-9]*)?")) { 
+                return change;
+            } else if ("-".equals(change.getText()) ) {
+                if (change.getControlText().startsWith("-")) {
+                    change.setText("");
+                    change.setRange(0, 1);
+                    change.setCaretPosition(change.getCaretPosition()-2);
+                    change.setAnchor(change.getAnchor()-2);
+                    return change ;
+                } else {
+                    change.setRange(0, 0);
+                    return change ;
+                }
+            }
+            return null;
+        };
     
     private class SpinnerData {
+
         public String name;
         public String tag;
         public String fieldName;
@@ -47,8 +64,7 @@ public class TweakController implements Initializable, Page {
                            TextField valueField,
                            Button decButton,
                            Button incButton,
-                           int step,
-                           UnaryOperator<Change> numericFilter) {
+                           int step) {
             this.name = name;
             this.tag = tag;
             this.fieldName = fieldName;
@@ -60,7 +76,7 @@ public class TweakController implements Initializable, Page {
             this.maxValue = 0;
             this.step = step;
             
-            valueField.setTextFormatter(new TextFormatter<>(numericFilter));
+            valueField.setTextFormatter(new TextFormatter<>(NUMERIC_FILTER));
             valueField.focusedProperty().addListener((o, ov, nv) -> {
                 if (!nv) { // focus lost
                     System.out.println("SpinnerData[" + name + "] focusListener");
@@ -122,7 +138,7 @@ public class TweakController implements Initializable, Page {
         
         private void setPrintAdjustData(String value) {
             String data = String.format("{\"name\":\"%s\",\"tag\":\"%s\",\"value\":%s}", fieldName, tag, value);
-            printer.runSetPrintAdjustDataTask(data);
+//            printer.runSetPrintAdjustDataTask(data);
         }
     };
 
@@ -281,11 +297,6 @@ public class TweakController implements Initializable, Page {
     private RootPrinter printer = null;
     private Map<String, SpinnerData> spinnerMap = new HashMap<>();
     
-    private final MapChangeListener<String, RootPrinter> printerMapListener = (c) ->  {
-        //System.out.println("RemoteServer::printerMapListener");
-        checkPrinterExists();
-    };
-
     private final ChangeListener<PrinterStatusResponse> printerStatusListener = (ob, ov, nv) -> {
         //System.out.println("RemotePrinter \"" + printer.getPrinterId() + "\"printerStatusListener");
         updatePrinterStatus(nv);
@@ -296,25 +307,6 @@ public class TweakController implements Initializable, Page {
         updatePrintAdjustData(nv);
     };
 
-    private final UnaryOperator<Change> numericFilter = (change) -> {
-            String newText = change.getControlNewText();
-            if (newText.matches("-?([1-9][0-9]*)?")) { 
-                return change;
-            } else if ("-".equals(change.getText()) ) {
-                if (change.getControlText().startsWith("-")) {
-                    change.setText("");
-                    change.setRange(0, 1);
-                    change.setCaretPosition(change.getCaretPosition()-2);
-                    change.setAnchor(change.getAnchor()-2);
-                    return change ;
-                } else {
-                    change.setRange(0, 0);
-                    return change ;
-                }
-            }
-            return null;
-        };
-
     @Override
     public void setRootStackController(RootStackController rootController) {
         this.rootController = rootController;
@@ -322,52 +314,47 @@ public class TweakController implements Initializable, Page {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Translate interface text.
-        Label[] labels = new Label[] {
-                m1Title,
-                m1Description,
-                m1PrintSpeedLabel,
-                m1PrintSpeedSuffix,
-                m1FlowRateLabel,
-                m1FlowRateSuffix,
-                m1TempLabel,
-                m1TempSuffix,
-                m2Title,
-                m2Description,
-                m2PrintSpeedLabel,
-                m2PrintSpeedSuffix,
-                m2FlowRateLabel,
-                m2FlowRateSuffix,
-                m2TempLabel,
-                m2TempSuffix,
-                bedTitle,
-                bedTempLabel,
-                bedTempSuffix
-        };
-        for(Label l : labels)
-            l.setText(I18n.t(l.getText()));
-        
+        translateLabels(m1Title,
+                        m1Description,
+                        m1PrintSpeedLabel,
+                        m1PrintSpeedSuffix,
+                        m1FlowRateLabel,
+                        m1FlowRateSuffix,
+                        m1TempLabel,
+                        m1TempSuffix,
+                        m2Title,
+                        m2Description,
+                        m2PrintSpeedLabel,
+                        m2PrintSpeedSuffix,
+                        m2FlowRateLabel,
+                        m2FlowRateSuffix,
+                        m2TempLabel,
+                        m2TempSuffix,
+                        bedTitle,
+                        bedTempLabel,
+                        bedTempSuffix);
+
         spinnerMap.put("m1PrintSpeed",
             new SpinnerData("m1PrintSpeed", "r", "feedRate", m1PrintSpeedValue,
-                            m1PrintSpeedDec, m1PrintSpeedInc, 10, numericFilter));
+                            m1PrintSpeedDec, m1PrintSpeedInc, 10));
         spinnerMap.put("m1FlowRate",
             new SpinnerData("m1FlowRate", "r", "extrusionRate", m1FlowRateValue,
-                            m1FlowRateDec, m1FlowRateInc, 2, numericFilter));
+                            m1FlowRateDec, m1FlowRateInc, 2));
         spinnerMap.put("m1Temp",
             new SpinnerData("m1Temp", "r", "temp", m1TempValue,
-                            m1TempDec, m1TempInc, 2, numericFilter));
+                            m1TempDec, m1TempInc, 2));
         spinnerMap.put("m2PrintSpeed",
             new SpinnerData("m2PrintSpeed", "l", "feedRate", m2PrintSpeedValue,
-                            m2PrintSpeedDec, m2PrintSpeedInc, 10, numericFilter));
+                            m2PrintSpeedDec, m2PrintSpeedInc, 10));
         spinnerMap.put("m2FlowRate",
             new SpinnerData("m2FlowRate", "l", "extrusionRate", m2FlowRateValue,
-                            m2FlowRateDec, m2FlowRateInc, 2, numericFilter));
+                            m2FlowRateDec, m2FlowRateInc, 2));
         spinnerMap.put("m2Temp",
             new SpinnerData("m2Temp", "l", "temp", m2TempValue,
-                            m2TempDec, m2TempInc, 2, numericFilter));
+                            m2TempDec, m2TempInc, 2));
         spinnerMap.put("bedTemp",
             new SpinnerData("bedTemp", "bed", "temp", bedTempValue,
-                            bedTempDec, bedTempInc, 5, numericFilter));
+                            bedTempDec, bedTempInc, 5));
 
         m1Pane.setVisible(false);
         m1Pane.setManaged(false);
@@ -379,12 +366,10 @@ public class TweakController implements Initializable, Page {
     
     @Override
     public void startUpdates() {
-        printer.getRootServer().getCurrentPrinterMap().addListener(printerMapListener);
         //printer.getCurrentStatusProperty().addListener(printerStatusListener);
         updatePrinterStatus(printer.getCurrentStatusProperty().get());
         printer.getCurrentPrintAdjustDataProperty().addListener(printAdjustDataListener);
         updatePrintAdjustData(printer.getCurrentPrintAdjustDataProperty().get());
-        checkPrinterExists();
     }
     
     @Override
@@ -392,7 +377,6 @@ public class TweakController implements Initializable, Page {
         // Printer can be null if
         // the home page has never been shown.
         if (printer != null) {
-            printer.getRootServer().getCurrentPrinterMap().removeListener(printerMapListener);
             //printer.getCurrentStatusProperty().removeListener(printerStatusListener);
             printer.getCurrentPrintAdjustDataProperty().removeListener(printAdjustDataListener);
             printer = null;
@@ -413,12 +397,6 @@ public class TweakController implements Initializable, Page {
     public void hidePage() {
         stopUpdates();
         tweakPane.setVisible(false);
-    }
-
-    private void checkPrinterExists() {
-        if (!rootController.getRootServer().checkPrinterExists(printer.getPrinterId())) {
-            rootController.showPrinterSelectPage(this);
-        }
     }
 
     private void updatePrinterStatus(PrinterStatusResponse printerStatus) {

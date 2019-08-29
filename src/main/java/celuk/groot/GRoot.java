@@ -9,6 +9,7 @@ import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class GRoot extends Application {
@@ -35,8 +36,14 @@ public class GRoot extends Application {
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
         
-        stage.setTitle("Groot");
+        stage.setTitle("GRoot");
         stage.setScene(scene);
+        stage.getIcons().addAll(new Image(getClass().getResourceAsStream(
+                "/icon/GRootIcon_256x256.png")),
+                new Image(getClass().getResourceAsStream(
+                                "/icon/GRootIcon_64x64.png")),
+                new Image(getClass().getResourceAsStream(
+                                "/icon/GRootIcon_32x32.png")));
         stage.show();
         
         //org.scenicview.ScenicView.show(scene);
@@ -44,7 +51,7 @@ public class GRoot extends Application {
 
     @Override
     public void stop() {
-        System.out.println("stop");
+        //System.out.println("stop");
         rootController.stop();
     }
 

@@ -152,4 +152,9 @@ public class MachineDetails
         else
             return lightOption;
     }
+    
+    public static MachineDetails getDetails(String typeCode) {
+        return machineDetailsMap.getOrDefault(typeCode,
+                                              MachineDetails.defaultDetails);
+    }
 }
