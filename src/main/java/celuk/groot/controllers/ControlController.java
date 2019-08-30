@@ -253,7 +253,7 @@ public class ControlController implements Initializable, Page {
     @FXML
     void rightButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showSettingsMenu(this, printer);
+            rootController.showConsolePage(this, printer);
     }
 
     private RootStackController rootController = null;

@@ -26,6 +26,7 @@ public class RootStackController implements Initializable {
     @FXML
     private AnchorPane rootAnchorPane;
     
+    private ConsoleController consolePage = null;
     private ControlController controlPage = null;
     private HeadParametersController headParametersPage = null;
     private HomeController homePage = null;
@@ -63,6 +64,7 @@ public class RootStackController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        URL consolePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Console.fxml");
         URL controlPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Control.fxml");
         URL headParametersPageURL = getClass().getResource(FXML_RESOURCE_PATH + "HeadParameters.fxml");
         URL homePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Home.fxml");
@@ -74,6 +76,7 @@ public class RootStackController implements Initializable {
         try
         {
             // Pages
+            consolePage = (ConsoleController)(loadPage(consolePageURL, null));
             controlPage = (ControlController)(loadPage(controlPageURL, null));
             headParametersPage = (HeadParametersController)(loadPage(headParametersPageURL, null));
             homePage = (HomeController)(loadPage(homePageURL, null));
@@ -115,8 +118,9 @@ public class RootStackController implements Initializable {
 
     public void showConsolePage(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
-            //previousPage.hidePage();
-            //consolePage.displayPage(null);
+            previousPage.hidePage();
+            consolePage.setReturnToControl(previousPage == controlPage);
+            consolePage.displayPage(printer);
         });
     }
 

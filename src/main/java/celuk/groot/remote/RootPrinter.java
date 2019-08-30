@@ -210,9 +210,12 @@ public class RootPrinter extends Updater {
             gCode,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 String response = "";
+
                 try {
                     if (requestData.length > 0) {
-                        response = jMapper.readValue(requestData, String.class);
+                        String[] r = jMapper.readValue(requestData, String[].class);
+                        if (r.length > 0 && r[0] != null)
+                            response = r[0].trim();
                     }
                 }
                 catch (IOException ex) {

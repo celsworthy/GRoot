@@ -12,19 +12,19 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane id="ConsolePane" fx:id="consolePane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800" prefWidth="480.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane id="ConsolePane" fx:id="consolePane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800" prefWidth="480.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="celuk.groot.controllers.ConsoleController">
    <children>
-      <VBox fx:id="menuVBox" alignment="TOP_CENTER">
+      <VBox fx:id="consoleVBox" alignment="TOP_CENTER">
          <children>
-            <ListView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="SOMETIMES">
+            <ListView fx:id="gcodeHistory" onMouseClicked="#gcodeHistoryAction" prefHeight="200.0" prefWidth="200.0" styleClass="gcode-history" VBox.vgrow="SOMETIMES">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </ListView>
             <HBox maxWidth="1.7976931348623157E308">
                <children>
-                  <TextField maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="SOMETIMES" />
-                  <Button mnemonicParsing="false" text="X" />
+                  <TextField fx:id="gcodeField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="gcode-field" HBox.hgrow="SOMETIMES" />
+                  <Button fx:id="gcodeClear" mnemonicParsing="false" onAction="#gcodeClearAction" styleClass="gcode-clear" text="X" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -50,32 +50,40 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
                <children>
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="0" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="1" GridPane.columnIndex="1" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="2" GridPane.columnIndex="2" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="3" GridPane.columnIndex="3" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="4" GridPane.columnIndex="4" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Button" GridPane.columnIndex="5" GridPane.rowSpan="2" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="5" GridPane.rowIndex="1" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="6" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="7" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="8" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="9" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="X" GridPane.rowIndex="2" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Y" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Z" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="E" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="D" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="B" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="G" GridPane.rowIndex="3" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="M" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="F" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="S" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="T" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Button" GridPane.columnIndex="5" GridPane.rowIndex="3" GridPane.rowSpan="2" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="." GridPane.rowIndex="4" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Space" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="-" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                  <Button id="zeroKey" fx:id="zeroKey" contentDisplay="TEXT_ONLY" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="0" />
+                  <Button id="oneKey" fx:id="oneKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="1" GridPane.columnIndex="1" />
+                  <Button id="twoKey" fx:id="twoKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="2" GridPane.columnIndex="2" />
+                  <Button id="threeKey" fx:id="threeKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="3" GridPane.columnIndex="3" />
+                  <Button id="fourKey" fx:id="fourKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="4" GridPane.columnIndex="4" />
+                  <Button id="backspaceKey" fx:id="backspaceKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" text="Del" GridPane.columnIndex="5" GridPane.rowSpan="2">
+                     <styleClass>
+                        <String fx:value="keypad-key" />
+                        <String fx:value="backspace-key" />
+                     </styleClass></Button>
+                  <Button id="fiveKey" fx:id="fiveKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="5" GridPane.rowIndex="1" />
+                  <Button id="sixKey" fx:id="sixKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="6" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button id="sevenKey" fx:id="sevenKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="7" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button id="eightKey" fx:id="eightKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="8" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Button id="nineKey" fx:id="nineKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="9" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <Button id="xKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="X" GridPane.rowIndex="2" fx:id="xKey" />
+                  <Button id="yKey" fx:id="yKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="Y" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Button id="zKey" fx:id="zKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="Z" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Button id="eKey" fx:id="eKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="E" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <Button id="dKey" fx:id="dKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="D" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                  <Button id="bKey" fx:id="bKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="B" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                  <Button id="gKey" fx:id="gKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="G" GridPane.rowIndex="3" />
+                  <Button id="mKey" fx:id="mKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="M" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Button id="fKey" fx:id="fKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="F" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Button id="sKey" fx:id="sKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="S" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                  <Button id="tKey" fx:id="tKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="T" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                  <Button id="returnKey" fx:id="returnKey" defaultButton="true" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#returnAction" text="Ret" GridPane.columnIndex="5" GridPane.rowIndex="3" GridPane.rowSpan="2">
+                     <styleClass>
+                        <String fx:value="keypad-key" />
+                        <String fx:value="return-key" />
+                     </styleClass></Button>
+                  <Button id="pointKey" fx:id="pointKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="." GridPane.rowIndex="4" />
+                  <Button id="spaceKey" fx:id="spaceKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="keypad.space" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
+                  <Button id="dashKey" fx:id="dashKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="-" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                </children>
             </GridPane>
             <GridPane fx:id="bottomBarGrid" styleClass="bottom-bar">
@@ -99,7 +107,7 @@
                      <styleClass>
                         <String fx:value="bottom-bar" />
                         <String fx:value="centered-background-image" />
-                        <String fx:value="bottom-bar-main-menu" />
+                        <String fx:value="bottom-bar-home" />
                      </styleClass>
                   </Button>
                   <Button fx:id="rightButton" contentDisplay="GRAPHIC_ONLY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#rightButtonAction" prefHeight="63.0" GridPane.columnIndex="2">

@@ -3,14 +3,11 @@ package celuk.groot.controllers;
 import celuk.groot.remote.HeadEEPROMData;
 import celuk.groot.remote.RootPrinter;
 import celuk.language.I18n;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
@@ -78,6 +75,8 @@ public class HeadParametersController implements Initializable, Page {
         }
         
         public void initialize() {
+            // Explicit initialisation to avoid leaking "this"
+            // in the constructor, which is apparently bad practise.
             this.valueField.setUserData(this);
             this.decButton.setUserData(this);
             this.incButton.setUserData(this);
@@ -85,14 +84,14 @@ public class HeadParametersController implements Initializable, Page {
             valueField.setTextFormatter(new TextFormatter<>(NUMERIC_FILTER));
             valueField.focusedProperty().addListener((o, ov, nv) -> {
                 if (!nv) { // focus lost
-                    System.out.println("SpinnerData[" + name + "] focusListener");
+                    //System.out.println("SpinnerData[" + name + "] focusListener");
                     processFieldChange();
                 }
             });
         }
 
         public void decAction(ActionEvent event) {
-            System.out.println("SpinnerData[" + name + "] decAction");
+            //System.out.println("SpinnerData[" + name + "] decAction");
             value -= this.step;
             if (value < minValue)
                 value = minValue;
@@ -101,12 +100,12 @@ public class HeadParametersController implements Initializable, Page {
         }
     
         public void fieldAction(ActionEvent event) {
-            System.out.println("SpinnerData[" + name + "] fieldAction");
+            //System.out.println("SpinnerData[" + name + "] fieldAction");
             processFieldChange();
         }
 
         public void processFieldChange() {
-            System.out.println("SpinnerData[" + name + "] processFieldChange");
+            //System.out.println("SpinnerData[" + name + "] processFieldChange");
             try {
                 float v = Float.parseFloat(valueField.getText());
                 if (v < minValue)
@@ -126,7 +125,7 @@ public class HeadParametersController implements Initializable, Page {
         }
 
         public void incAction(ActionEvent event) {
-            System.out.println("SpinnerData[" + name + "] incAction");
+            //System.out.println("SpinnerData[" + name + "] incAction");
             this.value += this.step;
             if (value > maxValue)
                 value = maxValue;
@@ -310,20 +309,28 @@ public class HeadParametersController implements Initializable, Page {
          
          spinnerMap.put("leftX",
             new SpinnerData("leftX", leftXField, leftXDec, leftXInc, 0.05F, "%.2f"));
+         spinnerMap.get("leftX").initialize();
          spinnerMap.put("leftY",
             new SpinnerData("leftY", leftYField, leftYDec, leftYInc, 0.05F, "%.2f"));
+         spinnerMap.get("leftY").initialize();
          spinnerMap.put("leftZ",
             new SpinnerData("leftZ", leftZField, leftZDec, leftZInc, 0.05F, "%.2f"));
+         spinnerMap.get("leftZ").initialize();
          spinnerMap.put("leftB",
             new SpinnerData("leftB", leftBField, leftBDec, leftBInc, 0.05F, "%.2f"));
+         spinnerMap.get("leftB").initialize();
          spinnerMap.put("rightX",
             new SpinnerData("rightX", rightXField, rightXDec, rightXInc, 0.05F, "%.2f"));
+         spinnerMap.get("rightX").initialize();
          spinnerMap.put("rightY",
             new SpinnerData("rightY", rightYField, rightYDec, rightYInc, 0.05F, "%.2f"));
+         spinnerMap.get("rightY").initialize();
          spinnerMap.put("rightZ",
             new SpinnerData("rightZ", rightZField, rightZDec, rightZInc, 0.05F, "%.2f"));
+         spinnerMap.get("rightZ").initialize();
          spinnerMap.put("rightB",
             new SpinnerData("rightB", rightBField, rightBDec, rightBInc, 0.05F, "%.2f"));
+         spinnerMap.get("rightB").initialize();
     }
     
     @Override
