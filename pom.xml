@@ -60,11 +60,13 @@
     </build>
     
     <dependencies>
+        <!--
         <dependency>
             <groupId>org.scenicview</groupId>
             <artifactId>ScenicView</artifactId>
             <version>1.0.0</version>
         </dependency>
+        -->
         <dependency>
             <groupId>celuk.language</groupId>
             <artifactId>Language</artifactId>

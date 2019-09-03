@@ -19,7 +19,7 @@ public class PrintMenuController extends MenuController {
     @Override
     protected void menu1Action(ActionEvent event) {
         if (validButtonAction(event)) {
-            System.out.println("print menu 1");
+            //System.out.println("print menu 1");
             rootController.showReprintPage(this, printer);
         }
     }
@@ -27,8 +27,8 @@ public class PrintMenuController extends MenuController {
     @Override
     protected void menu2Action(ActionEvent event) {
         if (validButtonAction(event)) {
-            System.out.println("print menu 2");
-           rootController.showUSBPrintPage(this, printer);
+            //System.out.println("print menu 2");
+            rootController.showUSBPrintPage(this, printer);
         }
     }
     

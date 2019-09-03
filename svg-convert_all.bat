@@ -1,0 +1,5 @@
+svgexport "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-NoUSB.svg" "D:\CEL\Java11\GRoot\src\main\resources\image\no-printers.png" "100%%" "128:"
+svgexport "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Tweak-Mat1.svg" "D:\CEL\Java11\GRoot\src\main\resources\image\nozzle-blue.png" "100%%" "32:"
+svgexport "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Tweak-Mat2.svg" "D:\CEL\Java11\GRoot\src\main\resources\image\nozzle-orange.png" "100%%" "32:"
+svgexport "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Head-Change-Grey.svg" "D:\CEL\Java11\GRoot\src\main\resources\image\head-change-grey.png" "100%%" "48:"
+svgexport "D:\CEL\Java11\GRoot\src\main\resources\image\SVG\Icon-Head-Change-White.svg" "D:\CEL\Java11\GRoot\src\main\resources\image\head-change-white.png" "100%%" "48:"
