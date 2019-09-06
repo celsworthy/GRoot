@@ -3,14 +3,17 @@ package celuk.groot.remote;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 public class RootPrinter extends Updater {
@@ -23,10 +26,12 @@ public class RootPrinter extends Updater {
     private static final String HEAD_EEPROM_COMMAND = "/remoteControl/headEEPROM";
     private static final String LIST_REPRINTABLE_JOBS_COMMAND = "/remoteControl/listReprintableJobs";
     private static final String LIST_USB_PRINTABLE_JOBS_COMMAND = "/remoteControl/listUSBPrintableJobs";
+    private static final String MATERIAL_STATUS_COMMAND = "/remoteControl/materialStatus";
     private static final String MACRO_COMMAND = "/remoteControl/runMacro";
     private static final String PAUSE_COMMAND = "/remoteControl/pause";
     private static final String PRINT_ADJUST_COMMAND = "/remoteControl/printAdjust";
     private static final String PRINT_USB_JOB_COMMAND = "/remoteControl/printUSBJob";
+    private static final String PURGE_TO_TARGET_COMMAND = "/remoteControl/purgeToTarget";
     private static final String REMOTE_CONTROL_COMMAND = "/remoteControl";
     private static final String REMOVE_HEAD_COMMAND = "/remoteControl/removeHead";
     private static final String REPRINT_JOB_COMMAND = "/remoteControl/reprintJob";
@@ -38,9 +43,11 @@ public class RootPrinter extends Updater {
     private final SimpleObjectProperty<PrinterStatusResponse> currentStatusProperty = new SimpleObjectProperty<>();
     private final SimpleObjectProperty<PrintAdjustData> currentPrintAdjustDataProperty = new SimpleObjectProperty<>();
     private final SimpleObjectProperty<HeadEEPROMData> currentHeadEEPROMDataProperty = new SimpleObjectProperty<>();
+    private final SimpleObjectProperty<MaterialStatusData> currentMaterialStatusDataProperty = new SimpleObjectProperty<>();
+    private final SimpleObjectProperty<PurgeData> currentPurgeDataProperty = new SimpleObjectProperty<>();
     private final SimpleObjectProperty<Map<Integer, ErrorDetails>> activeErrorMapProperty = new SimpleObjectProperty<>();
+    private final SimpleBooleanProperty safetiesOnProperty = new SimpleBooleanProperty(true);
     private Set<Integer> acknowledgedErrorSet = new HashSet<>();
-    private boolean safetiesOn = true;
     
     public RootPrinter(RootServer rootServer, String printerId) {
         super();
@@ -62,6 +69,18 @@ public class RootPrinter extends Updater {
 
     public SimpleObjectProperty<HeadEEPROMData> getCurrentHeadEEPROMDataProperty() {
         return currentHeadEEPROMDataProperty;
+    }
+
+    public SimpleObjectProperty<MaterialStatusData> getCurrentMaterialStatusDataProperty() {
+        return currentMaterialStatusDataProperty;
+    }
+
+    public SimpleObjectProperty<PurgeData> getCurrentPurgeDataProperty() {
+        return currentPurgeDataProperty;
+    }
+
+    public SimpleBooleanProperty getSafetiesOnProperty() {
+        return safetiesOnProperty;
     }
 
     public SimpleObjectProperty<Map<Integer, ErrorDetails>> getActiveErrorMapProperty() {
@@ -255,8 +274,8 @@ public class RootPrinter extends Updater {
     }
 
     public Future<Boolean> runCancelTask() {
-        return runBooleanTask(CANCEL_COMMAND, safetiesOn ? "\"true\""
-                                                         : "\"false\"");
+        return runBooleanTask(CANCEL_COMMAND, safetiesOnProperty.get() ? "\"true\""
+                                                                       : "\"false\"");
     }
 
     public Future<Boolean> runMacroTask(String macro) {
@@ -281,8 +300,8 @@ public class RootPrinter extends Updater {
     }
 
     public Future<Boolean> runRemoveHeadTask() {
-        return runBooleanTask(REMOVE_HEAD_COMMAND, safetiesOn ? "\"true\""
-                                                         : "\"false\"");
+        return runBooleanTask(REMOVE_HEAD_COMMAND, safetiesOnProperty.get() ? "\"true\""
+                                                                            : "\"false\"");
     }
 
     public Future<PrintJobListData> runListPrintableJobsTask(boolean reprintableMode) {
@@ -334,7 +353,7 @@ public class RootPrinter extends Updater {
     }
     
     public Future<Boolean> runWriteHeadEEPROMDataTask(HeadEEPROMData headData) {
-        //System.out.println("Requesting head EEPROM data from printer \"" + printerId + "\"");
+        //System.out.println("Writing head EEPROM data from printer \"" + printerId + "\"");
         Future<Boolean> f;
         try {
             String mappedData = rootServer.getMapper().writeValueAsString(headData);
@@ -342,7 +361,61 @@ public class RootPrinter extends Updater {
         } 
         catch (JsonProcessingException ex) {
             f = new CompletableFuture<>();
-            ((CompletableFuture)f).complete(false);
+            ((CompletableFuture)f).completeExceptionally(ex);
+        }
+        return f;
+    }
+
+    public Future<MaterialStatusData> runRequestMaterialStatusTask() {
+        //System.out.println("Requesting material status from printer \"" + printerId + "\"");
+        return rootServer.runRequestTask(COMMAND_PREFIX + printerId + MATERIAL_STATUS_COMMAND, true, null,
+            (byte[] requestData, ObjectMapper jMapper) -> {
+                MaterialStatusData materialStatus = null;
+                try {
+                    if (requestData.length > 0) {
+                        //System.out.println("Updating print adjust data of \"" + getPrinterId() + "\" - \"" + new String(requestData) + "\"");
+                        materialStatus = jMapper.readValue(requestData, MaterialStatusData.class);
+                    }
+                }
+                catch (IOException ex) {
+                    System.err.println("Error whilst decoding print adjust data from @" 
+                                       + getRootServer().getHostAddress() 
+                                       + ":" + getRootServer().getHostPort()
+                                       + " - " 
+                                       + ex.getMessage());
+                }
+                currentMaterialStatusDataProperty.set(materialStatus);
+                return materialStatus;
+            });
+    }
+
+    public Future<PurgeData> runRequestPurgeDataTask() {
+        Future<HeadEEPROMData> headFuture = runRequestHeadEEPROMDataTask();
+        Future<MaterialStatusData> materialFuture = runRequestMaterialStatusTask();
+        PurgeData pData = new PurgeData();
+        CompletableFuture<PurgeData> f = new CompletableFuture<>();
+        try {
+            pData.setMaterialStatus(materialFuture.get());
+            pData.setHeadData(headFuture.get());
+            currentPurgeDataProperty.set(pData);
+            f.complete(pData); 
+        } catch (InterruptedException | ExecutionException ex) {
+            f.completeExceptionally(ex);
+        }
+
+        return f;
+    }
+    
+    public Future<Boolean> runPurgeTask(PurgeTarget targetData) {
+        //System.out.println("Writing head EEPROM data from printer \"" + printerId + "\"");
+        Future<Boolean> f;
+        try {
+            String mappedData = rootServer.getMapper().writeValueAsString(targetData);
+            f = runBooleanTask(PURGE_TO_TARGET_COMMAND, mappedData);
+        } 
+        catch (JsonProcessingException ex) {
+            f = new CompletableFuture<>();
+            ((CompletableFuture)f).completeExceptionally(ex);
         }
         return f;
     }

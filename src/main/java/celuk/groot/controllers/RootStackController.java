@@ -2,7 +2,6 @@ package celuk.groot.controllers;
 
 import celuk.groot.remote.RootPrinter;
 import celuk.groot.remote.RootServer;
-import celuk.language.I18n;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
@@ -32,6 +30,8 @@ public class RootStackController implements Initializable {
     private HomeController homePage = null;
     private PrinterSelectController printerSelectPage = null;
     private PrintController printPage = null;
+    private PurgeController purgePage = null;
+    private PurgeIntroController purgeIntroPage = null;
     private TweakController tweakPage = null;
     private SecurityMenuController securityMenu = null;
     private IdentityMenuController identityMenu = null;
@@ -70,6 +70,8 @@ public class RootStackController implements Initializable {
         URL homePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Home.fxml");
         URL printerSelectPageURL = getClass().getResource(FXML_RESOURCE_PATH + "PrinterSelect.fxml");
         URL printPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Print.fxml");
+        URL purgePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Purge.fxml");
+        URL purgeIntroPageURL = getClass().getResource(FXML_RESOURCE_PATH + "PurgeIntro.fxml");
         URL tweakPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Tweak.fxml");
         URL mainMenuURL = getClass().getResource(FXML_RESOURCE_PATH + "MainMenu.fxml");
         URL menuURL = getClass().getResource(FXML_RESOURCE_PATH + "Menu.fxml");
@@ -82,6 +84,8 @@ public class RootStackController implements Initializable {
             homePage = (HomeController)(loadPage(homePageURL, null));
             printerSelectPage = (PrinterSelectController)(loadPage(printerSelectPageURL, null));
             printPage = (PrintController)(loadPage(printPageURL, null));
+            purgePage = (PurgeController)(loadPage(purgePageURL, null));
+            purgeIntroPage = (PurgeIntroController)(loadPage(purgeIntroPageURL, null));
             tweakPage = (TweakController)(loadPage(tweakPageURL, null));
         
             // Menus - all but the main menu use the same FXML page.
@@ -221,8 +225,15 @@ public class RootStackController implements Initializable {
 
     public void showPurgePage(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
-            // previousPage.hidePage();
-            //purgePage.displayPage(printer);
+            previousPage.hidePage();
+            purgePage.displayPage(printer);
+        });
+    }
+
+    public void showPurgeIntroPage(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            previousPage.hidePage();
+            purgeIntroPage.displayPage(printer);
         });
     }
 

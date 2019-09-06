@@ -62,7 +62,7 @@ public class MainMenuController implements Initializable, Page {
                     rootController.showPrintMenu(this, printer);
                     break;
                 case "purge":
-                    rootController.showPurgePage(this, printer);
+                    rootController.showPurgeIntroPage(this, printer);
                     break;
                 default:
                     rootController.showHomePage(this, printer);

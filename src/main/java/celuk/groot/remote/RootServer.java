@@ -1,19 +1,12 @@
 package celuk.groot.remote;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -45,7 +38,7 @@ public class RootServer extends Updater {
     protected SimpleStringProperty pinProperty = new SimpleStringProperty("1111");
 
     private final SimpleObjectProperty<ServerStatusResponse> currentStatusProperty = new SimpleObjectProperty<>();
-    private final ObservableMap<String, RootPrinter> currentPrinterMap = FXCollections.observableMap(new HashMap<String, RootPrinter>());
+    private final ObservableMap<String, RootPrinter> currentPrinterMap = FXCollections.observableMap(new HashMap<>());
 
     private final String hostAddress;
     private final String hostPort;

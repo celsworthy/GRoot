@@ -15,7 +15,7 @@
    <children>
       <VBox fx:id="printVBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" StackPane.alignment="CENTER">
          <children>
-            <Label fx:id="printTitle" styleClass="panel-title" text="print.title" />
+            <Label fx:id="printTitle" styleClass="page-title" text="print.title" />
             <VBox fx:id="noPrintPanel" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

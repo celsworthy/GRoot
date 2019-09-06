@@ -3,12 +3,11 @@ package celuk.groot.controllers;
 import celuk.groot.remote.PrintAdjustData;
 import celuk.groot.remote.PrinterStatusResponse;
 import celuk.groot.remote.RootPrinter;
-import celuk.language.I18n;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
+import java.util.function.BiConsumer;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
@@ -17,130 +16,30 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
 public class TweakController implements Initializable, Page {
+    private class SpinnerUpdater implements BiConsumer<IntegerSpinnerController, Integer> {
+        private final String tagName;
+        private final String fieldName;
+        
+        public SpinnerUpdater(String tagName, String fieldName) {
+            this.tagName = tagName;
+            this.fieldName = fieldName;
+        }
+        
+        @Override
+        public void accept(IntegerSpinnerController spinner, Integer value) {
+            String data = String.format("{\"name\":\"%s\",\"tag\":\"%s\",\"value\":%s}",
+                                        fieldName,
+                                        tagName, Integer.toString(value));
+            printer.runSetPrintAdjustDataTask(data);
+        }
+    };
     
     static final String NO_HEAD_KEY = "<none>";
     static final String DEFAULT_HEAD_KEY = "<default>";
-    static final UnaryOperator<Change> NUMERIC_FILTER = (change) -> {
-            String newText = change.getControlNewText();
-            if (newText.matches("-?([1-9][0-9]*)?")) { 
-                return change;
-            } else if ("-".equals(change.getText()) ) {
-                if (change.getControlText().startsWith("-")) {
-                    change.setText("");
-                    change.setRange(0, 1);
-                    change.setCaretPosition(change.getCaretPosition()-2);
-                    change.setAnchor(change.getAnchor()-2);
-                    return change ;
-                } else {
-                    change.setRange(0, 0);
-                    return change ;
-                }
-            }
-            return null;
-        };
-    
-    private class SpinnerData {
-
-        public String name;
-        public String tag;
-        public String fieldName;
-        public TextField valueField;
-        public Button decButton;
-        public Button incButton;
-        public int value;
-        public int minValue;
-        public int maxValue;
-        public int step;
-        
-        public SpinnerData(String name,
-                           String tag,
-                           String fieldName,
-                           TextField valueField,
-                           Button decButton,
-                           Button incButton,
-                           int step) {
-            this.name = name;
-            this.tag = tag;
-            this.fieldName = fieldName;
-            this.valueField = valueField;
-            this.decButton= decButton;
-            this.incButton = incButton;
-            this.value = 0;
-            this.minValue = 0;
-            this.maxValue = 0;
-            this.step = step;
-            
-            valueField.setTextFormatter(new TextFormatter<>(NUMERIC_FILTER));
-            valueField.focusedProperty().addListener((o, ov, nv) -> {
-                if (!nv) { // focus lost
-                    System.out.println("SpinnerData[" + name + "] focusListener");
-                    processFieldChange();
-                }
-            });
-        }
-        
-        public void decAction(ActionEvent event) {
-            System.out.println("SpinnerData[" + name + "] decAction");
-            value -= this.step;
-            if (value < minValue)
-                value = minValue;
-            String v = Integer.toString(value);
-            //valueField.setText(Integer.toString(this.value));            
-            setPrintAdjustData(v);
-        }
-    
-        public void fieldAction(ActionEvent event) {
-            System.out.println("SpinnerData[" + name + "] fieldAction");
-            processFieldChange();
-        }
-
-        public void processFieldChange() {
-            System.out.println("SpinnerData[" + name + "] processFieldChange");
-            try {
-                int v = Integer.parseInt( valueField.getText());
-                if (v < minValue)
-                    v = minValue;
-                if (v > maxValue)
-                    v = maxValue;
-                value = v;
-                //valueField.setText(Integer.toString(this.value));
-                setPrintAdjustData(Integer.toString(v));
-            }
-            catch (NumberFormatException ex)
-            {
-            }
-        }
-
-        public void incAction(ActionEvent event) {
-            System.out.println("SpinnerData[" + name + "] incAction");
-            this.value += this.step;
-            if (value > maxValue)
-                value = maxValue;
-            
-            String v = Integer.toString(this.value);
-            //valueField.setText(Integer.toString(this.value));
-            setPrintAdjustData(v);
-        }
-
-        public void updateSpinnerData(int value, int delta) {
-            minValue = value - delta;
-            maxValue = value + delta;
-            this.value = value;
-            if (!valueField.isFocused())
-                valueField.setText(Integer.toString(this.value));
-        }
-        
-        private void setPrintAdjustData(String value) {
-            String data = String.format("{\"name\":\"%s\",\"tag\":\"%s\",\"value\":%s}", fieldName, tag, value);
-//            printer.runSetPrintAdjustDataTask(data);
-        }
-    };
 
     @FXML
     private StackPane tweakPane;
@@ -251,7 +150,7 @@ public class TweakController implements Initializable, Page {
     void fieldAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof TextField) {
             TextField t = (TextField)event.getSource();
-            SpinnerData spinner = spinnerMap.get(t.getId());
+            IntegerSpinnerController spinner = spinnerMap.get(t.getId());
             if (spinner != null)
                 spinner.fieldAction(event);
         }
@@ -261,7 +160,7 @@ public class TweakController implements Initializable, Page {
     void incButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
             Button b = (Button)event.getSource();
-            SpinnerData spinner = spinnerMap.get(b.getId());
+            IntegerSpinnerController spinner = spinnerMap.get(b.getId());
             if (spinner != null)
                 spinner.incAction(event);
         }
@@ -271,7 +170,7 @@ public class TweakController implements Initializable, Page {
     void decButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
             Button b = (Button)event.getSource();
-            SpinnerData spinner = spinnerMap.get(b.getId());
+            IntegerSpinnerController spinner = spinnerMap.get(b.getId());
             if (spinner != null)
                 spinner.decAction(event);
         }
@@ -295,12 +194,7 @@ public class TweakController implements Initializable, Page {
 
     private RootStackController rootController = null;
     private RootPrinter printer = null;
-    private Map<String, SpinnerData> spinnerMap = new HashMap<>();
-    
-    private final ChangeListener<PrinterStatusResponse> printerStatusListener = (ob, ov, nv) -> {
-        //System.out.println("RemotePrinter \"" + printer.getPrinterId() + "\"printerStatusListener");
-        updatePrinterStatus(nv);
-    };
+    private Map<String, IntegerSpinnerController> spinnerMap = new HashMap<>();
     
     private final ChangeListener<PrintAdjustData> printAdjustDataListener = (ob, ov, nv) -> {
         //System.out.println("RemotePrinter \"" + printer.getPrinterId() + "\"printAdjustDataListener");
@@ -333,28 +227,34 @@ public class TweakController implements Initializable, Page {
                         bedTitle,
                         bedTempLabel,
                         bedTempSuffix);
-
+       
         spinnerMap.put("m1PrintSpeed",
-            new SpinnerData("m1PrintSpeed", "r", "feedRate", m1PrintSpeedValue,
-                            m1PrintSpeedDec, m1PrintSpeedInc, 10));
+            new IntegerSpinnerController("m1PrintSpeed", m1PrintSpeedValue,
+                m1PrintSpeedDec, m1PrintSpeedInc, 10,
+                new SpinnerUpdater("r", "feedRate")));
         spinnerMap.put("m1FlowRate",
-            new SpinnerData("m1FlowRate", "r", "extrusionRate", m1FlowRateValue,
-                            m1FlowRateDec, m1FlowRateInc, 2));
+            new IntegerSpinnerController("m1FlowRate", m1FlowRateValue,
+                m1FlowRateDec, m1FlowRateInc, 2,
+                new SpinnerUpdater("r", "extrusionRate")));
         spinnerMap.put("m1Temp",
-            new SpinnerData("m1Temp", "r", "temp", m1TempValue,
-                            m1TempDec, m1TempInc, 2));
+            new IntegerSpinnerController("m1Temp", m1TempValue,
+                m1TempDec, m1TempInc, 2, 
+                new SpinnerUpdater("r", "temp")));
         spinnerMap.put("m2PrintSpeed",
-            new SpinnerData("m2PrintSpeed", "l", "feedRate", m2PrintSpeedValue,
-                            m2PrintSpeedDec, m2PrintSpeedInc, 10));
+            new IntegerSpinnerController("m2PrintSpeed", m2PrintSpeedValue,
+                m2PrintSpeedDec, m2PrintSpeedInc, 10,
+                new SpinnerUpdater("l", "feedRate")));
         spinnerMap.put("m2FlowRate",
-            new SpinnerData("m2FlowRate", "l", "extrusionRate", m2FlowRateValue,
-                            m2FlowRateDec, m2FlowRateInc, 2));
+            new IntegerSpinnerController("m2FlowRate", m2FlowRateValue,
+                m2FlowRateDec, m2FlowRateInc, 2,
+                new SpinnerUpdater("l", "extrusionRate")));
         spinnerMap.put("m2Temp",
-            new SpinnerData("m2Temp", "l", "temp", m2TempValue,
-                            m2TempDec, m2TempInc, 2));
+            new IntegerSpinnerController("m2Temp", m2TempValue,
+                            m2TempDec, m2TempInc, 2, new SpinnerUpdater("l", "temp")));
         spinnerMap.put("bedTemp",
-            new SpinnerData("bedTemp", "bed", "temp", bedTempValue,
-                            bedTempDec, bedTempInc, 5));
+            new IntegerSpinnerController("bedTemp", bedTempValue,
+                bedTempDec, bedTempInc, 5,
+                new SpinnerUpdater("bed", "temp")));
 
         m1Pane.setVisible(false);
         m1Pane.setManaged(false);
@@ -366,8 +266,6 @@ public class TweakController implements Initializable, Page {
     
     @Override
     public void startUpdates() {
-        //printer.getCurrentStatusProperty().addListener(printerStatusListener);
-        updatePrinterStatus(printer.getCurrentStatusProperty().get());
         printer.getCurrentPrintAdjustDataProperty().addListener(printAdjustDataListener);
         updatePrintAdjustData(printer.getCurrentPrintAdjustDataProperty().get());
     }
@@ -377,7 +275,6 @@ public class TweakController implements Initializable, Page {
         // Printer can be null if
         // the home page has never been shown.
         if (printer != null) {
-            //printer.getCurrentStatusProperty().removeListener(printerStatusListener);
             printer.getCurrentPrintAdjustDataProperty().removeListener(printAdjustDataListener);
             printer = null;
         }
@@ -399,15 +296,10 @@ public class TweakController implements Initializable, Page {
         tweakPane.setVisible(false);
     }
 
-    private void updatePrinterStatus(PrinterStatusResponse printerStatus) {
-        Platform.runLater(() -> {
-        });
-    }
-    
     private void setSpinnerData(String fieldName, double value, double delta) {
-        SpinnerData spinner = spinnerMap.get(fieldName);
+        IntegerSpinnerController spinner = spinnerMap.get(fieldName);
         if (spinner != null)
-            spinner.updateSpinnerData((int)Math.round(value), (int)Math.round(delta));
+            spinner.updateSpinnerData((int)Math.round(value), (int)Math.round(value - delta), (int)Math.round(value + delta));
     }
 
     private void updatePrintAdjustData(PrintAdjustData adjustData) {

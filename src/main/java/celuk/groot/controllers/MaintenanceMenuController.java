@@ -23,15 +23,15 @@ public class MaintenanceMenuController extends MenuController {
     @Override
     protected void menu1Action(ActionEvent event) {
         if (validButtonAction(event)) {
-            System.out.println("maintenance menu 1");
-            rootController.showPurgePage(this, printer);
+            //System.out.println("maintenance menu 1");
+            rootController.showPurgeIntroPage(this, printer);
         }
     }
 
     @Override
     protected void menu2Action(ActionEvent event) {
         if (validButtonAction(event)) {
-            System.out.println("maintenance menu 2");
+            //System.out.println("maintenance menu 2");
             rootController.showEjectStuckMenu(this, printer);
         }
     }
@@ -39,7 +39,7 @@ public class MaintenanceMenuController extends MenuController {
     @Override
     protected void menu3Action(ActionEvent event) {
         if (validButtonAction(event)) {
-            System.out.println("maintenance menu 3");
+            //System.out.println("maintenance menu 3");
             rootController.showCleanNozzlesMenu(this, printer);
         }
     }
@@ -63,7 +63,7 @@ public class MaintenanceMenuController extends MenuController {
     @Override
     protected void menu6Action(ActionEvent event) {
         if (validButtonAction(event)) {
-            System.out.println("maintenance menu 6");
+            //System.out.println("maintenance menu 6");
             rootController.showTestAxisSpeedMenu(this, printer);
         }
     }

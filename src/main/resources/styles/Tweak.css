@@ -4,7 +4,7 @@
 }
 
 .bed-icon {
-    -fx-image:url("/image/tweak-bed.png");
+    -fx-image:url("/image/bed-yellow.png");
 }
 .bed-increment {
     -fx-graphic:url("/image/inc-yellow.png");
@@ -30,7 +30,7 @@
 }
 
 .m1-icon {
-    -fx-image:url("/image/tweak-m1.png");
+    -fx-image:url("/image/nozzle-blue.png");
 }
 
 .m1-increment {
@@ -44,7 +44,7 @@
 }
 
 .m2-icon {
-    -fx-image:url("/image/tweak-m2.png");
+    -fx-image:url("/image/nozzle-orange.png");
 }
 
 .m2-increment {

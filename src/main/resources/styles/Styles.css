@@ -27,6 +27,10 @@ body {
     -fx-graphic: url("/image/bottom-bar-console.png");
 }
 
+.bottom-bar-next {
+    -fx-graphic: url("/image/bottom-bar-next.png");
+}
+
 .bottom-bar-home {
     -fx-graphic: url("/image/bottom-bar-home.png");
 }
@@ -65,6 +69,10 @@ body {
     -fx-text-fill: #ffc800;
 }
 
+.italic-text {
+    -fx-font-style: italic;
+}
+
 .large-text {
     -fx-font-size: 24pt;
 }
@@ -85,9 +93,14 @@ body {
     -fx-background-color: #303030;
 }
 
-.panel-title {
+.page-title {
     -fx-text-fill: #009ee3;
     -fx-font-size: 32pt;
+}
+
+.panel-title {
+    -fx-text-fill: #009ee3;
+    -fx-font-size: 24pt;
 }
 
 .root {

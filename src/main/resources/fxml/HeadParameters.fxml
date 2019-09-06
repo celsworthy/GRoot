@@ -17,7 +17,7 @@
    <children>
       <VBox fx:id="headParametersVBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" StackPane.alignment="TOP_CENTER">
          <children>
-            <Label fx:id="headParametersTitle" alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="panel-title" text="headParameters.title">
+            <Label fx:id="headParametersTitle" alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="page-title" text="headParameters.title">
                <VBox.margin>
                   <Insets left="5.0" right="5.0" top="5.0" />
                </VBox.margin></Label>

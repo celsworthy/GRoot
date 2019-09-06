@@ -1,0 +1,11 @@
+.purge-icon {
+    -fx-background-image: url("/image/purge.png");
+}
+
+.m1-icon {
+    -fx-image:url("/image/nozzle-blue.png");
+}
+
+.m2-icon {
+    -fx-image:url("/image/nozzle-orange.png");
+}

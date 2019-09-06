@@ -7,7 +7,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
+import java.util.function.BiConsumer;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
@@ -17,139 +17,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 public class HeadParametersController implements Initializable, Page {
-        // This is similar to the SpinnerData in TweakController, but that one is an integer spinner. This one is a 
-    // float spinner. They should be combined as a numeric spinner.
-    
-    static final UnaryOperator<TextFormatter.Change> NUMERIC_FILTER = (change) -> {
-        String newText = change.getControlNewText();
-        if (newText.matches("[-+]?[0-9]*\\.?[0-9]*")) { 
-            return change;
-        } 
-        else if ("-".equals(change.getText()) ) {
-            if (change.getControlText().startsWith("-")) {
-                change.setText("");
-                change.setRange(0, 1);
-                change.setCaretPosition(change.getCaretPosition()-2);
-                change.setAnchor(change.getAnchor()-2);
-                return change ;
-            } 
-            else {
-                change.setRange(0, 0);
-                return change ;
-            }
-        }
-        return null;
-    };
-
-    private class SpinnerData {
-        public String name;
-        public TextField valueField;
-        public Button decButton;
-        public Button incButton;
-        public float value;
-        public float minValue;
-        public float maxValue;
-        public float step;
-        public String format;
-        
-        public SpinnerData(String name,
-                           TextField valueField,
-                           Button decButton,
-                           Button incButton,
-                           float step,
-                           String format) {
-            this.name = name;
-            this.valueField = valueField;
-            this.decButton= decButton;
-            this.incButton = incButton;
-            this.value = 0.0F;
-            this.minValue = 0.0F;
-            this.maxValue = 0.0F;
-            this.step = step;
-            this.format = format;
-        }
-        
-        public void initialize() {
-            // Explicit initialisation to avoid leaking "this"
-            // in the constructor, which is apparently bad practise.
-            this.valueField.setUserData(this);
-            this.decButton.setUserData(this);
-            this.incButton.setUserData(this);
-            
-            valueField.setTextFormatter(new TextFormatter<>(NUMERIC_FILTER));
-            valueField.focusedProperty().addListener((o, ov, nv) -> {
-                if (!nv) { // focus lost
-                    //System.out.println("SpinnerData[" + name + "] focusListener");
-                    processFieldChange();
-                }
-            });
-        }
-
-        public void decAction(ActionEvent event) {
-            //System.out.println("SpinnerData[" + name + "] decAction");
-            value -= this.step;
-            if (value < minValue)
-                value = minValue;
-            String v = String.format(format, this.value);
-            valueField.setText(v);            
-        }
-    
-        public void fieldAction(ActionEvent event) {
-            //System.out.println("SpinnerData[" + name + "] fieldAction");
-            processFieldChange();
-        }
-
-        public void processFieldChange() {
-            //System.out.println("SpinnerData[" + name + "] processFieldChange");
-            try {
-                float v = Float.parseFloat(valueField.getText());
-                if (v < minValue)
-                    v = minValue;
-                if (v > maxValue)
-                    v = maxValue;
-                if (v != value) {
-                    value = v;
-                    modified = true;
-                    String vs = String.format(format, this.value);
-                    valueField.setText(vs);
-                }
-            }
-            catch (NumberFormatException ex)
-            {
-            }
-        }
-
-        public void incAction(ActionEvent event) {
-            //System.out.println("SpinnerData[" + name + "] incAction");
-            this.value += this.step;
-            if (value > maxValue)
-                value = maxValue;
-            
-            setModified(true);
-            String v = String.format(format, this.value);
-            valueField.setText(v);
-        }
-
-        public void updateSpinnerData(float value, float minValue, float maxValue) {
-            this.minValue = minValue;
-            this.maxValue = maxValue;
-            this.value = value;
-            String v = String.format(format, this.value);
-            valueField.setText(v);
-        }
-        
-        public void setVisible(boolean visible) {
-            valueField.setVisible(visible);
-            decButton.setVisible(visible);
-            incButton.setVisible(visible);
-        }
-    };
-
     @FXML
     protected Pane headIcon;
     @FXML
@@ -247,7 +118,7 @@ public class HeadParametersController implements Initializable, Page {
 
     @FXML
     protected void decAction(ActionEvent event) {
-        SpinnerData s = (SpinnerData)(((Node)event.getSource()).getUserData());
+        FloatSpinnerController s = (FloatSpinnerController)(((Node)event.getSource()).getUserData());
         s.decAction(event);
     }
 
@@ -259,7 +130,7 @@ public class HeadParametersController implements Initializable, Page {
 
     @FXML
     protected void incAction(ActionEvent event) {
-        SpinnerData s = (SpinnerData)(((Node)event.getSource()).getUserData());
+        FloatSpinnerController s = (FloatSpinnerController)(((Node)event.getSource()).getUserData());
         s.incAction(event);
     }
 
@@ -284,7 +155,7 @@ public class HeadParametersController implements Initializable, Page {
 
     protected RootStackController rootController = null;
     protected RootPrinter printer = null;
-    private Map<String, SpinnerData> spinnerMap = new HashMap<>();
+    private Map<String, FloatSpinnerController> spinnerMap = new HashMap<>();
     private int nozzleCount = 0;
     private boolean valveFitted = false;
     protected boolean modified = false;
@@ -307,29 +178,31 @@ public class HeadParametersController implements Initializable, Page {
                          rightNozzleSubtitle,
                          rightNozzleTitle);
          
+         BiConsumer<FloatSpinnerController, Float> updater = (sc, v) -> { setModified(true); };
+         
          spinnerMap.put("leftX",
-            new SpinnerData("leftX", leftXField, leftXDec, leftXInc, 0.05F, "%.2f"));
+            new FloatSpinnerController("leftX", leftXField, leftXDec, leftXInc, 0.05F, "%.2f", updater));
          spinnerMap.get("leftX").initialize();
          spinnerMap.put("leftY",
-            new SpinnerData("leftY", leftYField, leftYDec, leftYInc, 0.05F, "%.2f"));
+            new FloatSpinnerController("leftY", leftYField, leftYDec, leftYInc, 0.05F, "%.2f", updater));
          spinnerMap.get("leftY").initialize();
          spinnerMap.put("leftZ",
-            new SpinnerData("leftZ", leftZField, leftZDec, leftZInc, 0.05F, "%.2f"));
+            new FloatSpinnerController("leftZ", leftZField, leftZDec, leftZInc, 0.05F, "%.2f", updater));
          spinnerMap.get("leftZ").initialize();
          spinnerMap.put("leftB",
-            new SpinnerData("leftB", leftBField, leftBDec, leftBInc, 0.05F, "%.2f"));
+            new FloatSpinnerController("leftB", leftBField, leftBDec, leftBInc, 0.05F, "%.2f", updater));
          spinnerMap.get("leftB").initialize();
          spinnerMap.put("rightX",
-            new SpinnerData("rightX", rightXField, rightXDec, rightXInc, 0.05F, "%.2f"));
+            new FloatSpinnerController("rightX", rightXField, rightXDec, rightXInc, 0.05F, "%.2f", updater));
          spinnerMap.get("rightX").initialize();
          spinnerMap.put("rightY",
-            new SpinnerData("rightY", rightYField, rightYDec, rightYInc, 0.05F, "%.2f"));
+            new FloatSpinnerController("rightY", rightYField, rightYDec, rightYInc, 0.05F, "%.2f", updater));
          spinnerMap.get("rightY").initialize();
          spinnerMap.put("rightZ",
-            new SpinnerData("rightZ", rightZField, rightZDec, rightZInc, 0.05F, "%.2f"));
+            new FloatSpinnerController("rightZ", rightZField, rightZDec, rightZInc, 0.05F, "%.2f", updater));
          spinnerMap.get("rightZ").initialize();
          spinnerMap.put("rightB",
-            new SpinnerData("rightB", rightBField, rightBDec, rightBInc, 0.05F, "%.2f"));
+            new FloatSpinnerController("rightB", rightBField, rightBDec, rightBInc, 0.05F, "%.2f", updater));
          spinnerMap.get("rightB").initialize();
     }
     
@@ -482,7 +355,7 @@ public class HeadParametersController implements Initializable, Page {
     }
     
     private void setSpinnerData(String fieldName, float value, float minValue, float maxValue) {
-        SpinnerData spinner = spinnerMap.get(fieldName);
+        FloatSpinnerController spinner = spinnerMap.get(fieldName);
         if (spinner != null) {
             spinner.setVisible(true);
             spinner.updateSpinnerData(value, minValue, maxValue);
