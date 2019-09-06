@@ -128,7 +128,7 @@ public class HomeController implements Initializable, Page {
     private final String rightNozzleTitle = I18n.t("common.rightNozzle");
     private final String nozzlesTitle = I18n.t("common.nozzles");
     private final String nozzleTitle = I18n.t("common.nozzle");
-    
+
     @FXML
     void printerButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
@@ -164,7 +164,8 @@ public class HomeController implements Initializable, Page {
     void cancelButtonAction(ActionEvent event) {
         if (rootController != null &&
             event.getSource() instanceof Button &&
-            printer.getCurrentStatusProperty().get().isCanCancel()) {
+            (printer.getCurrentStatusProperty().get().getPrinterStatusEnumValue().startsWith("HEATING") ||
+             printer.getCurrentStatusProperty().get().isCanCancel())) {
             printer.runCancelTask();
         }
     }
@@ -572,7 +573,11 @@ public class HomeController implements Initializable, Page {
         jobStatusIcon.setVisible(paused || playing || idle);
         jobStatusIcon.setManaged(paused || playing || idle);
             
-        jobStatusLabel.setText(printerStatus.getPrinterStatusString());
+        String jobStatusText = printerStatus.getPrinterStatusString();
+        // For some reason all but the heating statuses are translated.
+        if (jobStatusText.startsWith("heating-"))
+            jobStatusText = I18n.t("common." + jobStatusText.replace('-', '.'));
+        jobStatusLabel.setText(jobStatusText);
 
         if ((printerStatus.getPrinterStatusEnumValue().startsWith("PRINTING_PROJECT")
                 || printerStatus.getPrinterStatusEnumValue().startsWith("RUNNING_MACRO")
@@ -587,6 +592,8 @@ public class HomeController implements Initializable, Page {
             jobEtcLabel.setText(secondsToHMS(printerStatus.getEtcSeconds()));
             jobEtcLabel.setVisible(true);
             jobEtcLabel.setManaged(true);
+            jobProgressBar.setVisible(true);
+            jobProgressBar.setManaged(true);
 
             int timeElapsed = printerStatus.getTotalDurationSeconds() -  printerStatus.getEtcSeconds();
             if (timeElapsed < 0)
@@ -601,8 +608,6 @@ public class HomeController implements Initializable, Page {
                 jobProgressBar.setProgress(progressFraction);
             }
             jobEtcLabel.setText(secondsToHMS(printerStatus.getEtcSeconds()));
-            jobProgressBar.setVisible(true);
-            jobProgressBar.setManaged(true);
         }
         else
         {
@@ -615,7 +620,7 @@ public class HomeController implements Initializable, Page {
                printerStatus.getHeatingProgress() >= 0 &&
                printerStatus.getHeatingProgress() <= 100)
             {
-                jobProgressBar.setProgress(printerStatus.getHeatingProgress());
+                jobProgressBar.setProgress(0.01F * printerStatus.getHeatingProgress());
                 jobProgressBar.setVisible(true);
                 jobProgressBar.setManaged(true);
             }
@@ -647,18 +652,13 @@ public class HomeController implements Initializable, Page {
             }
             else {
                 pauseButton.setDisable(true);
-                pauseButton.pseudoClassStateChanged(pausedPS, false);
+                pauseButton.pseudoClassStateChanged(pausedPS, true);
             }
 
             cancelButton.setDisable(!(printerStatus.getPrinterStatusEnumValue().startsWith("HEATING") ||
                                       printerStatus.isCanCancel()));
 
-            if (printerStatus.getPrinterStatusEnumValue().startsWith("PRINTING_PROJECT")
-                || printerStatus.getPrinterStatusEnumValue().startsWith("RUNNING_MACRO")
-                || printerStatus.getPrinterStatusEnumValue().startsWith("PAUSED")
-                || printerStatus.getPrinterStatusEnumValue().startsWith("PAUSE_PENDING")
-                || printerStatus.getPrinterStatusEnumValue().startsWith("RESUME_PENDING")
-                || printerStatus.getPrinterStatusEnumValue().startsWith("HEATING"))
+            if (printerStatus.getPrinterStatusEnumValue().startsWith("PRINTING_PROJECT"))
             {
                 tweakButton.setDisable(false);
                 tweakButton.setVisible(true);        
