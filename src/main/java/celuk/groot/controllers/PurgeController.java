@@ -112,36 +112,6 @@ public class PurgeController implements Initializable, Page {
     private Button rightButton;
 
     @FXML
-    void fieldAction(ActionEvent event) {
-        if (rootController != null && event.getSource() instanceof TextField) {
-            TextField t = (TextField)event.getSource();
-            IntegerSpinnerController spinner = spinnerMap.get(t.getId());
-            if (spinner != null)
-                spinner.fieldAction(event);
-        }
-    }
-    
-    @FXML
-    void incButtonAction(ActionEvent event) {
-        if (rootController != null && event.getSource() instanceof Button) {
-            Button b = (Button)event.getSource();
-            IntegerSpinnerController spinner = spinnerMap.get(b.getId());
-            if (spinner != null)
-                spinner.incAction(event);
-        }
-    }
-    
-    @FXML
-    void decButtonAction(ActionEvent event) {
-        if (rootController != null && event.getSource() instanceof Button) {
-            Button b = (Button)event.getSource();
-            IntegerSpinnerController spinner = spinnerMap.get(b.getId());
-            if (spinner != null)
-                spinner.decAction(event);
-        }
-    }
-
-    @FXML
     void checkAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof CheckBox) {
             CheckBox box = (CheckBox)event.getSource();
@@ -220,13 +190,13 @@ public class PurgeController implements Initializable, Page {
         purgePromptText = I18n.t(purgePromptText);
         purgeUnavailableText = I18n.t(purgeUnavailableText);
 
-        BiConsumer<IntegerSpinnerController, Integer> updater = (sc, v) -> {};
+        BiConsumer<IntegerSpinnerController, Integer> updater = (sc, v) -> { sc.setValue(v); };
         spinnerMap.put("m1PurgeTemp",
             new IntegerSpinnerController("m1PurgeTemp", m1PurgeTempValue,
-                            m1PurgeTempDec, m1PurgeTempInc, 2, updater));
+                            m1PurgeTempDec, m1PurgeTempInc, 1, updater));
         spinnerMap.put("m2PurgeTemp",
             new IntegerSpinnerController("m2PurgeTemp", m2PurgeTempValue,
-                            m2PurgeTempDec, m2PurgeTempInc, 2, updater));
+                            m2PurgeTempDec, m2PurgeTempInc, 1, updater));
         
         panel1Nodes = new Node[] {
             m1PurgeTempDec,

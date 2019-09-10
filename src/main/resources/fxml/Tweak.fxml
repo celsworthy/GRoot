@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane id="TweakPane" fx:id="tweakPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800" prefWidth="480.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="celuk.groot.controllers.TweakController">
+<StackPane id="TweakPane" fx:id="tweakPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800" prefWidth="480.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="celuk.groot.controllers.TweakController">
    <children>
       <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" StackPane.alignment="TOP_CENTER">
          <children>
@@ -42,9 +42,9 @@
                               <String fx:value="field-label" />
                            </styleClass>
                         </Label>
-                        <Button id="m1Temp" fx:id="m1TempDec" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#decButtonAction" styleClass="m1-decrement" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <TextField id="m1Temp" fx:id="m1TempValue" maxWidth="1.7976931348623157E308" minWidth="10.0" onAction="#fieldAction" prefColumnCount="4" styleClass="field-value" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                        <Button id="m1Temp" fx:id="m1TempInc" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#incButtonAction" styleClass="m1-increment" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                        <Button id="m1Temp" fx:id="m1TempDec" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="m1-decrement" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField id="m1Temp" fx:id="m1TempValue" maxWidth="1.7976931348623157E308" minWidth="10.0" prefColumnCount="4" styleClass="field-value" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <Button id="m1Temp" fx:id="m1TempInc" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="m1-increment" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                         <Label fx:id="m1TempSuffix" text="tweak.matTempSuffix" GridPane.columnIndex="4" GridPane.rowIndex="4">
                            <styleClass>
                               <String fx:value="material-1" />
@@ -93,12 +93,12 @@
                               <String fx:value="field-suffix" />
                            </styleClass>
                         </Label>
-                        <Button id="m1PrintSpeed" fx:id="m1PrintSpeedDec" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#decButtonAction" styleClass="m1-decrement" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Button id="m1FlowRate" fx:id="m1FlowRateDec" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#decButtonAction" styleClass="m1-decrement" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Button id="m1PrintSpeed" fx:id="m1PrintSpeedInc" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#incButtonAction" styleClass="m1-increment" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                        <Button id="m1FlowRate" fx:id="m1FlowRateInc" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#incButtonAction" styleClass="m1-increment" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                        <TextField id="m1PrintSpeed" fx:id="m1PrintSpeedValue" maxWidth="1.7976931348623157E308" minWidth="10.0" onAction="#fieldAction" prefColumnCount="4" styleClass="field-value" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <TextField id="m1FlowRate" fx:id="m1FlowRateValue" maxWidth="1.7976931348623157E308" minWidth="10.0" onAction="#fieldAction" prefColumnCount="4" styleClass="field-value" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <Button id="m1PrintSpeed" fx:id="m1PrintSpeedDec" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="m1-decrement" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Button id="m1FlowRate" fx:id="m1FlowRateDec" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="m1-decrement" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Button id="m1PrintSpeed" fx:id="m1PrintSpeedInc" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="m1-increment" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <Button id="m1FlowRate" fx:id="m1FlowRateInc" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="m1-increment" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                        <TextField id="m1PrintSpeed" fx:id="m1PrintSpeedValue" maxWidth="1.7976931348623157E308" minWidth="10.0" prefColumnCount="4" styleClass="field-value" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <TextField id="m1FlowRate" fx:id="m1FlowRateValue" maxWidth="1.7976931348623157E308" minWidth="10.0" prefColumnCount="4" styleClass="field-value" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                         <Label fx:id="m1Material" styleClass="panel-material" text="tweak.m1Material" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
                      </children>
                      <padding>
@@ -130,9 +130,9 @@
                               <String fx:value="field-label" />
                            </styleClass>
                         </Label>
-                        <Button id="m2Temp" fx:id="m2TempDec" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#decButtonAction" styleClass="m2-decrement" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <TextField id="m2Temp" fx:id="m2TempValue" maxWidth="1.7976931348623157E308" minWidth="10.0" onAction="#fieldAction" prefColumnCount="4" styleClass="field-value" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                        <Button id="m2Temp" fx:id="m2TempInc" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#incButtonAction" styleClass="m2-increment" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                        <Button id="m2Temp" fx:id="m2TempDec" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="m2-decrement" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField id="m2Temp" fx:id="m2TempValue" maxWidth="1.7976931348623157E308" minWidth="10.0" prefColumnCount="4" styleClass="field-value" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <Button id="m2Temp" fx:id="m2TempInc" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="m2-increment" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                         <Label fx:id="m2TempSuffix" text="tweak.matTempSuffix" GridPane.columnIndex="4" GridPane.rowIndex="4">
                            <styleClass>
                               <String fx:value="material-2" />
@@ -180,12 +180,12 @@
                               <String fx:value="field-suffix" />
                            </styleClass>
                         </Label>
-                        <Button id="m2PrintSpeed" fx:id="m2PrintSpeedDec" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#decButtonAction" styleClass="m2-decrement" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Button id="m2FlowRate" fx:id="m2FlowRateDec" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#decButtonAction" styleClass="m2-decrement" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Button id="m2PrintSpeed" fx:id="m2PrintSpeedInc" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#incButtonAction" styleClass="m2-increment" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                        <Button id="m2FlowRate" fx:id="m2FlowRateInc" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#incButtonAction" styleClass="m2-increment" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                        <TextField id="m2PrintSpeed" fx:id="m2PrintSpeedValue" maxWidth="1.7976931348623157E308" minWidth="10.0" onAction="#fieldAction" prefColumnCount="4" styleClass="field-value" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <TextField id="m2FlowRate" fx:id="m2FlowRateValue" maxWidth="1.7976931348623157E308" minWidth="10.0" onAction="#fieldAction" prefColumnCount="4" styleClass="field-value" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <Button id="m2PrintSpeed" fx:id="m2PrintSpeedDec" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="m2-decrement" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Button id="m2FlowRate" fx:id="m2FlowRateDec" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="m2-decrement" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Button id="m2PrintSpeed" fx:id="m2PrintSpeedInc" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="m2-increment" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <Button id="m2FlowRate" fx:id="m2FlowRateInc" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="m2-increment" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                        <TextField id="m2PrintSpeed" fx:id="m2PrintSpeedValue" maxWidth="1.7976931348623157E308" minWidth="10.0" prefColumnCount="4" styleClass="field-value" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <TextField id="m2FlowRate" fx:id="m2FlowRateValue" maxWidth="1.7976931348623157E308" minWidth="10.0" prefColumnCount="4" styleClass="field-value" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                         <Label fx:id="m2Material" styleClass="panel-material" text="tweak.m2Material" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
                      </children>
                      <VBox.margin>
@@ -214,9 +214,9 @@
                               <String fx:value="field-label" />
                            </styleClass>
                         </Label>
-                        <Button id="bedTemp" fx:id="bedTempDec" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#decButtonAction" styleClass="bed-decrement" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField id="bedTemp" fx:id="bedTempValue" maxWidth="1.7976931348623157E308" minWidth="10.0" onAction="#fieldAction" prefColumnCount="4" styleClass="field-value" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <Button id="bedTemp" fx:id="bedTempInc" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#incButtonAction" styleClass="bed-increment" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Button id="bedTemp" fx:id="bedTempDec" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="bed-decrement" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField id="bedTemp" fx:id="bedTempValue" maxWidth="1.7976931348623157E308" minWidth="10.0" prefColumnCount="4" styleClass="field-value" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Button id="bedTemp" fx:id="bedTempInc" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="bed-increment" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                         <Label fx:id="bedTempSuffix" text="tweak.bedTempSuffix" GridPane.columnIndex="4" GridPane.rowIndex="1">
                            <styleClass>
                               <String fx:value="bed" />

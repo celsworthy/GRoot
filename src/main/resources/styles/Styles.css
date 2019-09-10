@@ -89,18 +89,22 @@ body {
     -fx-font-size: 12pt;
 }
 
-.panel {
-    -fx-background-color: #303030;
-}
-
 .page-title {
     -fx-text-fill: #009ee3;
     -fx-font-size: 32pt;
 }
 
+.panel {
+    -fx-background-color: #303030;
+}
+
 .panel-title {
     -fx-text-fill: #009ee3;
     -fx-font-size: 24pt;
+}
+
+.panel-label {
+    -fx-font-size: 12pt;
 }
 
 .root {

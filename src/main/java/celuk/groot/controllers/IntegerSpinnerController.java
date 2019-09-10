@@ -53,7 +53,10 @@ public class IntegerSpinnerController {
         this.maxValue = 0;
         this.step = step;
         this.updater = updater;
-
+        
+        decButton.setOnAction(this::decAction);
+        incButton.setOnAction(this::incAction);
+        valueField.setOnAction(this::fieldAction);
         valueField.setTextFormatter(new TextFormatter <> (NUMERIC_FILTER));
         valueField.focusedProperty().addListener((o, ov, nv) -> {
             if (!nv) { // focus lost
@@ -99,6 +102,11 @@ public class IntegerSpinnerController {
             value = maxValue;
 
         updater.accept(this, value);
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+        valueField.setText(Integer.toString(this.value));
     }
 
     public void updateSpinnerData(int value, int minValue, int maxValue) {

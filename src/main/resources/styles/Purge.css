@@ -2,10 +2,30 @@
     -fx-background-image: url("/image/purge.png");
 }
 
+.m1-decrement {
+    -fx-graphic:url("/image/dec-blue.png");
+    -fx-background-color: transparent;
+}
+
 .m1-icon {
     -fx-image:url("/image/nozzle-blue.png");
 }
 
+.m1-increment {
+    -fx-graphic:url("/image/inc-blue.png");
+    -fx-background-color: transparent;
+}
+
+.m2-decrement {
+    -fx-graphic:url("/image/dec-orange.png");
+    -fx-background-color: transparent;
+}
+
 .m2-icon {
     -fx-image:url("/image/nozzle-orange.png");
+}
+
+.m2-increment {
+    -fx-graphic:url("/image/inc-orange.png");
+    -fx-background-color: transparent;
 }

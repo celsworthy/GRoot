@@ -1,0 +1,20 @@
+.keypad-key {
+    -fx-background-color: #303030;
+    -fx-font-size: 24pt;
+    -fx-font-weight: 300;
+    -fx-text-fill: white;
+}
+
+.pin-clear {
+    -fx-background-color: #303030;
+    -fx-font-size: 18pt;
+}
+
+.pin-field {
+    -fx-font-size: 24pt;
+}
+
+.pin-label {
+    -fx-font-size: 24pt;
+}
+

@@ -24,16 +24,20 @@ public class RootStackController implements Initializable {
     @FXML
     private AnchorPane rootAnchorPane;
     
+    private AboutController aboutPage = null;
+    private AccessPINController accessPINPage = null;
     private ConsoleController consolePage = null;
     private ControlController controlPage = null;
     private HeadParametersController headParametersPage = null;
     private HomeController homePage = null;
+    private LoginController loginPage = null;
     private PrinterColourController printerColourPage = null;
     private PrinterNameController printerNamePage = null;
     private PrinterSelectController printerSelectPage = null;
     private PrintController printPage = null;
     private PurgeController purgePage = null;
     private PurgeIntroController purgeIntroPage = null;
+    private ResetPINController resetPINPage = null;
     private TweakController tweakPage = null;
     private SecurityMenuController securityMenu = null;
     private IdentityMenuController identityMenu = null;
@@ -66,32 +70,40 @@ public class RootStackController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        URL aboutPageURL = getClass().getResource(FXML_RESOURCE_PATH + "About.fxml");
+        URL accessPINPageURL = getClass().getResource(FXML_RESOURCE_PATH + "AccessPIN.fxml");
         URL consolePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Console.fxml");
         URL controlPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Control.fxml");
         URL headParametersPageURL = getClass().getResource(FXML_RESOURCE_PATH + "HeadParameters.fxml");
         URL homePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Home.fxml");
+        URL loginPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Login.fxml");
         URL printerColourPageURL = getClass().getResource(FXML_RESOURCE_PATH + "PrinterColour.fxml");
         URL printerNamePageURL = getClass().getResource(FXML_RESOURCE_PATH + "PrinterName.fxml");
         URL printerSelectPageURL = getClass().getResource(FXML_RESOURCE_PATH + "PrinterSelect.fxml");
         URL printPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Print.fxml");
         URL purgePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Purge.fxml");
         URL purgeIntroPageURL = getClass().getResource(FXML_RESOURCE_PATH + "PurgeIntro.fxml");
+        URL resetPINPageURL = getClass().getResource(FXML_RESOURCE_PATH + "ResetPIN.fxml");
         URL tweakPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Tweak.fxml");
         URL mainMenuURL = getClass().getResource(FXML_RESOURCE_PATH + "MainMenu.fxml");
         URL menuURL = getClass().getResource(FXML_RESOURCE_PATH + "Menu.fxml");
         try
         {
             // Pages
+            aboutPage = (AboutController)(loadPage(aboutPageURL, null));
+            accessPINPage = (AccessPINController)(loadPage(accessPINPageURL, null));
             consolePage = (ConsoleController)(loadPage(consolePageURL, null));
             controlPage = (ControlController)(loadPage(controlPageURL, null));
             headParametersPage = (HeadParametersController)(loadPage(headParametersPageURL, null));
             homePage = (HomeController)(loadPage(homePageURL, null));
+            loginPage = (LoginController)(loadPage(loginPageURL, null));
             printerColourPage = (PrinterColourController)(loadPage(printerColourPageURL, null));
             printerNamePage = (PrinterNameController)(loadPage(printerNamePageURL, null));
             printerSelectPage = (PrinterSelectController)(loadPage(printerSelectPageURL, null));
             printPage = (PrintController)(loadPage(printPageURL, null));
             purgePage = (PurgeController)(loadPage(purgePageURL, null));
             purgeIntroPage = (PurgeIntroController)(loadPage(purgeIntroPageURL, null));
+            resetPINPage = (ResetPINController)(loadPage(resetPINPageURL, null));
             tweakPage = (TweakController)(loadPage(tweakPageURL, null));
         
             // Menus - all but the main menu use the same FXML page.
@@ -119,6 +131,20 @@ public class RootStackController implements Initializable {
         }
     }
     
+    public void showAboutPage(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            previousPage.hidePage();
+            aboutPage.displayPage(printer);
+        });
+    }
+
+    public void showAccessPINPage(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            previousPage.hidePage();
+            accessPINPage.displayPage(printer);
+        });
+    }
+
     public void showHeadParametersPage(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
             previousPage.hidePage();
@@ -149,10 +175,16 @@ public class RootStackController implements Initializable {
         });
     }
     
+    public void showLoginPage(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            previousPage.hidePage();
+            loginPage.displayPage(printer);
+        });
+    }
+
     public void showPrinterColourPage(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
             previousPage.hidePage();
-            currentPrinter = null;
             printerColourPage.displayPage(printer);
         });
     }
@@ -160,7 +192,6 @@ public class RootStackController implements Initializable {
     public void showPrinterNamePage(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
             previousPage.hidePage();
-            currentPrinter = null;
             printerNamePage.displayPage(printer);
         });
     }
@@ -181,6 +212,13 @@ public class RootStackController implements Initializable {
         });
     }
 
+    public void showResetPINPage(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            previousPage.hidePage();
+            resetPINPage.displayPage(printer);
+        });
+    }
+    
     public void showUSBPrintPage(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
             previousPage.hidePage();

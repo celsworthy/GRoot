@@ -51,9 +51,9 @@
                               <String fx:value="field-label" />
                            </styleClass>
                         </Label>
-                        <Button id="m1Temp" fx:id="m1PurgeTempDec" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#decButtonAction" styleClass="m1-decrement" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <TextField id="m1Temp" fx:id="m1PurgeTempValue" maxWidth="1.7976931348623157E308" minWidth="10.0" onAction="#fieldAction" prefColumnCount="4" styleClass="field-value" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                        <Button id="m1Temp" fx:id="m1PurgeTempInc" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#incButtonAction" styleClass="m1-increment" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                        <Button id="m1PurgeTemp" fx:id="m1PurgeTempDec" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="m1-decrement" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField id="m1Temp" fx:id="m1PurgeTempValue" maxWidth="1.7976931348623157E308" minWidth="10.0" prefColumnCount="4" styleClass="field-value" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <Button id="m1PurgeTemp" fx:id="m1PurgeTempInc" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="m1-increment" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                         <Label fx:id="m1PurgeTempSuffix" text="unit.temp" GridPane.columnIndex="4" GridPane.rowIndex="4">
                            <styleClass>
                               <String fx:value="material-1" />
@@ -136,9 +136,9 @@
                               <String fx:value="field-label" />
                            </styleClass>
                         </Label>
-                        <Button id="m2Temp" fx:id="m2PurgeTempDec" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#decButtonAction" styleClass="m2-decrement" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <TextField id="m2Temp" fx:id="m2PurgeTempValue" maxWidth="1.7976931348623157E308" minWidth="10.0" onAction="#fieldAction" prefColumnCount="4" styleClass="field-value" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                        <Button id="m2Temp" fx:id="m2PurgeTempInc" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#incButtonAction" styleClass="m2-increment" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                        <Button id="m2PurgeTemp" fx:id="m2PurgeTempDec" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="m2-decrement" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField id="m2Temp" fx:id="m2PurgeTempValue" maxWidth="1.7976931348623157E308" minWidth="10.0" prefColumnCount="4" styleClass="field-value" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <Button id="m2PurgeTemp" fx:id="m2PurgeTempInc" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="m2-increment" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                         <Label fx:id="m2PurgeTempSuffix" text="unit.temp" GridPane.columnIndex="4" GridPane.rowIndex="4">
                            <styleClass>
                               <String fx:value="material-2" />

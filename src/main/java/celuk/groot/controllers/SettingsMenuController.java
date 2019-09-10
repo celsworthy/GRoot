@@ -46,16 +46,17 @@ public class SettingsMenuController extends MenuController {
     @Override
     protected void menu4Action(ActionEvent event) {
         if (validButtonAction(event)) {
-            System.out.println("settings menu 4");
-            //rootController.showTrashPage(this, printer);
+            //System.out.println("settings menu 4");
+            printer.runTidyPrintJobDirsTask();
+            rootController.showHomePage(this, printer);
         }
     }
 
     @Override
     protected void menu5Action(ActionEvent event) {
         if (validButtonAction(event)) {
-            System.out.println("settings menu 5");
-            //rootController.showAboutPage(this, printer);
+            //System.out.println("settings menu 5");
+            rootController.showAboutPage(this, printer);
         }
     }
 }

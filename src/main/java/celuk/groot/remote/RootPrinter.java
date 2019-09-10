@@ -11,8 +11,6 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
@@ -42,6 +40,8 @@ public class RootPrinter extends Updater {
     private static final String RESUME_COMMAND = "/remoteControl/resume";
     private static final String SET_PRINT_ADJUST_COMMAND = "/remoteControl/setPrintAdjust";
     private static final String SWITCH_AMBIENT_LIGHT_COMMAND = "/remoteControl/setAmbientLED";
+    private static final String TIDY_PRINT_JOB_DIRS_COMMAND = "/remoteControl/tidyPrintJobDirs";
+    
     private final RootServer rootServer;
     private final String printerId;
     private final SimpleObjectProperty<PrinterStatusResponse> currentStatusProperty = new SimpleObjectProperty<>();
@@ -377,6 +377,10 @@ public class RootPrinter extends Updater {
             });
     }
     
+    public Future<Boolean> runTidyPrintJobDirsTask() {
+        return runBooleanTask(TIDY_PRINT_JOB_DIRS_COMMAND, null);
+    }
+
     public Future<Boolean> runWriteHeadEEPROMDataTask(HeadEEPROMData headData) {
         //System.out.println("Writing head EEPROM data from printer \"" + printerId + "\"");
         Future<Boolean> f;

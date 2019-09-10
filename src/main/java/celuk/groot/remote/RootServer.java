@@ -30,9 +30,11 @@ public class RootServer extends Updater {
     //protected static final String HTTP_ADDRESS = "192.168.1.141";
     //protected static final String HTTP_ADDRESS = "localhost";
     //protected static final String HTTP_PORT = "8080";
-    private static final String WHO_ARE_YOU_COMMAND = "/api/discovery/whoareyou?pc";
+    private static final String ACCESS_PIN_COMMAND = "/api/admin/updatePIN";
+    private static final String RESET_PIN_COMMAND = "/api/admin/resetPIN";
     private static final String LIST_PRINTERS_COMMAND = "/api/discovery/listPrinters";
-
+    private static final String WHO_ARE_YOU_COMMAND = "/api/discovery/whoareyou?pc";
+    
     protected final ObjectMapper mapper = new ObjectMapper();
     protected final ExecutorService executorService;
     protected SimpleStringProperty pinProperty = new SimpleStringProperty("1111");
@@ -228,6 +230,22 @@ public class RootServer extends Updater {
             });
     }
     
+    public Future<Boolean> runSetAccessPINTask(String pin) {
+        String data = String.format("\"%s\"", pin);
+        return runRequestTask(ACCESS_PIN_COMMAND, false, data,
+            (byte[] requestData, ObjectMapper jMapper) -> {
+                return true;
+            });
+    }
+
+    public Future<Boolean> runResetPINTask(String serial) {
+        String data = String.format("\"%s\"", serial);
+        return runRequestTask(RESET_PIN_COMMAND, false, data,
+            (byte[] requestData, ObjectMapper jMapper) -> {
+                return true;
+            });
+    }
+
     @Override
     protected void update() {
         runRequestServerStatusTask();

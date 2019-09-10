@@ -19,7 +19,7 @@ public class SecurityMenuController extends MenuController {
     protected void menu1Action(ActionEvent event) {
         if (validButtonAction(event)) {
             System.out.println("security menu 1");
-            //rootController.showAccessPINPage(this, printer);
+            rootController.showAccessPINPage(this, printer);
         }
     }
 

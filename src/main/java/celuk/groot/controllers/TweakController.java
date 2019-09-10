@@ -1,7 +1,6 @@
 package celuk.groot.controllers;
 
 import celuk.groot.remote.PrintAdjustData;
-import celuk.groot.remote.PrinterStatusResponse;
 import celuk.groot.remote.RootPrinter;
 import java.net.URL;
 import java.util.HashMap;
@@ -145,36 +144,6 @@ public class TweakController implements Initializable, Page {
 
     @FXML
     private Button rightButton;
-
-    @FXML
-    void fieldAction(ActionEvent event) {
-        if (rootController != null && event.getSource() instanceof TextField) {
-            TextField t = (TextField)event.getSource();
-            IntegerSpinnerController spinner = spinnerMap.get(t.getId());
-            if (spinner != null)
-                spinner.fieldAction(event);
-        }
-    }
-    
-    @FXML
-    void incButtonAction(ActionEvent event) {
-        if (rootController != null && event.getSource() instanceof Button) {
-            Button b = (Button)event.getSource();
-            IntegerSpinnerController spinner = spinnerMap.get(b.getId());
-            if (spinner != null)
-                spinner.incAction(event);
-        }
-    }
-    
-    @FXML
-    void decButtonAction(ActionEvent event) {
-        if (rootController != null && event.getSource() instanceof Button) {
-            Button b = (Button)event.getSource();
-            IntegerSpinnerController spinner = spinnerMap.get(b.getId());
-            if (spinner != null)
-                spinner.decAction(event);
-        }
-    }
 
     @FXML
     void leftButtonAction(ActionEvent event) {
