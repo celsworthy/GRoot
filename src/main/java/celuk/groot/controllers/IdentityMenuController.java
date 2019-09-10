@@ -19,16 +19,16 @@ public class IdentityMenuController extends MenuController {
     @Override
     protected void menu1Action(ActionEvent event) {
         if (validButtonAction(event)) {
-            System.out.println("identity menu 1");
-            //rootController.showPrinterNamePage(this, printer);
+            //System.out.println("identity menu 1");
+            rootController.showPrinterNamePage(this, printer);
         }
     }
 
     @Override
     protected void menu2Action(ActionEvent event) {
         if (validButtonAction(event)) {
-            System.out.println("identity menu 2");
-            //rootController.showPrinterColourPage(this, printer);
+            //System.out.println("identity menu 2");
+            rootController.showPrinterColourPage(this, printer);
         }
     }
     

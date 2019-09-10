@@ -19,16 +19,18 @@ public class CleanNozzlesMenuController extends MenuController {
     @Override
     protected void menu1Action(ActionEvent event) {
         if (validButtonAction(event)) {
-            System.out.println("clean nozzle menu 1");
-            //rootController.showCleanLeftNozzlePage(this, printer);
+            //System.out.println("clean nozzle menu 1");
+            printer.runCleanNozzleTask(2);
+            rootController.showHomePage(this, printer);
         }
     }
 
     @Override
     protected void menu2Action(ActionEvent event) {
         if (validButtonAction(event)) {
-            System.out.println("clean nozzle stuck menu 2");
-            //rootController.showCleanRightNozzlePage(this, printer);
+            //System.out.println("clean nozzle stuck menu 2");
+            printer.runCleanNozzleTask(1);
+            rootController.showHomePage(this, printer);
         }
     }
     

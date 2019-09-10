@@ -1,1 +1,2 @@
-svgexport "D:\CEL\Java11\GRoot\SVG-Images\Icon_Menu_Back.svg" "D:\CEL\Java11\GRoot\src\main\resources\image\bottom-bar-next.png" "100%%" "48:"
+svgexport "D:\CEL\Java11\GRoot\SVG-Images\Icon-Tick-Black.svg" "D:\CEL\Java11\GRoot\src\main\resources\image\tick_black.png" "100%%" "48:"
+svgexport "D:\CEL\Java11\GRoot\SVG-Images\Icon-Tick-White.svg" "D:\CEL\Java11\GRoot\src\main\resources\image\tick_white.png" "100%%" "48:"

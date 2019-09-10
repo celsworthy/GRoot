@@ -1,0 +1,15 @@
+.keypad-key {
+    -fx-background-color: #303030;
+    -fx-font-size: 18pt;
+    -fx-font-weight: 300;
+    -fx-text-fill: white;
+}
+
+.name-field {
+    -fx-font-size: 18pt;
+}
+
+.name-clear {
+    -fx-background-color: #303030;
+    -fx-font-size: 18pt;
+}

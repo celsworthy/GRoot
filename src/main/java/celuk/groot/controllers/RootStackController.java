@@ -28,6 +28,8 @@ public class RootStackController implements Initializable {
     private ControlController controlPage = null;
     private HeadParametersController headParametersPage = null;
     private HomeController homePage = null;
+    private PrinterColourController printerColourPage = null;
+    private PrinterNameController printerNamePage = null;
     private PrinterSelectController printerSelectPage = null;
     private PrintController printPage = null;
     private PurgeController purgePage = null;
@@ -68,6 +70,8 @@ public class RootStackController implements Initializable {
         URL controlPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Control.fxml");
         URL headParametersPageURL = getClass().getResource(FXML_RESOURCE_PATH + "HeadParameters.fxml");
         URL homePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Home.fxml");
+        URL printerColourPageURL = getClass().getResource(FXML_RESOURCE_PATH + "PrinterColour.fxml");
+        URL printerNamePageURL = getClass().getResource(FXML_RESOURCE_PATH + "PrinterName.fxml");
         URL printerSelectPageURL = getClass().getResource(FXML_RESOURCE_PATH + "PrinterSelect.fxml");
         URL printPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Print.fxml");
         URL purgePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Purge.fxml");
@@ -82,6 +86,8 @@ public class RootStackController implements Initializable {
             controlPage = (ControlController)(loadPage(controlPageURL, null));
             headParametersPage = (HeadParametersController)(loadPage(headParametersPageURL, null));
             homePage = (HomeController)(loadPage(homePageURL, null));
+            printerColourPage = (PrinterColourController)(loadPage(printerColourPageURL, null));
+            printerNamePage = (PrinterNameController)(loadPage(printerNamePageURL, null));
             printerSelectPage = (PrinterSelectController)(loadPage(printerSelectPageURL, null));
             printPage = (PrintController)(loadPage(printPageURL, null));
             purgePage = (PurgeController)(loadPage(purgePageURL, null));
@@ -140,6 +146,22 @@ public class RootStackController implements Initializable {
             previousPage.hidePage();
             currentPrinter = printer;
             homePage.displayPage(printer);
+        });
+    }
+    
+    public void showPrinterColourPage(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            previousPage.hidePage();
+            currentPrinter = null;
+            printerColourPage.displayPage(printer);
+        });
+    }
+    
+    public void showPrinterNamePage(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            previousPage.hidePage();
+            currentPrinter = null;
+            printerNamePage.displayPage(printer);
         });
     }
     

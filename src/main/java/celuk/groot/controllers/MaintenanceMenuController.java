@@ -47,23 +47,23 @@ public class MaintenanceMenuController extends MenuController {
     @Override
     protected void menu4Action(ActionEvent event) {
         if (validButtonAction(event)) {
-            System.out.println("maintenance menu 4");
-            //rootController.showRemoveHeadPage(this, printer);
+            // System.out.println("maintenance menu 4");
+            printer.runRemoveHeadTask();
+            rootController.showHomePage(this, printer);
         }
     }
 
     @Override
     protected void menu5Action(ActionEvent event) {
         if (validButtonAction(event)) {
-            System.out.println("maintenance menu 5");
-            //rootController.showLevelGantryPage(this, printer);
+            printer.runMacroTask("LEVEL_GANTRY");
+            rootController.showHomePage(this, printer);
         }
     }
 
     @Override
     protected void menu6Action(ActionEvent event) {
         if (validButtonAction(event)) {
-            //System.out.println("maintenance menu 6");
             rootController.showTestAxisSpeedMenu(this, printer);
         }
     }

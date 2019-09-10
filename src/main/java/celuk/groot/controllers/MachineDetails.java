@@ -141,7 +141,7 @@ public class MachineDetails
         return getComplimentaryOption(webColour, machineIconLight, machineIconDark);
     }
 
-    public <T> T getComplimentaryOption(String webColour, T darkOption, T lightOption) {
+    public static <T> T getComplimentaryOption(String webColour, T darkOption, T lightOption) {
         Color wc = Color.web(webColour);
         // brightness  =  sqrt( .241 R2 + .691 G2 + .068 B2 )
         // Don't know where these numbers came from!

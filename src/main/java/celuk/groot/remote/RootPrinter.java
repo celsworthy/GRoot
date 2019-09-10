@@ -20,7 +20,10 @@ public class RootPrinter extends Updater {
     
     private static final String CANCEL_COMMAND = "/remoteControl/cancel";
     private static final String COMMAND_PREFIX = "/api/";
+    private static final String CHANGE_PRINTER_COLOUR_COMMAND = "/remoteControl/changePrinterColour";
+    private static final String CLEAN_NOZZLE_COMMAND = "/remoteControl/cleanNozzle";
     private static final String EJECT_FILAMENT_COMMAND = "/remoteControl/ejectFilament";
+    private static final String EJECT_STUCK_MATERIAL_COMMAND = "/remoteControl/ejectStuckMaterial";
     private static final String ERROR_STATUS_COMMAND = "/remoteControl/activeErrorStatus";
     private static final String EXECUTE_GCODE_COMMAND = "/remoteControl/executeGCode";
     private static final String HEAD_EEPROM_COMMAND = "/remoteControl/headEEPROM";
@@ -32,6 +35,7 @@ public class RootPrinter extends Updater {
     private static final String PRINT_ADJUST_COMMAND = "/remoteControl/printAdjust";
     private static final String PRINT_USB_JOB_COMMAND = "/remoteControl/printUSBJob";
     private static final String PURGE_TO_TARGET_COMMAND = "/remoteControl/purgeToTarget";
+    private static final String RENAME_PRINTER_COMMAND = "/remoteControl/renamePrinter";
     private static final String REMOTE_CONTROL_COMMAND = "/remoteControl";
     private static final String REMOVE_HEAD_COMMAND = "/remoteControl/removeHead";
     private static final String REPRINT_JOB_COMMAND = "/remoteControl/reprintJob";
@@ -283,6 +287,7 @@ public class RootPrinter extends Updater {
     }
 
     public Future<Boolean> runSwitchAmbientLightTask(String state) {
+        String data = String.format("\"%s\"", state);
         return runBooleanTask(SWITCH_AMBIENT_LIGHT_COMMAND, state);
     }
 
@@ -290,6 +295,11 @@ public class RootPrinter extends Updater {
         return runBooleanTask(SET_PRINT_ADJUST_COMMAND, data);
     }
     
+    public Future<Boolean> runRenamePrinterTask(String printerName) {
+        String data = String.format("\"%s\"", printerName);
+        return runBooleanTask(RENAME_PRINTER_COMMAND, data);
+    }
+
     public Future<Boolean> runReprintJobTask(String printJobID) {
         return runBooleanTask(REPRINT_JOB_COMMAND, printJobID);
     }
@@ -302,6 +312,21 @@ public class RootPrinter extends Updater {
     public Future<Boolean> runRemoveHeadTask() {
         return runBooleanTask(REMOVE_HEAD_COMMAND, safetiesOnProperty.get() ? "\"true\""
                                                                             : "\"false\"");
+    }
+
+    public Future<Boolean> runChangePrinterColourTask(String printerColour) {
+        String data = String.format("\"%s\"", printerColour);
+        return runBooleanTask(CHANGE_PRINTER_COLOUR_COMMAND, data);
+    }
+
+    public Future<Boolean> runCleanNozzleTask(int nozzleNumber) {
+        String data = String.format("\"%d\"", nozzleNumber);
+        return runBooleanTask(CLEAN_NOZZLE_COMMAND, data);
+    }
+
+    public Future<Boolean> runEjectStuckMaterialTask(int materialNumber) {
+        String data = String.format("\"%d\"", materialNumber);
+        return runBooleanTask(EJECT_STUCK_MATERIAL_COMMAND, data);
     }
 
     public Future<PrintJobListData> runListPrintableJobsTask(boolean reprintableMode) {
