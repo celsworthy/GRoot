@@ -48,7 +48,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </HBox>
-                  <Label fx:id="savePrompt" text="accessPIN.savePrompt">
+                  <Label fx:id="savePrompt" text="common.savePrompt">
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
@@ -85,7 +85,7 @@
                   <Button id="twoKey" fx:id="twoKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="2" GridPane.columnIndex="2" />
                   <Button id="threeKey" fx:id="threeKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="3" GridPane.columnIndex="3" />
                   <Button id="fourKey" fx:id="fourKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="4" GridPane.columnIndex="4" />
-                  <Button id="enterKey" fx:id="backspaceKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" text="keypad.backspace" GridPane.columnIndex="5" GridPane.rowSpan="2">
+                  <Button id="backspaceKey" fx:id="backspaceKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" text="keyboard.backspace" GridPane.columnIndex="5" GridPane.rowSpan="2">
                      <styleClass>
                         <String fx:value="keypad-key" />
                         <String fx:value="backspace-key" />

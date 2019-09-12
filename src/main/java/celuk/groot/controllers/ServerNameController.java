@@ -22,11 +22,11 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class PrinterNameController implements Initializable, Page {
+public class ServerNameController implements Initializable, Page {
     
     @FXML
     private StackPane namePane;
-
+    
     @FXML
     private VBox nameVBox;
 
@@ -41,7 +41,7 @@ public class PrinterNameController implements Initializable, Page {
     private Button nameClear;
     @FXML
     private Label savePrompt;    
-    
+
     @FXML
     private Button leftButton;
     @FXML
@@ -59,22 +59,25 @@ public class PrinterNameController implements Initializable, Page {
     @FXML
     void leftButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
-            rootController.showMainMenu(this, printer);
+            rootController.showServerSettingsMenu(this);
         }
     }
     
     @FXML
     void middleButtonAction(ActionEvent event) {
+        if (rootController != null && event.getSource() instanceof Button) {
+            rootController.showPrinterSelectPage(this);
+        }
     }
 
     @FXML
     void rightButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
-            // Save printer name
-            String printerName = nameField.getText().trim();
-            if (!printerName.isEmpty() && !printerName.equals(currentName)) {
-                printer.runRenamePrinterTask(printerName);
-                rootController.showHomePage(this, printer);
+            // Save server name
+            String serverName = nameField.getText().trim();
+            if (!serverName.isEmpty() && !serverName.equals(currentName)) {
+                rootController.getRootServer().runSetServerNameTask(serverName);
+                rootController.showPrinterSelectPage(this);
             }
         }
     }
@@ -109,10 +112,13 @@ public class PrinterNameController implements Initializable, Page {
             ex.printStackTrace(System.err);
             System.exit(1);
         }
-        nameLabel.setText(I18n.t("printerName.nameLabel"));
-        nameTitle.setText(I18n.t("printerName.title"));
+
+        nameLabel.setText(I18n.t("serverName.nameLabel"));
+        nameTitle.setText(I18n.t("serverName.title"));
         savePrompt.setText(I18n.t("common.savePrompt"));
-        nameField.setPromptText(I18n.t("printerName.enterName"));
+        nameField.setPromptText(I18n.t("serverName.enterName"));
+        middleButton.setVisible(false);
+        
         nameField.textProperty().addListener((observable, oldValue, newValue) -> {
             String v = newValue.trim();
             rightButton.setDisable(v.isBlank() || v.equals(currentName));
@@ -122,7 +128,7 @@ public class PrinterNameController implements Initializable, Page {
     @Override
     public void startUpdates() {
         Platform.runLater(() -> {
-            currentName = printer.getCurrentStatusProperty().get().getPrinterName();
+            currentName = rootController.getRootServer().getName();
             nameField.setText(currentName);
             keyboardController.setCase(true);
         });

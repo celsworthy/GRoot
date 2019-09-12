@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.MapChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,7 +39,9 @@ public class RootStackController implements Initializable {
     private PurgeController purgePage = null;
     private PurgeIntroController purgeIntroPage = null;
     private ResetPINController resetPINPage = null;
+    private ServerNameController serverNamePage = null;
     private TweakController tweakPage = null;
+    private WirelessController wirelessPage = null;
     private SecurityMenuController securityMenu = null;
     private IdentityMenuController identityMenu = null;
     private MainMenuController mainMenu = null;
@@ -67,6 +70,16 @@ public class RootStackController implements Initializable {
         }
     };
     
+    private final ChangeListener<Boolean> authorisedListener = (op, ov, nv) ->  {
+        // This should be invoked if an HTTP request fails because of lack of authorisation.
+        if (nv == false) {
+            Platform.runLater(() -> {
+                hidePages(loginPage);
+                loginPage.displayPage(currentPrinter);
+            });            
+        }
+    };
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -78,13 +91,14 @@ public class RootStackController implements Initializable {
         URL homePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Home.fxml");
         URL loginPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Login.fxml");
         URL printerColourPageURL = getClass().getResource(FXML_RESOURCE_PATH + "PrinterColour.fxml");
-        URL printerNamePageURL = getClass().getResource(FXML_RESOURCE_PATH + "PrinterName.fxml");
+        URL namePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Name.fxml");
         URL printerSelectPageURL = getClass().getResource(FXML_RESOURCE_PATH + "PrinterSelect.fxml");
         URL printPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Print.fxml");
         URL purgePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Purge.fxml");
         URL purgeIntroPageURL = getClass().getResource(FXML_RESOURCE_PATH + "PurgeIntro.fxml");
         URL resetPINPageURL = getClass().getResource(FXML_RESOURCE_PATH + "ResetPIN.fxml");
         URL tweakPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Tweak.fxml");
+        URL wirelessPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Wireless.fxml");
         URL mainMenuURL = getClass().getResource(FXML_RESOURCE_PATH + "MainMenu.fxml");
         URL menuURL = getClass().getResource(FXML_RESOURCE_PATH + "Menu.fxml");
         try
@@ -98,13 +112,15 @@ public class RootStackController implements Initializable {
             homePage = (HomeController)(loadPage(homePageURL, null));
             loginPage = (LoginController)(loadPage(loginPageURL, null));
             printerColourPage = (PrinterColourController)(loadPage(printerColourPageURL, null));
-            printerNamePage = (PrinterNameController)(loadPage(printerNamePageURL, null));
+            printerNamePage = (PrinterNameController)(loadPage(namePageURL, PrinterNameController.class));
             printerSelectPage = (PrinterSelectController)(loadPage(printerSelectPageURL, null));
             printPage = (PrintController)(loadPage(printPageURL, null));
             purgePage = (PurgeController)(loadPage(purgePageURL, null));
             purgeIntroPage = (PurgeIntroController)(loadPage(purgeIntroPageURL, null));
             resetPINPage = (ResetPINController)(loadPage(resetPINPageURL, null));
+            serverNamePage = (ServerNameController)(loadPage(namePageURL, ServerNameController.class));
             tweakPage = (TweakController)(loadPage(tweakPageURL, null));
+            wirelessPage = (WirelessController)(loadPage(wirelessPageURL, null));
         
             // Menus - all but the main menu use the same FXML page.
             cleanNozzlesMenu = (CleanNozzlesMenuController)(loadPage(menuURL, CleanNozzlesMenuController.class));
@@ -119,6 +135,7 @@ public class RootStackController implements Initializable {
             testAxisSpeedMenu = (TestAxisSpeedMenuController)(loadPage(menuURL, TestAxisSpeedMenuController.class));
 
             server.getCurrentPrinterMap().addListener(printerMapListener);
+            server.getAuthorisedProperty().addListener(authorisedListener);
             errorManager = new ErrorDisplayManager(server);
 
             hidePages(printerSelectPage);
@@ -219,6 +236,20 @@ public class RootStackController implements Initializable {
         });
     }
     
+    public void showServerNamePage(Page previousPage) {
+        Platform.runLater(() -> {
+            previousPage.hidePage();
+            serverNamePage.displayPage(null);
+        });
+    }
+    
+    public void showWirelessPage(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            previousPage.hidePage();
+            wirelessPage.displayPage(printer);
+        });
+    }
+
     public void showUSBPrintPage(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
             previousPage.hidePage();

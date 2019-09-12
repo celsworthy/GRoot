@@ -485,11 +485,10 @@ public class PrintController implements Initializable, Page {
     private void printJob(PrintJobData job) {
         if (job != null) {
             try {
-                boolean result = false;
                 if (job.getPrintJobPath() == null || job.getPrintJobPath().isEmpty())
-                    result = printer.runReprintJobTask(job.getPrintJobID()).get();
+                    printer.runReprintJobTask(job.getPrintJobID()).get();
                 else
-                    result = printer.runPrintUSBJobTask(job.getPrintJobID(), job.getPrintJobPath()).get();
+                    printer.runPrintUSBJobTask(job.getPrintJobID(), job.getPrintJobPath()).get();
                 rootController.showHomePage(this, printer);
             }
             catch (Exception ex) {

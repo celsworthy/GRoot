@@ -7,12 +7,14 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -30,16 +32,22 @@ public class RootServer extends Updater {
     //protected static final String HTTP_ADDRESS = "192.168.1.141";
     //protected static final String HTTP_ADDRESS = "localhost";
     //protected static final String HTTP_PORT = "8080";
-    private static final String ACCESS_PIN_COMMAND = "/api/admin/updatePIN";
+    private static final String UPDATE_PIN_COMMAND = "/api/admin/updatePIN";
     private static final String RESET_PIN_COMMAND = "/api/admin/resetPIN";
+    
+    private static final String ENABLE_DISABLE_WIFI_COMMAND = "/api/admin/enableDisableWifi";
+    private static final String GET_CURRENT_WIFI_STATE_COMMAND = "/api/admin/getCurrentWifiState";
+    private static final String SET_SERVER_NAME_COMMAND = "/api/admin/setServerName";
+    private static final String SET_WIFI_CREDENTIALS_COMMAND = "/api/admin/setWiFiCredentials";
     private static final String LIST_PRINTERS_COMMAND = "/api/discovery/listPrinters";
     private static final String WHO_ARE_YOU_COMMAND = "/api/discovery/whoareyou?pc";
-    
     protected final ObjectMapper mapper = new ObjectMapper();
     protected final ExecutorService executorService;
     protected SimpleStringProperty pinProperty = new SimpleStringProperty("1111");
 
+    private final SimpleBooleanProperty authorisedProperty = new SimpleBooleanProperty(false);
     private final SimpleObjectProperty<ServerStatusResponse> currentStatusProperty = new SimpleObjectProperty<>();
+    private final SimpleObjectProperty<WifiStatusResponse> wifiStatusProperty = new SimpleObjectProperty<>();
     private final ObservableMap<String, RootPrinter> currentPrinterMap = FXCollections.observableMap(new HashMap<>());
 
     private final String hostAddress;
@@ -68,9 +76,17 @@ public class RootServer extends Updater {
     public ObservableMap<String, RootPrinter> getCurrentPrinterMap() {
         return currentPrinterMap;
     }
+    
+    public SimpleBooleanProperty getAuthorisedProperty() {
+        return authorisedProperty;
+    }
 
     public SimpleObjectProperty<ServerStatusResponse> getCurrentStatusProperty() {
         return currentStatusProperty;
+    }
+    
+    public SimpleObjectProperty<WifiStatusResponse> getWifiStatusProperty() {
+        return wifiStatusProperty;
     }
 
     public String getName() {
@@ -136,16 +152,23 @@ public class RootServer extends Updater {
 
             int responseCode = con.getResponseCode();
 
-            if (responseCode == 200) {
-                int availChars = con.getInputStream().available();
-                requestData = new byte[availChars];
-                con.getInputStream().read(requestData, 0, availChars);
-            }
-            else if (responseCode == 204) {
-                requestData = new byte[0];
-            }
-            else {
-                System.out.println("Invalid response (" + Integer.toString(responseCode) +") after making request \"" + request + "\" from @" + hostAddress + ":" + hostPort);
+            switch (responseCode) {
+                case 200:
+                    int availChars = con.getInputStream().available();
+                    requestData = new byte[availChars];
+                    con.getInputStream().read(requestData, 0, availChars);
+                    authorisedProperty.set(true);
+                    break;
+                case 204:
+                    requestData = new byte[0];
+                    authorisedProperty.set(true);
+                    break;
+                case 401:
+                    authorisedProperty.set(false);
+                    break;
+                default:
+                    System.out.println("Invalid response (" + Integer.toString(responseCode) +") after making request \"" + request + "\" from @" + hostAddress + ":" + hostPort);
+                    break;
             }
         } 
         catch (java.net.SocketTimeoutException ex) {
@@ -157,6 +180,10 @@ public class RootServer extends Updater {
         }
         
         return requestData;
+    }
+
+    public <R> Future<R> runBackgroundTask( Callable<R> backgroundTask) {
+        return executorService.submit(backgroundTask);
     }
 
     public <R> Future<R> runRequestTask(String command, boolean isGetRequest, String content, BiFunction<byte[], ObjectMapper, R> responseMapper) {
@@ -230,19 +257,62 @@ public class RootServer extends Updater {
             });
     }
     
-    public Future<Boolean> runSetAccessPINTask(String pin) {
+    public Future<Void> runUpdatePINTask(String pin) {
         String data = String.format("\"%s\"", pin);
-        return runRequestTask(ACCESS_PIN_COMMAND, false, data,
+        return runRequestTask(UPDATE_PIN_COMMAND, false, data,
             (byte[] requestData, ObjectMapper jMapper) -> {
-                return true;
+                return null;
             });
     }
 
-    public Future<Boolean> runResetPINTask(String serial) {
+    public Future<Void> runResetPINTask(String serial) {
         String data = String.format("\"%s\"", serial);
         return runRequestTask(RESET_PIN_COMMAND, false, data,
             (byte[] requestData, ObjectMapper jMapper) -> {
-                return true;
+                return null;
+            });
+    }
+    
+    public Future<WifiStatusResponse> runRequestWifiStatusTask() {
+        return runRequestTask(GET_CURRENT_WIFI_STATE_COMMAND, false, null,
+            (byte[] requestData, ObjectMapper jMapper) -> {
+                WifiStatusResponse wifiStatus = null;
+                try {
+                    if (requestData.length > 0) {
+                        //System.out.println("Updating wifi status");
+                        wifiStatus = mapper.readValue(requestData, WifiStatusResponse.class);
+                        wifiStatusProperty.set(wifiStatus);
+                    }
+                }
+                catch (IOException ex) {
+                    System.out.println("Error whilst decoding printer list from @" + hostAddress + ":" + hostPort + " - " + ex);
+                }
+                return wifiStatus;
+            });
+    }
+    
+    public Future<Void> runSetServerNameTask(String serverName) {
+        String data = String.format("\"%s\"", serverName);
+        return runRequestTask(SET_SERVER_NAME_COMMAND, false, data,
+            (byte[] requestData, ObjectMapper jMapper) -> {
+                return null;
+            });
+    }
+    
+    public Future<Void> runEnableDisableWifiTask(boolean enableWifi) {
+        String data = enableWifi ? "\"true\""
+                                 : "\"false\"";
+        return runRequestTask(ENABLE_DISABLE_WIFI_COMMAND, false, data,
+            (byte[] requestData, ObjectMapper jMapper) -> {
+                return null;
+            });
+    }
+    
+    public Future<Void> runSetWiFiCredentialsTask(String ssid, String password) {
+        String data = String.format("\"%s:%s\"", ssid, password);
+        return runRequestTask(SET_WIFI_CREDENTIALS_COMMAND, false, data,
+            (byte[] requestData, ObjectMapper jMapper) -> {
+                return null;
             });
     }
 

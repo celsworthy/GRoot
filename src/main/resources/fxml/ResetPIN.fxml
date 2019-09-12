@@ -17,10 +17,10 @@
    <children>
       <VBox fx:id="accessPINVBox" alignment="TOP_CENTER">
          <children>
-            <Label fx:id="accessPINTitle" styleClass="page-title" text="resetPIN.title" />
+            <Label fx:id="resetPINTitle" styleClass="page-title" text="resetPIN.title" />
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="5.0" styleClass="panel">
                <children>
-                  <Label fx:id="pinLabel" styleClass="login-label" text="resetPIN.serialLabel">
+                  <Label fx:id="serialLabel" styleClass="login-label" text="resetPIN.serialLabel">
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
@@ -34,7 +34,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </HBox>
-                  <Label fx:id="loginPrompt" text="resetPIN.resetPrompt">
+                  <Label fx:id="resetPINPrompt" text="resetPIN.resetPrompt">
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
@@ -121,6 +121,6 @@
    </children>
    <stylesheets>
       <String fx:value="styles/Styles.css" />
-      <String fx:value="styles/resetPIN.css" />
+      <String fx:value="styles/ResetPIN.css" />
    </stylesheets>
 </StackPane>

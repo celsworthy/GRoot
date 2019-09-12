@@ -259,74 +259,74 @@ public class RootPrinter extends Updater {
         return runSendGCodeTask("G37 S");
     }
 
-    private Future<Boolean> runBooleanTask(String command, String data) {
+    private Future<Void> runVoidTask(String command, String data) {
         return rootServer.runRequestTask(COMMAND_PREFIX + printerId + command,
             false,
             data,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 runRequestPrinterStatusTask();
-                return true;
+                return null;
             });
     }
 
-    public Future<Boolean> runPauseTask() {
-        return runBooleanTask(PAUSE_COMMAND, null);
+    public Future<Void> runPauseTask() {
+        return runVoidTask(PAUSE_COMMAND, null);
     }
     
-    public Future<Boolean> runResumeTask() {
-        return runBooleanTask(RESUME_COMMAND, null);
+    public Future<Void> runResumeTask() {
+        return runVoidTask(RESUME_COMMAND, null);
     }
 
-    public Future<Boolean> runCancelTask() {
-        return runBooleanTask(CANCEL_COMMAND, safetiesOnProperty.get() ? "\"true\""
+    public Future<Void> runCancelTask() {
+        return runVoidTask(CANCEL_COMMAND, safetiesOnProperty.get() ? "\"true\""
                                                                        : "\"false\"");
     }
 
-    public Future<Boolean> runMacroTask(String macro) {
-        return runBooleanTask(MACRO_COMMAND, macro);
+    public Future<Void> runMacroTask(String macro) {
+        return runVoidTask(MACRO_COMMAND, macro);
     }
 
-    public Future<Boolean> runSwitchAmbientLightTask(String state) {
+    public Future<Void> runSwitchAmbientLightTask(String state) {
         String data = String.format("\"%s\"", state);
-        return runBooleanTask(SWITCH_AMBIENT_LIGHT_COMMAND, state);
+        return runVoidTask(SWITCH_AMBIENT_LIGHT_COMMAND, state);
     }
 
-    public Future<Boolean> runSetPrintAdjustDataTask(String data) {
-        return runBooleanTask(SET_PRINT_ADJUST_COMMAND, data);
+    public Future<Void> runSetPrintAdjustDataTask(String data) {
+        return runVoidTask(SET_PRINT_ADJUST_COMMAND, data);
     }
     
-    public Future<Boolean> runRenamePrinterTask(String printerName) {
+    public Future<Void> runRenamePrinterTask(String printerName) {
         String data = String.format("\"%s\"", printerName);
-        return runBooleanTask(RENAME_PRINTER_COMMAND, data);
+        return runVoidTask(RENAME_PRINTER_COMMAND, data);
     }
 
-    public Future<Boolean> runReprintJobTask(String printJobID) {
-        return runBooleanTask(REPRINT_JOB_COMMAND, printJobID);
+    public Future<Void> runReprintJobTask(String printJobID) {
+        return runVoidTask(REPRINT_JOB_COMMAND, printJobID);
     }
     
-    public Future<Boolean> runPrintUSBJobTask(String printJobID, String printJobPath) {
+    public Future<Void> runPrintUSBJobTask(String printJobID, String printJobPath) {
         String data = String.format("{\"printJobID\":\"%s\",\"printJobPath\":\"%s\"}", printJobID, printJobPath);
-        return runBooleanTask(PRINT_USB_JOB_COMMAND, data);
+        return runVoidTask(PRINT_USB_JOB_COMMAND, data);
     }
 
-    public Future<Boolean> runRemoveHeadTask() {
-        return runBooleanTask(REMOVE_HEAD_COMMAND, safetiesOnProperty.get() ? "\"true\""
+    public Future<Void> runRemoveHeadTask() {
+        return runVoidTask(REMOVE_HEAD_COMMAND, safetiesOnProperty.get() ? "\"true\""
                                                                             : "\"false\"");
     }
 
-    public Future<Boolean> runChangePrinterColourTask(String printerColour) {
+    public Future<Void> runChangePrinterColourTask(String printerColour) {
         String data = String.format("\"%s\"", printerColour);
-        return runBooleanTask(CHANGE_PRINTER_COLOUR_COMMAND, data);
+        return runVoidTask(CHANGE_PRINTER_COLOUR_COMMAND, data);
     }
 
-    public Future<Boolean> runCleanNozzleTask(int nozzleNumber) {
+    public Future<Void> runCleanNozzleTask(int nozzleNumber) {
         String data = String.format("\"%d\"", nozzleNumber);
-        return runBooleanTask(CLEAN_NOZZLE_COMMAND, data);
+        return runVoidTask(CLEAN_NOZZLE_COMMAND, data);
     }
 
-    public Future<Boolean> runEjectStuckMaterialTask(int materialNumber) {
+    public Future<Void> runEjectStuckMaterialTask(int materialNumber) {
         String data = String.format("\"%d\"", materialNumber);
-        return runBooleanTask(EJECT_STUCK_MATERIAL_COMMAND, data);
+        return runVoidTask(EJECT_STUCK_MATERIAL_COMMAND, data);
     }
 
     public Future<PrintJobListData> runListPrintableJobsTask(boolean reprintableMode) {
@@ -377,16 +377,16 @@ public class RootPrinter extends Updater {
             });
     }
     
-    public Future<Boolean> runTidyPrintJobDirsTask() {
-        return runBooleanTask(TIDY_PRINT_JOB_DIRS_COMMAND, null);
+    public Future<Void> runTidyPrintJobDirsTask() {
+        return runVoidTask(TIDY_PRINT_JOB_DIRS_COMMAND, null);
     }
 
-    public Future<Boolean> runWriteHeadEEPROMDataTask(HeadEEPROMData headData) {
+    public Future<Void> runWriteHeadEEPROMDataTask(HeadEEPROMData headData) {
         //System.out.println("Writing head EEPROM data from printer \"" + printerId + "\"");
-        Future<Boolean> f;
+        Future<Void> f;
         try {
             String mappedData = rootServer.getMapper().writeValueAsString(headData);
-            f = runBooleanTask(RESUME_COMMAND, mappedData);
+            f = runVoidTask(RESUME_COMMAND, mappedData);
         } 
         catch (JsonProcessingException ex) {
             f = new CompletableFuture<>();
@@ -435,12 +435,12 @@ public class RootPrinter extends Updater {
         return f;
     }
     
-    public Future<Boolean> runPurgeTask(PurgeTarget targetData) {
+    public Future<Void> runPurgeTask(PurgeTarget targetData) {
         //System.out.println("Writing head EEPROM data from printer \"" + printerId + "\"");
-        Future<Boolean> f;
+        Future<Void> f;
         try {
             String mappedData = rootServer.getMapper().writeValueAsString(targetData);
-            f = runBooleanTask(PURGE_TO_TARGET_COMMAND, mappedData);
+            f = runVoidTask(PURGE_TO_TARGET_COMMAND, mappedData);
         } 
         catch (JsonProcessingException ex) {
             f = new CompletableFuture<>();

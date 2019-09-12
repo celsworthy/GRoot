@@ -30,8 +30,8 @@ public class SettingsMenuController extends MenuController {
     @Override
     protected void menu2Action(ActionEvent event) {
         if (validButtonAction(event)) {
-            System.out.println("settings menu 2");
-            //rootController.showWirelessSettingsPage(this, printer);
+            //System.out.println("settings menu 2");
+            rootController.showWirelessPage(this, printer);
         }
     }
 

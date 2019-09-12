@@ -17,7 +17,7 @@
    <children>
       <VBox fx:id="accessPINVBox" alignment="TOP_CENTER">
          <children>
-            <Label fx:id="accessPINTitle" styleClass="page-title" text="login.title" />
+            <Label fx:id="loginTitle" styleClass="page-title" text="login.title" />
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="5.0" styleClass="panel">
                <children>
                   <Label fx:id="pinLabel" styleClass="login-label" text="login.pinLabel">
@@ -121,6 +121,6 @@
    </children>
    <stylesheets>
       <String fx:value="styles/Styles.css" />
-      <String fx:value="styles/login.css" />
+      <String fx:value="styles/Login.css" />
    </stylesheets>
 </StackPane>

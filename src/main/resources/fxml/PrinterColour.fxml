@@ -60,7 +60,7 @@
                         <Button fx:id="colour16Button" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#colourAction" styleClass="colour-button" GridPane.rowIndex="5" />
                      </children>
                   </GridPane>
-                  <Label fx:id="savePrompt" text="printerColour.savePrompt">
+                  <Label fx:id="savePrompt" text="common.savePrompt">
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>

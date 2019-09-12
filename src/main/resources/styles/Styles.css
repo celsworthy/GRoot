@@ -27,20 +27,28 @@ body {
     -fx-graphic: url("/image/bottom-bar-console.png");
 }
 
-.bottom-bar-next {
-    -fx-graphic: url("/image/bottom-bar-next.png");
-}
-
 .bottom-bar-home {
     -fx-graphic: url("/image/bottom-bar-home.png");
 }
 
-.bottom-bar-save {
-    -fx-graphic: url("/image/bottom-bar-save.png");
+.bottom-bar-login {
+    -fx-graphic: url("/image/bottom-bar-key.png");
 }
 
 .bottom-bar-main-menu {
     -fx-graphic: url("/image/bottom-bar-main-menu.png");
+}
+
+.bottom-bar-next {
+    -fx-graphic: url("/image/bottom-bar-next.png");
+}
+
+.bottom-bar-reset {
+    -fx-graphic: url("/image/bottom-bar-reset.png");
+}
+
+.bottom-bar-save {
+    -fx-graphic: url("/image/bottom-bar-save.png");
 }
 
 .bottom-bar-settings {

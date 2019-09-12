@@ -1,0 +1,6 @@
+.keyboard-key {
+    -fx-background-color: #303030;
+    -fx-font-size: 12pt;
+    -fx-font-weight: 300;
+    -fx-text-fill: white;
+}

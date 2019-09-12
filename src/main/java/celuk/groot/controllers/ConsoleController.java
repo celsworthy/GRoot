@@ -81,7 +81,7 @@ public class ConsoleController implements Initializable, Page {
     @FXML
     private Button backspaceKey;
     @FXML
-    private Button returnKey;
+    private Button enterKey;
 
     @FXML
     private Button leftButton;
@@ -132,7 +132,7 @@ public class ConsoleController implements Initializable, Page {
     }
     
     @FXML
-    void returnAction(ActionEvent event) {
+    void enterAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
             gcodeHistory.getSelectionModel().clearSelection();
             String gCode = gcodeField.getText().trim();
@@ -225,7 +225,7 @@ public class ConsoleController implements Initializable, Page {
         backspaceKey.setUserData(KeyCode.BACK_SPACE);
         dashKey.setUserData(KeyCode.MINUS);
         pointKey.setUserData(KeyCode.PERIOD);
-        returnKey.setUserData(KeyCode.ENTER);
+        enterKey.setUserData(KeyCode.ENTER);
         spaceKey.setUserData(KeyCode.SPACE);
         
         //gcodeHistory.getSelectionModel().selectedItemProperty().addListener(historyListener);

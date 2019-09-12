@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
@@ -24,7 +24,7 @@ public class ResetPINController implements Initializable, Page {
     @FXML
     private Label serialLabel;
     @FXML
-    private PasswordField serialField;
+    private TextField serialField;
     @FXML
     private Label resetPINPrompt;
     @FXML

@@ -55,7 +55,7 @@
                   <Button id="twoKey" fx:id="twoKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="2" GridPane.columnIndex="2" />
                   <Button id="threeKey" fx:id="threeKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="3" GridPane.columnIndex="3" />
                   <Button id="fourKey" fx:id="fourKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="4" GridPane.columnIndex="4" />
-                  <Button id="backspaceKey" fx:id="backspaceKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" text="Del" GridPane.columnIndex="5" GridPane.rowSpan="2">
+                  <Button id="backspaceKey" fx:id="backspaceKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" text="keyboard.backspace" GridPane.columnIndex="5" GridPane.rowSpan="2">
                      <styleClass>
                         <String fx:value="keypad-key" />
                         <String fx:value="backspace-key" />
@@ -76,13 +76,13 @@
                   <Button id="fKey" fx:id="fKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="F" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                   <Button id="sKey" fx:id="sKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="S" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                   <Button id="tKey" fx:id="tKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="T" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                  <Button id="returnKey" fx:id="returnKey" defaultButton="true" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#returnAction" text="Ret" GridPane.columnIndex="5" GridPane.rowIndex="3" GridPane.rowSpan="2">
+                  <Button id="enterKey" fx:id="enterKey" defaultButton="true" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#enterAction" text="keyboard.enter" GridPane.columnIndex="5" GridPane.rowIndex="3" GridPane.rowSpan="2">
                      <styleClass>
                         <String fx:value="keypad-key" />
-                        <String fx:value="return-key" />
+                        <String fx:value="enter-key" />
                      </styleClass></Button>
                   <Button id="pointKey" fx:id="pointKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="." GridPane.rowIndex="4" />
-                  <Button id="spaceKey" fx:id="spaceKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="keypad.space" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
+                  <Button id="spaceKey" fx:id="spaceKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="keyboard.space" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
                   <Button id="dashKey" fx:id="dashKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="-" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                </children>
             </GridPane>
