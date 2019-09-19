@@ -122,7 +122,7 @@ public class PrinterNameController implements Initializable, Page {
     @Override
     public void startUpdates() {
         Platform.runLater(() -> {
-            currentName = printer.getCurrentStatusProperty().get().getPrinterName();
+            currentName = printer.getPrinterName();
             nameField.setText(currentName);
             keyboardController.setCase(true);
         });

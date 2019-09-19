@@ -294,14 +294,14 @@ public class HomeController implements Initializable, Page {
                 printerButton.setStyle("-fx-background-color: "
                                        + printerStatus.getPrinterWebColourString()
                                        + ";"
-                                       + "-fx-background-image: "
+                                       + "-fx-background-image: url(\""
                                        + md.getMachineIcon(printerStatus.getPrinterWebColourString())
-                                       + ";");
+                                       + "\");");
                 nameLabel.setText(printerStatus.getPrinterName());
                 modelLabel.setText(I18n.t(md.model));
-                idleVBox.setStyle("-fx-background-image: "
-                                 + md.getIdleIcon()
-                                 + ";");
+                idleVBox.setStyle("-fx-background-image: url(\""
+                                 + md.getStatusIconDark20()
+                                 + "\");");
                 updateFilamentStatus(printerStatus, 0);
                 updateFilamentStatus(printerStatus, 1);
                 updateFilamentEjectStatus(printerStatus);

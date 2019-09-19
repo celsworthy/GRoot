@@ -81,14 +81,7 @@ public class WirelessController implements Initializable, Page {
     @FXML
     void wirelessToggleAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof RadioButton) {
-            clearPage();
-            server.runBackgroundTask(() -> {
-                Future<Void> f1 = server.runEnableDisableWifiTask(wirelessOn.isSelected());
-                f1.get();
-                Future<WifiStatusResponse> f2 = server.runRequestWifiStatusTask();
-                f1.get();
-                return null;
-            });
+            reconfigure();
         }
     }
     
@@ -115,18 +108,25 @@ public class WirelessController implements Initializable, Page {
     @FXML
     void rightButtonAction(ActionEvent event) {
         if (rootController != null &&
-            event.getSource() instanceof Button &&
-            wirelessOn.isSelected()) {
+            event.getSource() instanceof Button) {
             
             radioHBox.setDisable(true);
             credentialsVBox.setDisable(true);
             keyboardPane.setDisable(true);
             rightButton.setDisable(true);
+            String ssidText = ssidField.getText();
+            String passwordText = passwordField.getText();
+            boolean wifiEnabled = wirelessOn.isSelected();
+            
             server.runBackgroundTask(() -> {
-                Future<Void> f1 = server.runSetWiFiCredentialsTask(ssidField.getText(), passwordField.getText());
+                Future<Void> f1 = null;
+                if (wifiEnabled)
+                    f1 = server.runSetWiFiCredentialsTask(ssidText, passwordText);
+                else
+                    f1 = server.runEnableDisableWifiTask(false);
                 f1.get();
                 Future<WifiStatusResponse> f2 = server.runRequestWifiStatusTask();
-                f1.get();
+                f2.get();
                 return null;
             });
         }
@@ -139,18 +139,12 @@ public class WirelessController implements Initializable, Page {
     private RootPrinter printer = null;
     private RootServer server = null;
     private WifiStatusResponse wifiStatus = null;
-    private ChangeListener<String> fieldListener = (ob, ov, nv) -> {
-        if (wirelessOn.isSelected()) {
-            String newSSID = ssidField.getText();
-            newSSID = (newSSID == null ? "" : newSSID.trim());
-            rightButton.setDisable(newSSID.isEmpty());
-        }
-        else {
-            rightButton.setDisable(true);
-        }
+    private boolean wifiEnabled = false;
+    private final ChangeListener<String> fieldListener = (ob, ov, nv) -> {
+        reconfigure();
     };
     
-    private ChangeListener<WifiStatusResponse> statusListener = (ob, ov, nv) -> {
+    private final ChangeListener<WifiStatusResponse> statusListener = (ob, ov, nv) -> {
         wifiStatus = nv;
         
         Platform.runLater(() -> {
@@ -161,6 +155,7 @@ public class WirelessController implements Initializable, Page {
                 radioHBox.setDisable(false);
                 credentialsVBox.setDisable(false);
                 wirelessOn.setSelected(true);
+                wifiEnabled = true;
                 ssidField.setText(wifiStatus.getSsid());
                 passwordField.setText("");
                 rightButton.setDisable(wifiStatus.getSsid().isBlank());
@@ -169,6 +164,7 @@ public class WirelessController implements Initializable, Page {
             else {
                 radioHBox.setDisable(wifiStatus == null);
                 wirelessOff.setSelected(true);
+                wifiEnabled = false;
                 credentialsVBox.setDisable(true);
                 ssidField.setText("");
                 passwordField.setText("");
@@ -220,8 +216,8 @@ public class WirelessController implements Initializable, Page {
         passwordClear.setUserData(passwordField);
         
         middleButton.setVisible(false);
-        
         ssidField.textProperty().addListener(fieldListener);
+        
     }
     
     @Override
@@ -251,6 +247,20 @@ public class WirelessController implements Initializable, Page {
         wirelessPane.setVisible(false);
     }
     
+    private void reconfigure()
+    {
+        boolean newWifiEnabled = wirelessOn.isSelected();
+        String newSSID = ssidField.getText();
+        if (wifiEnabled != newWifiEnabled ||
+            (newWifiEnabled && newSSID != null && !newSSID.isBlank())) {
+            rightButton.setDisable(false);
+        }
+        else {
+            rightButton.setDisable(true);
+        }
+        credentialsVBox.setDisable(!newWifiEnabled);
+    };
+
     private void clearPage() {
         wifiStatus = null;
         Platform.runLater(() -> {

@@ -22,7 +22,7 @@ public class SettingsMenuController extends MenuController {
     @Override
     protected void menu1Action(ActionEvent event) {
         if (validButtonAction(event)) {
-            System.out.println("settings menu 1");
+            //System.out.println("settings menu 1");
             rootController.showIdentityMenu(this, printer);
         }
     }
@@ -38,7 +38,7 @@ public class SettingsMenuController extends MenuController {
     @Override
     protected void menu3Action(ActionEvent event) {
         if (validButtonAction(event)) {
-            System.out.println("settings menu 3");
+            //System.out.println("settings menu 3");
             rootController.showSecurityMenu(this, printer);
         }
     }

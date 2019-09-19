@@ -33,84 +33,84 @@
                 <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button id="e1m50" fx:id="e1m50Button" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#controlAction" prefHeight="80.0" prefWidth="64.0">
+                  <Button id="e1m50" fx:id="e1m50Button" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="10.0" minWidth="10.0" mnemonicParsing="false" onAction="#controlAction" prefHeight="80.0" prefWidth="64.0">
                      <styleClass>
                         <String fx:value="centered-background-image" />
                         <String fx:value="jog-button" />
                         <String fx:value="jog-1-m50" />
                      </styleClass>
                   </Button>
-                  <Button id="e1m20" fx:id="e1m20Button" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#controlAction" prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="1">
+                  <Button id="e1m20" fx:id="e1m20Button" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="10.0" minWidth="10.0" mnemonicParsing="false" onAction="#controlAction" prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="1">
                      <styleClass>
                         <String fx:value="centered-background-image" />
                         <String fx:value="jog-button" />
                         <String fx:value="jog-1-m20" />
                      </styleClass>
                   </Button>
-                  <Button id="e1Eject" fx:id="e1EjectButton" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#controlAction" prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="2">
+                  <Button id="e1Eject" fx:id="e1EjectButton" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="10.0" minWidth="10.0" mnemonicParsing="false" onAction="#controlAction" prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="2">
                      <styleClass>
                         <String fx:value="centered-background-image" />
                         <String fx:value="jog-button" />
                         <String fx:value="jog-1-eject" />
                      </styleClass>
                   </Button>
-                  <Button id="e1p20" fx:id="e1p20Button" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#controlAction" prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="3">
+                  <Button id="e1p20" fx:id="e1p20Button" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="10.0" minWidth="10.0" mnemonicParsing="false" onAction="#controlAction" prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="3">
                      <styleClass>
                         <String fx:value="centered-background-image" />
                         <String fx:value="jog-button" />
                         <String fx:value="jog-1-p20" />
                      </styleClass>
                   </Button>
-                  <Button id="e1p50" fx:id="e1p50Button" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#controlAction" prefHeight="80.0" prefWidth="64.0" GridPane.columnIndex="4">
+                  <Button id="e1p50" fx:id="e1p50Button" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="10.0" minWidth="10.0" mnemonicParsing="false" onAction="#controlAction" prefHeight="80.0" prefWidth="64.0" GridPane.columnIndex="4">
                      <styleClass>
                         <String fx:value="centered-background-image" />
                         <String fx:value="jog-button" />
                         <String fx:value="jog-1-p50" />
                      </styleClass>
                   </Button>
-                  <Button id="e1Heat" fx:id="e1HeatButton" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#controlAction" prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="6">
+                  <Button id="e1Heat" fx:id="e1HeatButton" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="10.0" minWidth="10.0" mnemonicParsing="false" onAction="#controlAction" prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="6">
                      <styleClass>
                         <String fx:value="centered-background-image" />
                         <String fx:value="jog-button" />
                         <String fx:value="jog-1-heat" />
                      </styleClass>
                   </Button>
-                  <Button id="e2m50" fx:id="e2m50Button" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#controlAction" prefHeight="80.0" prefWidth="64.0" GridPane.rowIndex="2">
+                  <Button id="e2m50" fx:id="e2m50Button" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="10.0" minWidth="10.0" mnemonicParsing="false" onAction="#controlAction" prefHeight="80.0" prefWidth="64.0" GridPane.rowIndex="2">
                      <styleClass>
                         <String fx:value="centered-background-image" />
                         <String fx:value="jog-button" />
                         <String fx:value="jog-2-m50" />
                      </styleClass>
                   </Button>
-                  <Button id="e2m20" fx:id="e2m20Button" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#controlAction" prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Button id="e2m20" fx:id="e2m20Button" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="10.0" minWidth="10.0" mnemonicParsing="false" onAction="#controlAction" prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <styleClass>
                         <String fx:value="centered-background-image" />
                         <String fx:value="jog-button" />
                         <String fx:value="jog-2-m20" />
                      </styleClass>
                   </Button>
-                  <Button id="e2Eject" fx:id="e2EjectButton" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#controlAction" prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <Button id="e2Eject" fx:id="e2EjectButton" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="10.0" minWidth="10.0" mnemonicParsing="false" onAction="#controlAction" prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <styleClass>
                         <String fx:value="centered-background-image" />
                         <String fx:value="jog-button" />
                         <String fx:value="jog-2-eject" />
                      </styleClass>
                   </Button>
-                  <Button id="e2p20" fx:id="e2p20Button" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#controlAction" prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                  <Button id="e2p20" fx:id="e2p20Button" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="10.0" minWidth="10.0" mnemonicParsing="false" onAction="#controlAction" prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
                      <styleClass>
                         <String fx:value="centered-background-image" />
                         <String fx:value="jog-button" />
                         <String fx:value="jog-2-p20" />
                      </styleClass>
                   </Button>
-                  <Button id="e2p50" fx:id="e2p50Button" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#controlAction" prefHeight="80.0" prefWidth="64.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                  <Button id="e2p50" fx:id="e2p50Button" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="10.0" minWidth="10.0" mnemonicParsing="false" onAction="#controlAction" prefHeight="80.0" prefWidth="64.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
                      <styleClass>
                         <String fx:value="centered-background-image" />
                         <String fx:value="jog-button" />
                         <String fx:value="jog-2-p50" />
                      </styleClass>
                   </Button>
-                  <Button id="e2Heat" fx:id="e2HeatButton" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#controlAction" prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                  <Button id="e2Heat" fx:id="e2HeatButton" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="10.0" minWidth="10.0" mnemonicParsing="false" onAction="#controlAction" prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="6" GridPane.rowIndex="2">
                      <styleClass>
                         <String fx:value="centered-background-image" />
                         <String fx:value="jog-button" />
@@ -228,7 +228,7 @@
                                     <String fx:value="move-y-m10" />
                                  </styleClass>
                                  <GridPane.margin>
-                                    <Insets left="40.0" />
+                                    <Insets left="55.0" />
                                  </GridPane.margin>
                               </Button>
                               <Button id="yHome" fx:id="yHomeButton" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#controlAction" prefHeight="48.0" prefWidth="48.0" GridPane.rowIndex="2">
@@ -238,7 +238,7 @@
                                     <String fx:value="move-y-home" />
                                  </styleClass>
                                  <GridPane.margin>
-                                    <Insets left="37.0" />
+                                    <Insets left="35.0" />
                                  </GridPane.margin>
                               </Button>
                               <Button id="yp10" fx:id="yp10Button" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#controlAction" prefHeight="99.0" prefWidth="67.0" GridPane.rowIndex="3" GridPane.rowSpan="2">
@@ -248,7 +248,7 @@
                                     <String fx:value="move-y-p10" />
                                  </styleClass>
                                  <GridPane.margin>
-                                    <Insets left="21.0" />
+                                    <Insets left="15.0" />
                                  </GridPane.margin>
                               </Button>
                               <Button id="heatBed" fx:id="heatBedButton" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#controlAction" prefHeight="48.0" prefWidth="48.0" GridPane.columnIndex="2" GridPane.rowIndex="4">

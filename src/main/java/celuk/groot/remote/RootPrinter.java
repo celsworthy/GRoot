@@ -3,6 +3,7 @@ package celuk.groot.remote;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -20,6 +21,7 @@ public class RootPrinter extends Updater {
     private static final String COMMAND_PREFIX = "/api/";
     private static final String CHANGE_PRINTER_COLOUR_COMMAND = "/remoteControl/changePrinterColour";
     private static final String CLEAN_NOZZLE_COMMAND = "/remoteControl/cleanNozzle";
+    private static final String CLEAR_ERROR_COMMAND = "/remoteControl/clearError";
     private static final String EJECT_FILAMENT_COMMAND = "/remoteControl/ejectFilament";
     private static final String EJECT_STUCK_MATERIAL_COMMAND = "/remoteControl/ejectStuckMaterial";
     private static final String ERROR_STATUS_COMMAND = "/remoteControl/activeErrorStatus";
@@ -53,6 +55,9 @@ public class RootPrinter extends Updater {
     private final SimpleBooleanProperty safetiesOnProperty = new SimpleBooleanProperty(true);
     private Set<Integer> acknowledgedErrorSet = new HashSet<>();
     
+    //private ErrorDetails fakeError = null;
+    //private int fakeCount = 0;
+    
     public RootPrinter(RootServer rootServer, String printerId) {
         super();
         this.rootServer = rootServer;
@@ -63,6 +68,22 @@ public class RootPrinter extends Updater {
         return printerId;
     }
     
+    public String getPrinterName() {
+        PrinterStatusResponse sr = currentStatusProperty.get();
+        if (sr != null)
+            return sr.getPrinterName();
+        else
+            return "-?-";
+    }
+    
+    public String getPrinterTypeCode() {
+        PrinterStatusResponse sr = currentStatusProperty.get();
+        if (sr != null)
+            return sr.getPrinterTypeCode();
+        else
+            return "";
+    }
+
     public SimpleObjectProperty<PrinterStatusResponse> getCurrentStatusProperty() {
         return currentStatusProperty;
     }
@@ -162,16 +183,44 @@ public class RootPrinter extends Updater {
     }
 
     private void processErrorList(List<ErrorDetails> errorList) {
+        /*
+        if (fakeCount <= 20) {
+            ++fakeCount;
+            System.out.println("fakeCount = " + Integer.toString(fakeCount));
+        }
+        if (fakeCount > 20) {
+            if (fakeError == null) { 
+                fakeError = new ErrorDetails();
+                //Z_TOP_SWITCH("error.ERROR_Z_TOP_SWITCH", 17, true, CLEAR_CONTINUE, ABORT),
+                fakeError.setErrorCode(17);
+                fakeError.setErrorTitle("Error 17");
+                fakeError.setErrorMessage("ERROR_Z_TOP_SWITCH");
+                fakeError.setUserToClear(true);
+                fakeError.setOptions(3);
+            }
+            if (errorList == null)
+                errorList = new ArrayList<ErrorDetails>();
+            errorList.add(fakeError);
+        }
+        */
+
         Map<Integer, ErrorDetails> activeMap = new HashMap<>();
         Set<Integer> ackSet = new HashSet<>();
         if (errorList != null) {
             errorList.forEach(e -> {
-                if (acknowledgedErrorSet.contains(e.getErrorCode()))
-                    ackSet.add(e.getErrorCode());
-                else
-                    activeMap.put(e.getErrorCode(), e);
+                int errorCode = e.getErrorCode();
+                if (errorCode == 25 || errorCode == 33 || errorCode == 41) {
+                    // Ignore these errors for now
+                }
+                else {
+                    if (acknowledgedErrorSet.contains(e.getErrorCode()))
+                        ackSet.add(e.getErrorCode());
+                    else
+                        activeMap.put(e.getErrorCode(), e);
+                }
             });
         }
+        
         acknowledgedErrorSet = ackSet;
         activeErrorMapProperty.set(activeMap);
         if (!activeMap.isEmpty()) {
@@ -322,6 +371,11 @@ public class RootPrinter extends Updater {
     public Future<Void> runCleanNozzleTask(int nozzleNumber) {
         String data = String.format("\"%d\"", nozzleNumber);
         return runVoidTask(CLEAN_NOZZLE_COMMAND, data);
+    }
+
+    public Future<Void> runClearErrorTask(int errorCode) {
+        String data = String.format("\"%d\"", errorCode);
+        return runVoidTask(CLEAR_ERROR_COMMAND, data);
     }
 
     public Future<Void> runEjectStuckMaterialTask(int materialNumber) {

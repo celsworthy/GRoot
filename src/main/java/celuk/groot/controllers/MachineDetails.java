@@ -8,34 +8,52 @@ import javafx.scene.paint.Color;
 
 public class MachineDetails
 {
+    public enum OPACITY {
+        PC20,
+        PC50,
+        PC100
+    }
+    
     public static MachineDetails defaultDetails;
     public static Map<String, MachineDetails> machineDetailsMap;
     static {
         defaultDetails = new MachineDetails("machine.robox",
-                                            "url(\"/image/logo-robox-black-20pc.png\")",
+                                            "/image/logo-robox-text-white.png",
                                             "/image/logo-robox-black-20pc.png",
+                                            "/image/logo-robox-black-50pc.png",
+                                            "/image/logo-robox-black.png",
                                             "/image/logo-robox-white-20pc.png",
-                                            "url(\"/image/machine-robox-black.png\")",
-                                            "url(\"/image/machine-robox-white.png\")");
+                                            "/image/logo-robox-white-50pc.png",
+                                            "/image/logo-robox-white.png",
+                                            "/image/machine-robox-black.png",
+                                            "/image/machine-robox-white.png");
         
         machineDetailsMap = new HashMap<>();
         machineDetailsMap.put("RBX01", defaultDetails);
         machineDetailsMap.put("RBX02", defaultDetails);
         machineDetailsMap.put("RBX10",
                               new MachineDetails("machine.roboxPro",
-                                                 "url(\"/image/logo-roboxpro-black-20pc.png\")",
+                                                 "/image/logo-roboxpro-text-inverse.png",
                                                  "/image/logo-roboxpro-black-20pc.png",
+                                                 "/image/logo-roboxpro-black-50pc.png",
+                                                 "/image/logo-roboxpro-black.png",
                                                  "/image/logo-roboxpro-white-20pc.png",
-                                                 "url(\"/image/machine-roboxpro-black.png\")",
-                                                 "url(\"/image/machine-roboxpro-white.png\")"));
+                                                 "/image/logo-roboxpro-white-50pc.png",
+                                                 "/image/logo-roboxpro-white.png",
+                                                 "/image/machine-roboxpro-black.png",
+                                                 "/image/machine-roboxpro-white.png"));
     }
     
     public String model;
-    public String idleIcon;
-    public String statusIconLight;
+    public String textIcon;
+    public String statusIconDark20;
+    public String statusIconDark50;
     public String statusIconDark;
-    public String machineIconLight;
+    public String statusIconLight20;
+    public String statusIconLight50;
+    public String statusIconLight;
     public String machineIconDark;
+    public String machineIconLight;
 
     public MachineDetails()
     {
@@ -43,18 +61,26 @@ public class MachineDetails
     }
 
     public MachineDetails(String model,
-                          String idleIcon,
-                          String statusIconLight,
+                          String textIcon,
+                          String statusIconDark20,
+                          String statusIconDark50,
                           String statusIconDark,
-                          String machineIconLight,
-                          String machineIconDark)
+                          String statusIconLight20,
+                          String statusIconLight50,
+                          String statusIconLight,
+                          String machineIconDark,
+                          String machineIconLight)
     {
         this.model = model;
-        this.idleIcon = idleIcon;
-        this.statusIconLight = statusIconLight;
+        this.textIcon = textIcon;
+        this.statusIconDark20 = statusIconDark20;
+        this.statusIconDark50 = statusIconDark50;
         this.statusIconDark = statusIconDark;
-        this.machineIconLight = machineIconLight;
+        this.statusIconLight20 = statusIconLight20;
+        this.statusIconLight50 = statusIconLight50;
+        this.statusIconLight = statusIconLight;
         this.machineIconDark = machineIconDark;
+        this.machineIconLight = machineIconLight;
     }
 
     @JsonProperty
@@ -70,27 +96,39 @@ public class MachineDetails
     }
 
     @JsonProperty
-    public String getIdleIcon()
+    public String getTextIcon()
     {
-        return idleIcon;
+        return textIcon;
     }
 
     @JsonProperty
-    public void getIdleIcon(String idleIcon)
+    public void setTextIcon(String textIcon)
     {
-        this.idleIcon = idleIcon;
+        this.textIcon = textIcon;
     }
 
     @JsonProperty
-    public String getStatusIconLight()
+    public String getStatusIconDark20()
     {
-        return statusIconLight;
+        return statusIconDark20;
     }
 
     @JsonProperty
-    public void setStatusIconLight(String statusIconLight)
+    public void setStatusIconDark20(String statusIconDark20)
     {
-        this.statusIconLight = statusIconLight;
+        this.statusIconDark20 = statusIconDark20;
+    }
+
+    @JsonProperty
+    public String getStatusIconDark50()
+    {
+        return statusIconDark50;
+    }
+
+    @JsonProperty
+    public void setStatusIconDark50(String statusIconDark50)
+    {
+        this.statusIconDark50 = statusIconDark50;
     }
 
     @JsonProperty
@@ -105,10 +143,72 @@ public class MachineDetails
         this.statusIconDark = statusIconDark;
     }
 
-    @JsonIgnore
-    public String getStatusIcon(String webColour)
+    @JsonProperty
+    public String getStatusIconLight20()
     {
-        return getComplimentaryOption(webColour, statusIconLight, statusIconDark);
+        return statusIconLight20;
+    }
+
+    @JsonProperty
+    public void setStatusIconLight20(String statusIconLight20)
+    {
+        this.statusIconLight20 = statusIconLight20;
+    }
+
+    @JsonProperty
+    public String getStatusIconLight50()
+    {
+        return statusIconLight50;
+    }
+
+    @JsonProperty
+    public void setStatusIconLight50(String statusIconLight50)
+    {
+        this.statusIconLight50 = statusIconLight50;
+    }
+
+    @JsonProperty
+    public String getStatusIconLight()
+    {
+        return statusIconLight;
+    }
+
+    @JsonProperty
+    public void setStatusIconLight(String statusIconLight)
+    {
+        this.statusIconLight = statusIconLight;
+    }
+
+    @JsonIgnore
+    public String getStatusIcon20(String webColour)
+    {
+        return getComplimentaryOption(webColour, statusIconDark20, statusIconLight20);
+    }
+
+    @JsonIgnore
+    public String getStatusIcon50(String webColour)
+    {
+        return getComplimentaryOption(webColour, statusIconDark50, statusIconLight50);
+    }
+
+    @JsonIgnore
+    public String getStatusIcon(String webColour, OPACITY iconOpacity)
+    {
+        String s = "";
+        switch (iconOpacity) {
+            case PC20:
+                s = getComplimentaryOption(webColour, statusIconDark20, statusIconLight20);
+                break;
+                
+            case PC50:
+                s = getComplimentaryOption(webColour, statusIconDark50, statusIconLight50);
+                break;
+                
+            case PC100:
+                s = getComplimentaryOption(webColour, statusIconDark, statusIconLight);
+                break;
+        }
+        return s;
     }
 
     @JsonProperty
@@ -138,7 +238,7 @@ public class MachineDetails
     @JsonIgnore
     public String getMachineIcon(String webColour)
     {
-        return getComplimentaryOption(webColour, machineIconLight, machineIconDark);
+        return getComplimentaryOption(webColour, machineIconDark, machineIconLight);
     }
 
     public static <T> T getComplimentaryOption(String webColour, T darkOption, T lightOption) {

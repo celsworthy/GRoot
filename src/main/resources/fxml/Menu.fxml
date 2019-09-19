@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -14,14 +15,11 @@
    <children>
       <VBox fx:id="menuVBox" alignment="TOP_CENTER">
          <children>
-            <Label fx:id="menuModel" styleClass="menu-model" text="menu.model" VBox.vgrow="SOMETIMES">
+            <Pane fx:id="menuLogo" maxWidth="1.7976931348623157E308" prefHeight="48.0" styleClass="centered-background-image">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </Label>
+            </Pane>
             <Label fx:id="menuTitle" styleClass="menu-title" text="menu.title" VBox.vgrow="SOMETIMES">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -30,7 +28,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </Label>
-            <Button id="m1" fx:id="menuButton1" alignment="BASELINE_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#menu1Action" text="menu.button1" VBox.vgrow="SOMETIMES">
+            <Button id="m1" fx:id="menuButton1" alignment="BASELINE_LEFT" graphicTextGap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#menu1Action" text="menu.button1" VBox.vgrow="SOMETIMES">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
@@ -42,7 +40,7 @@
                   <String fx:value="menu-button-1" />
                </styleClass>
             </Button>
-            <Button id="m2" fx:id="menuButton2" alignment="BASELINE_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#menu2Action" text="menu.button2" VBox.vgrow="SOMETIMES">
+            <Button id="m2" fx:id="menuButton2" alignment="BASELINE_LEFT" graphicTextGap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#menu2Action" text="menu.button2" VBox.vgrow="SOMETIMES">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
@@ -54,7 +52,7 @@
                   <String fx:value="menu-button-2" />
                </styleClass>
             </Button>
-            <Button id="m3" fx:id="menuButton3" alignment="BASELINE_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#menu3Action" text="menu.button3" VBox.vgrow="SOMETIMES">
+            <Button id="m3" fx:id="menuButton3" alignment="BASELINE_LEFT" graphicTextGap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#menu3Action" text="menu.button3" VBox.vgrow="SOMETIMES">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
@@ -66,7 +64,7 @@
                   <String fx:value="menu-button-3" />
                </styleClass>
             </Button>
-            <Button id="m4" fx:id="menuButton4" alignment="BASELINE_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#menu4Action" text="menu.button4" VBox.vgrow="SOMETIMES">
+            <Button id="m4" fx:id="menuButton4" alignment="BASELINE_LEFT" graphicTextGap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#menu4Action" text="menu.button4" VBox.vgrow="SOMETIMES">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
@@ -78,7 +76,7 @@
                   <String fx:value="menu-button-4" />
                </styleClass>
             </Button>
-            <Button id="m5" fx:id="menuButton5" alignment="BASELINE_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#menu5Action" text="menu.button5" VBox.vgrow="SOMETIMES">
+            <Button id="m5" fx:id="menuButton5" alignment="BASELINE_LEFT" graphicTextGap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#menu5Action" text="menu.button5" VBox.vgrow="SOMETIMES">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
@@ -90,7 +88,7 @@
                   <String fx:value="menu-button-5" />
                </styleClass>
             </Button>
-            <Button id="m6" fx:id="menuButton6" alignment="BASELINE_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#menu6Action" text="menu.button6" VBox.vgrow="SOMETIMES">
+            <Button id="m6" fx:id="menuButton6" alignment="BASELINE_LEFT" graphicTextGap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#menu6Action" text="menu.button6" VBox.vgrow="SOMETIMES">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>

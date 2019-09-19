@@ -5,6 +5,7 @@
  */
 package celuk.groot.controllers;
 
+import celuk.groot.remote.PrinterStatusResponse;
 import celuk.groot.remote.RootPrinter;
 import celuk.language.I18n;
 import javafx.scene.control.Labeled;
@@ -34,5 +35,18 @@ public interface Page {
     default void translateLabels(Labeled ... labels) {
         for (Labeled l : labels)
             l.setText(I18n.t(l.getText()));
+    }
+
+    default String getStatusIcon(RootPrinter p, MachineDetails.OPACITY iconOpacity) {
+        String typeCode = "";
+        String printerColour = "White";
+        if (p != null) {
+            PrinterStatusResponse s = p.getCurrentStatusProperty().get();
+            if (s != null) {
+                typeCode = s.getPrinterTypeCode();
+                printerColour = s.getPrinterWebColourString();
+            }
+        }
+        return MachineDetails.getDetails(typeCode).getStatusIcon(printerColour, iconOpacity);
     }
 }

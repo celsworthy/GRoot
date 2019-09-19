@@ -232,7 +232,7 @@ public class PrinterSelectController implements Initializable, Page {
             RootPrinter p = (RootPrinter)b.getUserData();
             if (p != null && printerStatus != null && p.getPrinterId().equalsIgnoreCase(printerStatus.getPrinterID())) {
                 MachineDetails md = MachineDetails.getDetails(printerStatus.getPrinterTypeCode());
-                String statusIcon = md.getStatusIcon(printerStatus.getPrinterWebColourString());
+                String statusIcon = md.getStatusIcon(printerStatus.getPrinterWebColourString(), MachineDetails.OPACITY.PC20);
                 Image statusImage = new Image(getClass().getResourceAsStream(statusIcon));
                 String buttonStyle = md.getComplimentaryOption(printerStatus.getPrinterWebColourString(), "printer-button-dark", "printer-button-light");
                 Platform.runLater(() -> {

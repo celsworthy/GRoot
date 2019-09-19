@@ -1,5 +1,6 @@
 package celuk.groot.controllers;
 
+import celuk.groot.remote.PrinterStatusResponse;
 import celuk.groot.remote.RootPrinter;
 import celuk.language.I18n;
 import java.net.URL;
@@ -9,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 abstract public class MenuController implements Initializable, Page {
@@ -16,7 +18,7 @@ abstract public class MenuController implements Initializable, Page {
     @FXML
     protected StackPane menuPane;
     @FXML
-    protected Label menuModel;
+    protected Pane menuLogo;
     @FXML
     protected Label menuTitle;
     @FXML
@@ -108,14 +110,18 @@ abstract public class MenuController implements Initializable, Page {
     @Override
     public void displayPage(RootPrinter printer) {
         this.printer = printer;
+        String logoIcon = "/image/logo-root-text-white.png";
+        if (printer != null) {
+            PrinterStatusResponse s = printer.getCurrentStatusProperty().get();
+            if (s != null) {
+                logoIcon = MachineDetails.getDetails(s.getPrinterTypeCode())
+                                         .getTextIcon();
+            }
+        }
+        menuLogo.setStyle("-fx-background-image: url(\""
+                          + logoIcon
+                          + "\");");
         startUpdates();
-        String typeCode = "";
-        if (printer != null)
-            typeCode = printer.getCurrentStatusProperty()
-                              .get()
-                              .getPrinterTypeCode();
-        MachineDetails md = MachineDetails.getDetails(typeCode);
-        menuModel.setText(I18n.t(md.model));
         menuPane.setVisible(true);
     }
 

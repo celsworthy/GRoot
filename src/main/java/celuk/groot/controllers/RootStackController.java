@@ -56,7 +56,7 @@ public class RootStackController implements Initializable {
 
     private RootServer server = null;
     private Insets offsets = new Insets(0.0, 0.0, 0.0, 0.0);
-    private ErrorDisplayManager errorManager = null;
+    private ErrorAlertController errorManager = null;
     private RootPrinter currentPrinter = null;
     
     private final MapChangeListener<String, RootPrinter> printerMapListener = (c) ->  {
@@ -136,7 +136,8 @@ public class RootStackController implements Initializable {
 
             server.getCurrentPrinterMap().addListener(printerMapListener);
             server.getAuthorisedProperty().addListener(authorisedListener);
-            errorManager = new ErrorDisplayManager(server);
+            errorManager = new ErrorAlertController(server);
+            errorManager.prepareDialog();
 
             hidePages(printerSelectPage);
             printerSelectPage.displayPage(null);
