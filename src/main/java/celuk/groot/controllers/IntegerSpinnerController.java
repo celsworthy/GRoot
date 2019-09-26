@@ -60,14 +60,14 @@ public class IntegerSpinnerController {
         valueField.setTextFormatter(new TextFormatter <> (NUMERIC_FILTER));
         valueField.focusedProperty().addListener((o, ov, nv) -> {
             if (!nv) { // focus lost
-                System.out.println("SpinnerData[" + name + "] focusListener");
+                //System.out.println("SpinnerData[" + name + "] focusListener");
                 processFieldChange();
             }
         });
     }
 
     public void decAction(ActionEvent event) {
-        System.out.println("SpinnerData[" + name + "] decAction");
+        //System.out.println("SpinnerData[" + name + "] decAction");
         value -= this.step;
         if (value < minValue)
             value = minValue;
@@ -75,12 +75,12 @@ public class IntegerSpinnerController {
     }
 
     public void fieldAction(ActionEvent event) {
-        System.out.println("SpinnerData[" + name + "] fieldAction");
+        //System.out.println("SpinnerData[" + name + "] fieldAction");
         processFieldChange();
     }
 
     public void processFieldChange() {
-        System.out.println("SpinnerData[" + name + "] processFieldChange");
+        //System.out.println("SpinnerData[" + name + "] processFieldChange");
         try {
             int v = Integer.parseInt( valueField.getText());
             if (v < minValue)
@@ -96,7 +96,7 @@ public class IntegerSpinnerController {
     }
 
     public void incAction(ActionEvent event) {
-        System.out.println("SpinnerData[" + name + "] incAction");
+        //System.out.println("SpinnerData[" + name + "] incAction");
         this.value += this.step;
         if (value > maxValue)
             value = maxValue;

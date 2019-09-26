@@ -42,7 +42,7 @@ public class HomeController implements Initializable, Page {
     @FXML
     private Label filament1RemainingLabel;
     @FXML
-    private VBox filament1VBox;
+    private Pane filament1Pane;
     @FXML
     private Button filament1EjectButton;
     @FXML
@@ -52,7 +52,7 @@ public class HomeController implements Initializable, Page {
     @FXML
     private Label filament2RemainingLabel;
     @FXML
-    private VBox filament2VBox;
+    private Pane filament2Pane;
     @FXML
     private Button filament2EjectButton;
     @FXML
@@ -317,7 +317,7 @@ public class HomeController implements Initializable, Page {
         String typeValue = null;
         String descriptionValue = null;
         boolean showLoaded = false;
-        String reelIconResource = "url(\"/image/home-no-reel.png\")";
+        String halfReelIconResource = "url(\"/image/home-no-half-reel.png\")";
         boolean reelKnown = false; 
         double remaining = -1.0;
     
@@ -328,10 +328,12 @@ public class HomeController implements Initializable, Page {
             if (filament.getFilamentName() != null && !filament.getFilamentName().isEmpty()) {
                 typeValue = filament.getMaterialName();
                 descriptionValue = filament.getFilamentName();
-                if (filament.getCustomFlag())
-                    reelIconResource = "url(\"/image/home-custom-reel.png\")";
-                else
-                    reelIconResource = "url(\"/image/home-smart-reel.png\")";
+                if (filament.getCustomFlag()) {
+                    halfReelIconResource = "url(\"/image/home-custom-half-reel.png\")";
+                }
+                else {
+                    halfReelIconResource = "url(\"/image/home-smart-half-reel.png\")";
+                }
                 remaining = filament.getRemainingFilament();
                 reelKnown = true;
             }
@@ -341,12 +343,12 @@ public class HomeController implements Initializable, Page {
             if (showLoaded)
             {
                 descriptionValue = "Unknown Filament";
-                reelIconResource = "url(\"/image/home-unknown-reel.png\")";
+                halfReelIconResource = "url(\"/image/home-unknown-half-reel.png\")";
             }
             else
             {
                 descriptionValue = "No Filament";
-                reelIconResource = "url(\"/image/home-no-reel.png\")";
+                halfReelIconResource = "url(\"/image/home-no-half-reel.png\")";
             }
         }
     
@@ -354,7 +356,7 @@ public class HomeController implements Initializable, Page {
         Label descriptionLabel;
         Label typeLabel;
         Label remainingLabel;
-        VBox reelVBox;
+        Pane reelPane;
         Button ejectButton;
 
         if (filamentIndex == 0) {
@@ -362,7 +364,7 @@ public class HomeController implements Initializable, Page {
             descriptionLabel = filament1DescriptionLabel;
             typeLabel = filament1TypeLabel;
             remainingLabel = filament1RemainingLabel;
-            reelVBox = filament1VBox;
+            reelPane = filament1Pane;
             ejectButton = filament1EjectButton;
         }
         else {
@@ -370,7 +372,7 @@ public class HomeController implements Initializable, Page {
             descriptionLabel = filament2DescriptionLabel;
             typeLabel = filament2TypeLabel;
             remainingLabel = filament2RemainingLabel;
-            reelVBox = filament2VBox;
+            reelPane = filament2Pane;
             ejectButton = filament2EjectButton;
         }
 
@@ -402,7 +404,7 @@ public class HomeController implements Initializable, Page {
         else
             descriptionLabel.setStyle("-fx-background-color: #b2b2b2;");
 
-        reelVBox.setStyle("-fx-background-image: " + reelIconResource + ";");
+        reelPane.setStyle("-fx-background-image: " + halfReelIconResource + ";");
         if (showLoaded)
             ejectButton.setVisible(true);
         else

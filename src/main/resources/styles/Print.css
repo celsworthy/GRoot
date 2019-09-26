@@ -3,7 +3,7 @@
 }
 
 .navigator-panel {
-    -fx-background-color: #009ee3;
+    -fx-background-color: -robox-blue;
 }
 
 .navigator-next {
@@ -21,7 +21,7 @@
 
 .no-print-jobs-title {
     -fx-font-size: 24pt;
-    -fx-text-fill: #009ee3;
+    -fx-text-fill: -robox-blue;
 }
 
 .no-print-jobs-details {
@@ -40,12 +40,12 @@
 }
 
 .print-job-panel {
-    -fx-background-color: #303030;
-    -fx-text-fill: #009ee3;
+    -fx-background-color: -robox-grey;
+    -fx-text-fill: -robox-blue;
 }
 
 .print-job-panel:active {
-    -fx-background-color: #009ee3;
+    -fx-background-color: -robox-blue;
     -fx-text-fill: white;
 }
 

@@ -1,12 +1,11 @@
 .keypad-key {
-    -fx-background-color: #303030;
+    -fx-background-color: -robox-grey;
     -fx-font-size: 24pt;
     -fx-font-weight: 300;
     -fx-text-fill: white;
 }
 
 .gcode-history {
-    -fx-font-family: "Source Code Pro";
     -fx-font-size: 18pt;
 }
 
@@ -15,6 +14,6 @@
 }
 
 .gcode-clear {
-    -fx-background-color: #303030;
+    -fx-background-color: -robox-grey;
     -fx-font-size: 18pt;
 }

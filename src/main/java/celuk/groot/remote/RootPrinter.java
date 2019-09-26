@@ -52,11 +52,13 @@ public class RootPrinter extends Updater {
     private final SimpleObjectProperty<MaterialStatusData> currentMaterialStatusDataProperty = new SimpleObjectProperty<>();
     private final SimpleObjectProperty<PurgeData> currentPurgeDataProperty = new SimpleObjectProperty<>();
     private final SimpleObjectProperty<Map<Integer, ErrorDetails>> activeErrorMapProperty = new SimpleObjectProperty<>();
+    private final SimpleBooleanProperty activeErrorHeartbeatProperty = new SimpleBooleanProperty(false);
+    private final SimpleBooleanProperty hasActiveErrorProperty = new SimpleBooleanProperty(false);
     private final SimpleBooleanProperty safetiesOnProperty = new SimpleBooleanProperty(true);
     private Set<Integer> acknowledgedErrorSet = new HashSet<>();
     
-    //private ErrorDetails fakeError = null;
-    //private int fakeCount = 0;
+    private ErrorDetails fakeError = null;
+    private int fakeCount = 0;
     
     public RootPrinter(RootServer rootServer, String printerId) {
         super();
@@ -106,6 +108,14 @@ public class RootPrinter extends Updater {
 
     public SimpleBooleanProperty getSafetiesOnProperty() {
         return safetiesOnProperty;
+    }
+
+    public SimpleBooleanProperty getActiveErrorHeartbeatProperty() {
+        return activeErrorHeartbeatProperty;
+    }
+    
+    public SimpleBooleanProperty getHasActiveErrorProperty() {
+        return hasActiveErrorProperty;
     }
 
     public SimpleObjectProperty<Map<Integer, ErrorDetails>> getActiveErrorMapProperty() {
@@ -182,8 +192,7 @@ public class RootPrinter extends Updater {
             });
     }
 
-    private void processErrorList(List<ErrorDetails> errorList) {
-        /*
+    private List<ErrorDetails> generateFakeError(List<ErrorDetails> errorList) {
         if (fakeCount <= 20) {
             ++fakeCount;
             System.out.println("fakeCount = " + Integer.toString(fakeCount));
@@ -202,8 +211,11 @@ public class RootPrinter extends Updater {
                 errorList = new ArrayList<ErrorDetails>();
             errorList.add(fakeError);
         }
-        */
+        return errorList;
+    }
 
+    private void processErrorList(List<ErrorDetails> errorList) {
+        //errorList = generateFakeError(errorList);
         Map<Integer, ErrorDetails> activeMap = new HashMap<>();
         Set<Integer> ackSet = new HashSet<>();
         if (errorList != null) {
@@ -222,19 +234,25 @@ public class RootPrinter extends Updater {
         }
         
         acknowledgedErrorSet = ackSet;
-        activeErrorMapProperty.set(activeMap);
-        if (!activeMap.isEmpty()) {
-            System.err.println("Errors on printer \"" 
-                               + currentStatusProperty.get().getPrinterName()
-                               + "\"");
-            activeMap.forEach((ec, e) -> {
-                System.err.println("    Error "
-                                   + Integer.toString(ec)
-                                   + ": " + e.getErrorTitle()
-                                   + " - " 
-                                   + e.getErrorMessage());
-            });
-        }
+        activeErrorMapProperty.setValue(activeMap);
+        hasActiveErrorProperty.set(!activeMap.isEmpty());
+        // The original idea was to have a listener on the activeErrorMapProperty, which was to be called every
+        // time the map is updated with a new map. Unfortunately, this doesn't work because the listener is not
+        // called when the new map is not the same instance, but is equal to the old one.
+        // So instead we have a heartbeat property that is toggled every time the map is updated.
+        activeErrorHeartbeatProperty.set(!activeErrorHeartbeatProperty.get());
+        //if (!activeMap.isEmpty()) {
+            //System.err.println("Errors on printer \"" 
+            //                   + currentStatusProperty.get().getPrinterName()
+            //                   + "\"");
+            //activeMap.forEach((ec, e) -> {
+            //    System.err.println("    Error "
+            //                       + Integer.toString(ec)
+            //                       + ": " + e.getErrorTitle()
+            //                       + " - " 
+            //                       + e.getErrorMessage());
+            //});
+        //}
     }
 
     private Future<ActiveErrorStatusData> runRequestErrorStatusTask() {

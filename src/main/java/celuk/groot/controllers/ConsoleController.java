@@ -187,7 +187,7 @@ public class ConsoleController implements Initializable, Page {
                 gcodeField.setText(v);
             gcodeHistory.getSelectionModel().clearSelection();
         }
-        System.out.println("historyListener - ov = \"" + ov + "\" nv = \"" + nv + "\"");
+        // System.out.println("historyListener - ov = \"" + ov + "\" nv = \"" + nv + "\"");
     };
     
     @Override

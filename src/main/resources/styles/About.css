@@ -1,6 +1,5 @@
 .about-panel {
-    -fx-font-family: "Source Code Pro";
-    -fx-background-color: #009ee3;
+    -fx-background-color: -robox-blue;
     -fx-text-fill: white;
 }
 

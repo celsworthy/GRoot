@@ -3,6 +3,6 @@
 }
 
 .name-clear {
-    -fx-background-color: #303030;
+    -fx-background-color: -robox-grey;
     -fx-font-size: 18pt;
 }

@@ -1,7 +1,7 @@
 .filament-description {
-    -fx-text-fill: #000000;
+    -fx-text-fill: black;
     -fx-font-size: 12pt;
-    -fx-background-color: #ffffff;
+    -fx-background-color: white;
 }
 
 .filament-type {
@@ -13,7 +13,7 @@
 }
 
 .job-panel {
-    -fx-background-color: #009ee3;
+    -fx-background-color: -robox-blue;
 }
 
 .job-pause {
@@ -54,7 +54,7 @@
 }
 
 .machine-model {
-    -fx-text-fill: #009ee3;
+    -fx-text-fill: -robox-blue;
     -fx-font-weight: bold;
     -fx-font-size: 12pt;
 }
@@ -74,7 +74,12 @@
     -fx-background-color: transparent;
 }
 
+.half-reel-image {
+    -fx-background-position: center bottom;
+    -fx-background-repeat: no-repeat;
+}
+
 .reel-image {
-    -fx-background-position: top center;
+    -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }

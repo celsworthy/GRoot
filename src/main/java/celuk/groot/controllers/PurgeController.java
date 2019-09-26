@@ -261,9 +261,6 @@ public class PurgeController implements Initializable, Page {
     
     @Override
     public void displayPage(RootPrinter printer) {
-        if (printer == null) {
-            System.out.println("Null printer!");
-        }
         this.printer = printer;
         startUpdates();
         purgePane.setVisible(true);

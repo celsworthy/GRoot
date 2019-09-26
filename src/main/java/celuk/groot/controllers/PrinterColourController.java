@@ -191,8 +191,8 @@ public class PrinterColourController implements Initializable, Page {
 
     private void selectColourButton(Button buttonToSelect, String buttonColour) {
         String complimentaryTick = MachineDetails.getComplimentaryOption(buttonColour,
-                                                                         "/image/tick_black.png",
-                                                                         "/image/tick_white.png");
+                                                                         "/image/tick-black.png",
+                                                                         "/image/tick-white.png");
         buttonToSelect.setStyle("-fx-background-color: " + buttonColour + ";" +
                                 "-fx-graphic: url(\"" + complimentaryTick + "\");");
         selectedButton = buttonToSelect;

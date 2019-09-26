@@ -42,32 +42,32 @@ abstract public class MenuController implements Initializable, Page {
     
     @FXML
     protected void menu1Action(ActionEvent event) {
-        System.out.println("menu 1");
+        //System.out.println("menu 1");
     }
 
     @FXML
     protected void menu2Action(ActionEvent event) {
-        System.out.println("menu 2");
+        //System.out.println("menu 2");
     }
 
     @FXML
     protected void menu3Action(ActionEvent event) {
-        System.out.println("menu 3");
+        //System.out.println("menu 3");
     }
 
     @FXML
     protected void menu4Action(ActionEvent event) {
-        System.out.println("menu 4");
+        //System.out.println("menu 4");
     }
 
     @FXML
     protected void menu5Action(ActionEvent event) {
-        System.out.println("menu 5");
+        //System.out.println("menu 5");
     }
 
     @FXML
     protected void menu6Action(ActionEvent event) {
-        System.out.println("menu 6");
+        //System.out.println("menu 6");
     }
     
     @FXML

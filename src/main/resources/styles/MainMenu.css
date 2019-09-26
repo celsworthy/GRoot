@@ -1,7 +1,7 @@
 .main-menu-button {
-    -fx-text-fill: #009ee3;
+    -fx-text-fill: -robox-blue;
     -fx-font-size: 18pt;
-    -fx-background-color: #303030;
+    -fx-background-color: -robox-grey;
 }
 
 .main-menu-calibration {

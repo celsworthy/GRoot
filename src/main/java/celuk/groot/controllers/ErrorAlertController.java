@@ -26,7 +26,7 @@ import javafx.scene.control.ButtonType;
  * @author Tony
  */
 public class ErrorAlertController {
-    private final Map<String, ChangeListener<Map<Integer, ErrorDetails>>> listenerMap = new HashMap<>();
+    private final Map<String, ChangeListener<Boolean>> listenerMap = new HashMap<>();
     private final RootServer server;
     private String abortText = "error.abort";
     private String clearText = "error.clear";
@@ -37,6 +37,7 @@ public class ErrorAlertController {
     private String ejectFilament2Text = "error.ejectFilament2";
     private final Alert errorAlert = new Alert(Alert.AlertType.NONE); 
     MapChangeListener<String, RootPrinter> printerMapListener = (var c) -> {
+        System.out.println("");
         processPrinterMap(c.getMap());
     };
     
@@ -70,7 +71,7 @@ public class ErrorAlertController {
             var p = printerMap.get(pid);
             if (p != null) {
                 var l = listenerMap.get(pid);
-                p.getActiveErrorMapProperty().removeListener(l);
+                p.getActiveErrorHeartbeatProperty().removeListener(l);
                 listenerMap.remove(pid);
             }
         });
@@ -81,43 +82,50 @@ public class ErrorAlertController {
                                                .filter(pid -> !listenerMap.containsKey(pid))
                                                .collect(Collectors.toList());
         foundPrinters.forEach(pid -> {
-            var p = printerMap.get(pid);
-            System.out.println("Adding printer " + p.getPrinterName());
-            ChangeListener<Map<Integer, ErrorDetails>> l = (pr, ov, nv) -> {
-                displayError(pid, nv);
+            RootPrinter printer = printerMap.get(pid);
+            //System.out.println("Adding printer " + p.getPrinterName());
+            ChangeListener<Boolean> l = (pr, ov, nv) -> {
+                displayError(printer);
             };
-            p.getActiveErrorMapProperty().addListener(l);
+            printer.getActiveErrorHeartbeatProperty().addListener(l);
             listenerMap.put(pid, l);
         });
     }
     
-    private void displayError(String pid, Map<Integer, ErrorDetails> errorMap) {
-        errorMap.forEach((errorCode, error) -> {
-            System.err.println("Error code " 
-                               + Integer.toString(errorCode)
-                               + " - "
-                               + error.getErrorTitle());
-        });
-        Platform.runLater(() -> {
-            handleError(pid, errorMap);
-        });
+    private void displayError(RootPrinter printer) {
+        Map<Integer, ErrorDetails> errorMap = printer.getActiveErrorMapProperty().get();
+        //errorMap.forEach((errorCode, error) -> {
+        //    System.err.println("Error code " 
+        //                       + Integer.toString(errorCode)
+        //                       + " - "
+        //                       + error.getErrorTitle());
+        //});
+        if (errorMap != null) {
+            Platform.runLater(() -> {
+                handleError(printer, errorMap);
+            });
+        }
     }
 
-    private void handleError(String pid, Map<Integer, ErrorDetails> errorMap) {
+    private void handleError(RootPrinter printer, Map<Integer, ErrorDetails> errorMap) {
  
         if (errorMap.isEmpty()) {
             if (errorAlert.isShowing()) {
-                String alertPid = (String)errorAlert.getDialogPane().getUserData();
-                if (alertPid != null && alertPid.equals(pid)) {
+                RootPrinter alertPrinter = (RootPrinter)errorAlert.getDialogPane().getUserData();
+                if (alertPrinter != null && alertPrinter.getPrinterId().equals(printer.getPrinterId())) {
                     errorAlert.hide();
                     errorAlert.getDialogPane().setUserData(null);
                 }
             }
         }
         else {
-            if (!errorAlert.isShowing()) {
+            if (errorAlert.isShowing()) {
+                // An alert is already being shown. Do nothing.
+                // If the alert is for another error, this one
+                // will be shown once that one has been acknowledged.
+            }
+            else {
                 // Select the highest priority error.
-                RootPrinter printer = server.getCurrentPrinterMap().get(pid);
                 String printerName = printer.getPrinterName();
 
                 Map.Entry<Integer, ErrorDetails> errorEntry = errorMap.entrySet()
@@ -134,7 +142,7 @@ public class ErrorAlertController {
                 errorAlert.setHeaderText(errorData.getErrorTitle());
                 errorAlert.setContentText(errorMessage);
                 errorAlert.setTitle(dialogTitleText.replace("#1", printerName));
-                errorAlert.getDialogPane().setUserData(pid);
+                errorAlert.getDialogPane().setUserData(printer);
                 List<ButtonType> buttonList = errorAlert.getButtonTypes();
                 buttonList.clear();
                 int options = errorData.getOptions();
@@ -177,11 +185,11 @@ public class ErrorAlertController {
                 if (result.isPresent()) {
                     ButtonType bt = result.get();
                     String typeCode = result.get().getButtonData().getTypeCode();
-                    System.out.println("Returned " + typeCode);
+                    //System.out.println("Returned " + typeCode);
                     switch(typeCode) {
                         case "O":
                             // OK/Continue button.
-                            System.out.println("OK");
+                            //System.out.println("OK");
                             server.runBackgroundTask(() -> {
                                 printer.runResumeTask();
                                 printer.runClearErrorTask(errorCode);
@@ -190,7 +198,7 @@ public class ErrorAlertController {
                             break;
                         case "A":
                             // Apply/Eject button.
-                            System.out.println("Eject");
+                            //System.out.println("Eject");
                             server.runBackgroundTask(() -> {
                                 printer.runEjectFilamentTask(errorCode == 28 ? 1 : 0);
                                 printer.runClearErrorTask(errorCode);
@@ -199,7 +207,7 @@ public class ErrorAlertController {
                             break;
                         case "C":
                             // Cancel/Abort button.
-                            System.out.println("Abort");
+                            //System.out.println("Abort");
                             server.runBackgroundTask(() -> {
                                 printer.runCancelTask();
                                 printer.runClearErrorTask(errorCode);

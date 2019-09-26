@@ -1,5 +1,5 @@
 .head-params-gap {
-    -fx-background-color: #414141;
+    -fx-background-color: -robox-light-grey;
 }
 
 .head-params-head-icon {
@@ -7,7 +7,7 @@
 
 .head-params-label {
     -fx-font-size: 14pt;
-    -fx-text-fill: #009ee3;
+    -fx-text-fill: -robox-blue;
 }
 
 .head-params-left-dec {
@@ -26,7 +26,7 @@
 
 .head-params-left-subtitle {
     -fx-font-size: 14pt;
-    -fx-text-fill: #eb672a;
+    -fx-text-fill: -robox-orange;
 }
 
 .head-params-head-change {
@@ -82,7 +82,7 @@
 
 .head-params-right-subtitle {
     -fx-font-size: 14pt;
-    -fx-text-fill: #009ee3;
+    -fx-text-fill: -robox-blue;
 }
 
 .head-params-right-title {

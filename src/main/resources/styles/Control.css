@@ -1,11 +1,11 @@
 .control-button {
-    -fx-text-fill: #009ee3;
+    -fx-text-fill: -robox-blue;
     -fx-font-size: 18pt;
-    -fx-background-color: #303030;
+    -fx-background-color: -robox-grey;
 }
 
 .jog-button {
-    -fx-background-color: #303030;
+    -fx-background-color: -robox-grey;
 }
 
 .jog-1-eject {
@@ -73,7 +73,7 @@
 }
 
 .move-gap {
-    -fx-background-color: #414141;
+    -fx-background-color: -robox-light-grey;
 }
 
 .move-heat-bed {

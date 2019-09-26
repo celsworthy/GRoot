@@ -18,7 +18,7 @@ public class SecurityMenuController extends MenuController {
     @Override
     protected void menu1Action(ActionEvent event) {
         if (validButtonAction(event)) {
-            System.out.println("security menu 1");
+            //System.out.println("security menu 1");
             rootController.showAccessPINPage(this, printer);
         }
     }

@@ -14,32 +14,32 @@ public class MachineDetails
         PC100
     }
     
-    public static MachineDetails defaultDetails;
-    public static Map<String, MachineDetails> machineDetailsMap;
+    public static final MachineDetails DEFAULT_DETAILS;
+    public static final Map<String, MachineDetails> MACHINE_DETAIL_MAP;
     static {
-        defaultDetails = new MachineDetails("machine.robox",
-                                            "/image/logo-robox-text-white.png",
-                                            "/image/logo-robox-black-20pc.png",
-                                            "/image/logo-robox-black-50pc.png",
-                                            "/image/logo-robox-black.png",
-                                            "/image/logo-robox-white-20pc.png",
-                                            "/image/logo-robox-white-50pc.png",
-                                            "/image/logo-robox-white.png",
+        DEFAULT_DETAILS = new MachineDetails("machine.robox",
+                                            "/image/status-robox-text-white.png",
+                                            "/image/status-robox-black-20pc.png",
+                                            "/image/status-robox-black-50pc.png",
+                                            "/image/status-robox-black.png",
+                                            "/image/status-robox-white-20pc.png",
+                                            "/image/status-robox-white-50pc.png",
+                                            "/image/status-robox-white.png",
                                             "/image/machine-robox-black.png",
                                             "/image/machine-robox-white.png");
         
-        machineDetailsMap = new HashMap<>();
-        machineDetailsMap.put("RBX01", defaultDetails);
-        machineDetailsMap.put("RBX02", defaultDetails);
-        machineDetailsMap.put("RBX10",
+        MACHINE_DETAIL_MAP = new HashMap<>();
+        MACHINE_DETAIL_MAP.put("RBX01", DEFAULT_DETAILS);
+        MACHINE_DETAIL_MAP.put("RBX02", DEFAULT_DETAILS);
+        MACHINE_DETAIL_MAP.put("RBX10",
                               new MachineDetails("machine.roboxPro",
-                                                 "/image/logo-roboxpro-text-inverse.png",
-                                                 "/image/logo-roboxpro-black-20pc.png",
-                                                 "/image/logo-roboxpro-black-50pc.png",
-                                                 "/image/logo-roboxpro-black.png",
-                                                 "/image/logo-roboxpro-white-20pc.png",
-                                                 "/image/logo-roboxpro-white-50pc.png",
-                                                 "/image/logo-roboxpro-white.png",
+                                                 "/image/status-roboxpro-text-inverse.png",
+                                                 "/image/status-roboxpro-black-20pc.png",
+                                                 "/image/status-roboxpro-black-50pc.png",
+                                                 "/image/status-roboxpro-black.png",
+                                                 "/image/status-roboxpro-white-20pc.png",
+                                                 "/image/status-roboxpro-white-50pc.png",
+                                                 "/image/status-roboxpro-white.png",
                                                  "/image/machine-roboxpro-black.png",
                                                  "/image/machine-roboxpro-white.png"));
     }
@@ -254,7 +254,7 @@ public class MachineDetails
     }
     
     public static MachineDetails getDetails(String typeCode) {
-        return machineDetailsMap.getOrDefault(typeCode,
-                                              MachineDetails.defaultDetails);
+        return MACHINE_DETAIL_MAP.getOrDefault(typeCode,
+                                              MachineDetails.DEFAULT_DETAILS);
     }
 }
