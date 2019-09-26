@@ -1,3 +1,10 @@
 .colour-button {
-    -fx-background-color: white;
+}
+
+.colour-button:selected {
+   -fx-graphic: url("/image/tick-white.png");
+}
+
+.colour-button:dark:selected {
+   -fx-graphic: url("/image/tick-black.png");
 }

@@ -4,6 +4,7 @@ import celuk.groot.remote.RootPrinter;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -74,7 +75,7 @@ public class PrinterColourController implements Initializable, Page {
         if (rootController != null && event.getSource() instanceof Button) {
             Button b = (Button)event.getSource();
             if (b != selectedButton) {
-                String selectedColour = (String)selectedButton.getUserData();
+                String selectedColour = (String)b.getUserData();
                 deselectColourButton();
                 selectColourButton(b, selectedColour);
                 printer.runSwitchAmbientLightTask(selectedColour);
@@ -104,6 +105,8 @@ public class PrinterColourController implements Initializable, Page {
         }
     }
 
+    private final static PseudoClass DARK_PS = PseudoClass.getPseudoClass("dark");
+    private final static PseudoClass SELECTED_PS = PseudoClass.getPseudoClass("selected");
     private RootStackController rootController = null;
     private RootPrinter printer = null;
     Button colourButtons[] = null;
@@ -148,8 +151,7 @@ public class PrinterColourController implements Initializable, Page {
             "#FFFF00"
         };
         for (int i = 0; i < colourButtons.length; ++i) {
-            colourButtons[i].setStyle("-fx-background-color: " + colours[i] + ";");
-            colourButtons[i].setUserData(colours[i]);
+            setButtonColour(colourButtons[i], colours[i]);
         }
         middleButton.setVisible(false);
     }
@@ -180,21 +182,24 @@ public class PrinterColourController implements Initializable, Page {
         printerColourPane.setVisible(false);
     }
     
+    private void setButtonColour(Button b, String colour) {
+            b.setStyle("-fx-background-color: " + colour + ";");
+            b.setUserData(colour);
+            boolean isDark = MachineDetails.getComplimentaryOption(colour,
+                                                                   true,
+                                                                   false);
+            b.pseudoClassStateChanged(DARK_PS, isDark);
+    }
+    
     private void deselectColourButton() {
         if (selectedButton != null) {
-            String selectedColour = (String)selectedButton.getUserData();
-            // Remove tick by setting style to be background coloue only.
-            selectedButton.setStyle("-fx-background-color: " + selectedColour + ";");
+            selectedButton.pseudoClassStateChanged(SELECTED_PS, false);
             selectedButton = null;
         }
     }
 
     private void selectColourButton(Button buttonToSelect, String buttonColour) {
-        String complimentaryTick = MachineDetails.getComplimentaryOption(buttonColour,
-                                                                         "/image/tick-black.png",
-                                                                         "/image/tick-white.png");
-        buttonToSelect.setStyle("-fx-background-color: " + buttonColour + ";" +
-                                "-fx-graphic: url(\"" + complimentaryTick + "\");");
+        buttonToSelect.pseudoClassStateChanged(SELECTED_PS, true);
         selectedButton = buttonToSelect;
         rightButton.setDisable(selectedButton == null || selectedButton == currentButton);
     }
@@ -209,8 +214,11 @@ public class PrinterColourController implements Initializable, Page {
             }
         }
         
+        if (selectedButton == null) {
+            selectedButton = colour18Button;
+            setButtonColour(colour18Button, webColour);
+        }
         currentButton = selectedButton;
         selectColourButton(selectedButton, webColour);
     }
-    
 }
