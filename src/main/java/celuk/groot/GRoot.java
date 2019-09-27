@@ -14,22 +14,22 @@ import javafx.stage.Stage;
 
 public class GRoot extends Application {
 
-    private static final GRootCommandLineArgs commandLineArgs = new GRootCommandLineArgs();
+    private static final GRootCommandLineArgs COMMAND_LINE_ARGS = new GRootCommandLineArgs();
     private Parent root = null;
     RootStackController rootController = null;
     RootServer server = null;
     
     @Override
+    public void init() throws Exception {
+        server = new RootServer(COMMAND_LINE_ARGS.hostName, COMMAND_LINE_ARGS.portNumber);
+        server.startUpdating(COMMAND_LINE_ARGS.updateInterval);
+    }
+    
+    @Override
     public void start(Stage stage) throws Exception {
-        server = new RootServer(commandLineArgs.hostName, commandLineArgs.portNumber);
-        server.startUpdating(commandLineArgs.updateInterval);
         FXMLLoader rootLoader =  new FXMLLoader(getClass().getResource("/fxml/RootStack.fxml"), null);
         rootController = new RootStackController();
         rootController.setRootServer(server);
-        rootController.setOffsets(commandLineArgs.offsetTop,
-                                  commandLineArgs.offsetRight,
-                                  commandLineArgs.offsetBottom,
-                                  commandLineArgs.offsetLeft);
         rootLoader.setController(rootController);
         root = rootLoader.load();
 
@@ -44,6 +44,7 @@ public class GRoot extends Application {
                                 "/icon/GRootIcon_64x64.png")),
                 new Image(getClass().getResourceAsStream(
                                 "/icon/GRootIcon_32x32.png")));
+        
         stage.show();
         
         //org.scenicview.ScenicView.show(scene);
@@ -65,9 +66,11 @@ public class GRoot extends Application {
      */
     public static void main(String[] args) {
         
-        new JCommander(commandLineArgs).parse(args);
-        I18n.loadMessages(commandLineArgs.installDirectory,
-                          I18n.getDefaultApplicationLocale(commandLineArgs.languageTag));
+        new JCommander(COMMAND_LINE_ARGS).parse(args);
+        I18n.loadMessages(COMMAND_LINE_ARGS.installDirectory,
+                          I18n.getDefaultApplicationLocale(COMMAND_LINE_ARGS.languageTag));
+        if (COMMAND_LINE_ARGS.showSplashScreen)
+            System.setProperty("javafx.preloader", "celuk.groot.GRootPreloader");
         launch(args);
     }
 }

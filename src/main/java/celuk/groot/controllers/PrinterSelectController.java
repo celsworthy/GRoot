@@ -260,6 +260,8 @@ public class PrinterSelectController implements Initializable, Page {
         printer11Pane.setUserData(panelArray[3]);
         printer20Pane.setUserData(panelArray[4]);
         printer21Pane.setUserData(panelArray[5]);
+        for (PrinterPanel pp : panelArray)
+            pp.reset();
     }
     
     private ChangeListener<ServerStatusResponse> serverStatusListener = (ob, ov, nv) -> {

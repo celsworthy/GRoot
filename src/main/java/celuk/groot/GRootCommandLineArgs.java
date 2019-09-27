@@ -29,17 +29,8 @@ public class GRootCommandLineArgs {
     @Parameter(names={"--port", "-p"}, description = "Port number of Root server")
     public String portNumber = "8080";
 
-    @Parameter(names={"--offset-bottom", "-ob"}, description = "Offset on bottom of root pane")
-    public double offsetBottom = 0.0;
-
-    @Parameter(names={"--offset-left", "-ol"}, description = "Offset on left of root pane")
-    public double offsetLeft = 0.0;
-
-    @Parameter(names={"--offset-right", "-or"}, description = "Offset on right of root pane")
-    public double offsetRight = 0.0;
-
-    @Parameter(names={"--offset-top", "-ot"}, description = "Offset on top of root pane")
-    public double offsetTop = 0.0;
+    @Parameter(names={"--show-splash-screen", "-s"}, description = "Show splash screen during startup")
+    boolean showSplashScreen = false;
 
     @Parameter(names={"--update-interval", "-u"}, description = "Update interval in microseconds")
     public int updateInterval = 2000;

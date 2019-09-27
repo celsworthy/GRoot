@@ -25,6 +25,25 @@ public class RootStackController implements Initializable {
     @FXML
     private AnchorPane rootAnchorPane;
     
+    private final URL aboutPageURL = getClass().getResource(FXML_RESOURCE_PATH + "About.fxml");
+    private final URL accessPINPageURL = getClass().getResource(FXML_RESOURCE_PATH + "AccessPIN.fxml");
+    private final URL consolePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Console.fxml");
+    private final URL controlPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Control.fxml");
+    private final URL headParametersPageURL = getClass().getResource(FXML_RESOURCE_PATH + "HeadParameters.fxml");
+    private final URL homePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Home.fxml");
+    private final URL loginPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Login.fxml");
+    private final URL printerColourPageURL = getClass().getResource(FXML_RESOURCE_PATH + "PrinterColour.fxml");
+    private final URL namePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Name.fxml");
+    private final URL printerSelectPageURL = getClass().getResource(FXML_RESOURCE_PATH + "PrinterSelect.fxml");
+    private final URL printPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Print.fxml");
+    private final URL purgePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Purge.fxml");
+    private final URL purgeIntroPageURL = getClass().getResource(FXML_RESOURCE_PATH + "PurgeIntro.fxml");
+    private final URL resetPINPageURL = getClass().getResource(FXML_RESOURCE_PATH + "ResetPIN.fxml");
+    private final URL tweakPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Tweak.fxml");
+    private final URL wirelessPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Wireless.fxml");
+    private final URL mainMenuURL = getClass().getResource(FXML_RESOURCE_PATH + "MainMenu.fxml");
+    private final URL menuURL = getClass().getResource(FXML_RESOURCE_PATH + "Menu.fxml");
+
     private AboutController aboutPage = null;
     private AccessPINController accessPINPage = null;
     private ConsoleController consolePage = null;
@@ -83,74 +102,29 @@ public class RootStackController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        URL aboutPageURL = getClass().getResource(FXML_RESOURCE_PATH + "About.fxml");
-        URL accessPINPageURL = getClass().getResource(FXML_RESOURCE_PATH + "AccessPIN.fxml");
-        URL consolePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Console.fxml");
-        URL controlPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Control.fxml");
-        URL headParametersPageURL = getClass().getResource(FXML_RESOURCE_PATH + "HeadParameters.fxml");
-        URL homePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Home.fxml");
-        URL loginPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Login.fxml");
-        URL printerColourPageURL = getClass().getResource(FXML_RESOURCE_PATH + "PrinterColour.fxml");
-        URL namePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Name.fxml");
-        URL printerSelectPageURL = getClass().getResource(FXML_RESOURCE_PATH + "PrinterSelect.fxml");
-        URL printPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Print.fxml");
-        URL purgePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Purge.fxml");
-        URL purgeIntroPageURL = getClass().getResource(FXML_RESOURCE_PATH + "PurgeIntro.fxml");
-        URL resetPINPageURL = getClass().getResource(FXML_RESOURCE_PATH + "ResetPIN.fxml");
-        URL tweakPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Tweak.fxml");
-        URL wirelessPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Wireless.fxml");
-        URL mainMenuURL = getClass().getResource(FXML_RESOURCE_PATH + "MainMenu.fxml");
-        URL menuURL = getClass().getResource(FXML_RESOURCE_PATH + "Menu.fxml");
-        try
-        {
-            // Pages
-            aboutPage = (AboutController)(loadPage(aboutPageURL, null));
-            accessPINPage = (AccessPINController)(loadPage(accessPINPageURL, null));
-            consolePage = (ConsoleController)(loadPage(consolePageURL, null));
-            controlPage = (ControlController)(loadPage(controlPageURL, null));
-            headParametersPage = (HeadParametersController)(loadPage(headParametersPageURL, null));
-            homePage = (HomeController)(loadPage(homePageURL, null));
-            loginPage = (LoginController)(loadPage(loginPageURL, null));
-            printerColourPage = (PrinterColourController)(loadPage(printerColourPageURL, null));
-            printerNamePage = (PrinterNameController)(loadPage(namePageURL, PrinterNameController.class));
-            printerSelectPage = (PrinterSelectController)(loadPage(printerSelectPageURL, null));
-            printPage = (PrintController)(loadPage(printPageURL, null));
-            purgePage = (PurgeController)(loadPage(purgePageURL, null));
-            purgeIntroPage = (PurgeIntroController)(loadPage(purgeIntroPageURL, null));
-            resetPINPage = (ResetPINController)(loadPage(resetPINPageURL, null));
-            serverNamePage = (ServerNameController)(loadPage(namePageURL, ServerNameController.class));
-            tweakPage = (TweakController)(loadPage(tweakPageURL, null));
-            wirelessPage = (WirelessController)(loadPage(wirelessPageURL, null));
-        
-            // Menus - all but the main menu use the same FXML page.
-            cleanNozzlesMenu = (CleanNozzlesMenuController)(loadPage(menuURL, CleanNozzlesMenuController.class));
-            ejectStuckMenu = (EjectStuckMenuController)(loadPage(menuURL, EjectStuckMenuController.class));
-            identityMenu = (IdentityMenuController)(loadPage(menuURL, IdentityMenuController.class));
-            mainMenu = (MainMenuController)(loadPage(mainMenuURL, null));
-            maintenanceMenu = (MaintenanceMenuController)(loadPage(menuURL, MaintenanceMenuController.class));
-            printMenu = (PrintMenuController)(loadPage(menuURL, PrintMenuController.class));
-            securityMenu = (SecurityMenuController)(loadPage(menuURL, SecurityMenuController.class));
-            serverSettingsMenu = (ServerSettingsMenuController)(loadPage(menuURL, ServerSettingsMenuController.class));
-            settingsMenu = (SettingsMenuController)(loadPage(menuURL, SettingsMenuController.class));
-            testAxisSpeedMenu = (TestAxisSpeedMenuController)(loadPage(menuURL, TestAxisSpeedMenuController.class));
+        // Most pages are loaded when first shown. The following commonly used
+        // pages are loaded immediately.
+        homePage = (HomeController)(loadPage(homePageURL, null));
+        loginPage = (LoginController)(loadPage(loginPageURL, null));
+        printerSelectPage = (PrinterSelectController)(loadPage(printerSelectPageURL, null));
 
-            server.getCurrentPrinterMap().addListener(printerMapListener);
-            server.getAuthorisedProperty().addListener(authorisedListener);
-            errorManager = new ErrorAlertController(server);
-            errorManager.prepareDialog();
+        // Menus - all but the main menu use the same FXML page.
+        mainMenu = (MainMenuController)(loadPage(mainMenuURL, null));
 
-            hidePages(printerSelectPage);
-            printerSelectPage.displayPage(null);
-        }
-        catch (IOException ex) {
-            System.out.println(ex);
-            ex.printStackTrace(System.err);
-            System.exit(1);
-        }
+        server.getCurrentPrinterMap().addListener(printerMapListener);
+        server.getAuthorisedProperty().addListener(authorisedListener);
+        errorManager = new ErrorAlertController(server);
+        errorManager.prepareDialog();
+
+        hidePages(printerSelectPage);
+        printerSelectPage.displayPage(null);
     }
     
     public void showAboutPage(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
+            if (aboutPage == null) {
+                aboutPage = (AboutController)(loadPage(aboutPageURL, null));
+            }
             previousPage.hidePage();
             aboutPage.displayPage(printer);
         });
@@ -158,20 +132,19 @@ public class RootStackController implements Initializable {
 
     public void showAccessPINPage(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
+            if (accessPINPage == null) {
+                accessPINPage = (AccessPINController)(loadPage(accessPINPageURL, null));
+            }
             previousPage.hidePage();
             accessPINPage.displayPage(printer);
         });
     }
 
-    public void showHeadParametersPage(Page previousPage, RootPrinter printer) {
-        Platform.runLater(() -> {
-            previousPage.hidePage();
-            headParametersPage.displayPage(printer);
-        });
-    }
-
     public void showConsolePage(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
+            if (consolePage == null) {
+                consolePage = (ConsoleController)(loadPage(consolePageURL, null));
+            }
             previousPage.hidePage();
             consolePage.setReturnToControl(previousPage == controlPage);
             consolePage.displayPage(printer);
@@ -180,13 +153,29 @@ public class RootStackController implements Initializable {
 
     public void showControlPage(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
+            if (controlPage == null) {
+                controlPage = (ControlController)(loadPage(controlPageURL, null));
+            }
             previousPage.hidePage();
             controlPage.displayPage(printer);
         });
     }
 
+    public void showHeadParametersPage(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            if (headParametersPage == null) {
+                headParametersPage = (HeadParametersController)(loadPage(headParametersPageURL, null));
+            }
+            previousPage.hidePage();
+            headParametersPage.displayPage(printer);
+        });
+    }
+
     public void showHomePage(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
+            if (homePage == null) {
+                homePage = (HomeController)(loadPage(homePageURL, null));
+            }
             previousPage.hidePage();
             currentPrinter = printer;
             homePage.displayPage(printer);
@@ -195,6 +184,9 @@ public class RootStackController implements Initializable {
     
     public void showLoginPage(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
+            if (loginPage == null) {
+                loginPage = (LoginController)(loadPage(loginPageURL, null));
+            }
             previousPage.hidePage();
             loginPage.displayPage(printer);
         });
@@ -202,6 +194,9 @@ public class RootStackController implements Initializable {
 
     public void showPrinterColourPage(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
+            if (printerColourPage == null) {
+                printerColourPage = (PrinterColourController)(loadPage(printerColourPageURL, null));
+            }
             previousPage.hidePage();
             printerColourPage.displayPage(printer);
         });
@@ -209,6 +204,9 @@ public class RootStackController implements Initializable {
     
     public void showPrinterNamePage(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
+            if (printerNamePage == null) {
+                printerNamePage = (PrinterNameController)(loadPage(namePageURL, PrinterNameController.class));
+            }
             previousPage.hidePage();
             printerNamePage.displayPage(printer);
         });
@@ -216,6 +214,9 @@ public class RootStackController implements Initializable {
     
     public void showPrinterSelectPage(Page previousPage) {
         Platform.runLater(() -> {
+            if (printerSelectPage == null) {
+                printerSelectPage = (PrinterSelectController)(loadPage(printerSelectPageURL, null));
+            }
             previousPage.hidePage();
             currentPrinter = null;
             printerSelectPage.displayPage(null);
@@ -224,6 +225,9 @@ public class RootStackController implements Initializable {
     
     public void showReprintPage(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
+            if (printPage == null) {
+                printPage = (PrintController)(loadPage(printPageURL, null));
+            }
             previousPage.hidePage();
             printPage.setReprintMode(true);
             printPage.displayPage(printer);
@@ -232,20 +236,69 @@ public class RootStackController implements Initializable {
 
     public void showResetPINPage(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
+            if (resetPINPage == null) {
+                resetPINPage = (ResetPINController)(loadPage(resetPINPageURL, null));
+            }
             previousPage.hidePage();
             resetPINPage.displayPage(printer);
         });
     }
     
+    public void showPurgePage(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            if (purgePage == null) {
+                purgePage = (PurgeController)(loadPage(purgePageURL, null));
+            }
+            previousPage.hidePage();
+            purgePage.displayPage(printer);
+        });
+    }
+
+    public void showPurgeIntroPage(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            if (purgeIntroPage == null) {
+                purgeIntroPage = (PurgeIntroController)(loadPage(purgeIntroPageURL, null));
+            }
+            previousPage.hidePage();
+            purgeIntroPage.displayPage(printer);
+        });
+    }
+
+    public void showRemoveHeadPage(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            //if (removeHeadPage == null) {
+            //    removeHeadPage = (RemoveHeadController)(loadPage(removeHeadPageURL, null));
+            //}
+            // previousPage.hidePage();
+            //removeHeadPage.displayPage(printer);
+        });
+    }
+
     public void showServerNamePage(Page previousPage) {
         Platform.runLater(() -> {
+            if (serverNamePage == null) {
+                serverNamePage = (ServerNameController)(loadPage(namePageURL, ServerNameController.class));
+            }
             previousPage.hidePage();
             serverNamePage.displayPage(null);
         });
     }
     
+    public void showTweakPage(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            if (tweakPage == null) {
+                tweakPage = (TweakController)(loadPage(tweakPageURL, null));
+            }
+            previousPage.hidePage();
+            tweakPage.displayPage(printer);
+        });
+    }
+
     public void showWirelessPage(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
+            if (wirelessPage == null) {
+                wirelessPage = (WirelessController)(loadPage(wirelessPageURL, null));
+            }
             previousPage.hidePage();
             wirelessPage.displayPage(printer);
         });
@@ -253,6 +306,9 @@ public class RootStackController implements Initializable {
 
     public void showUSBPrintPage(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
+            if (printPage == null) {
+                printPage = (PrintController)(loadPage(printPageURL, null));
+            }
             previousPage.hidePage();
             printPage.setReprintMode(false);
             printPage.displayPage(printer);
@@ -261,6 +317,9 @@ public class RootStackController implements Initializable {
 
     public void showCleanNozzlesMenu(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
+            if (cleanNozzlesMenu == null) {
+                cleanNozzlesMenu = (CleanNozzlesMenuController)(loadPage(menuURL, CleanNozzlesMenuController.class));
+            }
             previousPage.hidePage();
             cleanNozzlesMenu.displayPage(printer);
         });
@@ -268,6 +327,9 @@ public class RootStackController implements Initializable {
 
     public void showEjectStuckMenu(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
+            if (ejectStuckMenu == null) {
+                ejectStuckMenu = (EjectStuckMenuController)(loadPage(menuURL, EjectStuckMenuController.class));
+            }
             previousPage.hidePage();
             ejectStuckMenu.displayPage(printer);
         });
@@ -275,6 +337,9 @@ public class RootStackController implements Initializable {
 
     public void showIdentityMenu(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
+            if (identityMenu == null) {
+                identityMenu = (IdentityMenuController)(loadPage(menuURL, IdentityMenuController.class));
+            }
             previousPage.hidePage();
             identityMenu.displayPage(printer);
         });
@@ -282,6 +347,9 @@ public class RootStackController implements Initializable {
 
     public void showMainMenu(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
+            if (mainMenu == null) {
+                mainMenu = (MainMenuController)(loadPage(mainMenuURL, null));
+            }
             previousPage.hidePage();
             mainMenu.displayPage(printer);
         });
@@ -289,54 +357,39 @@ public class RootStackController implements Initializable {
 
     public void showMaintenanceMenu(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
+            if (maintenanceMenu == null) {
+                maintenanceMenu = (MaintenanceMenuController)(loadPage(menuURL, MaintenanceMenuController.class));
+            }
             previousPage.hidePage();
             maintenanceMenu.displayPage(printer);
         });
     }
 
-    public void showSecurityMenu(Page previousPage, RootPrinter printer) {
-        Platform.runLater(() -> {
-            previousPage.hidePage();
-            securityMenu.displayPage(printer);
-        });
-    }
-
-    public void showTestAxisSpeedMenu(Page previousPage, RootPrinter printer) {
-        Platform.runLater(() -> {
-            previousPage.hidePage();
-            testAxisSpeedMenu.displayPage(printer);
-        });
-    }
-
     public void showPrintMenu(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
+            if (printMenu == null) {
+                printMenu = (PrintMenuController)(loadPage(menuURL, PrintMenuController.class));
+            }
             previousPage.hidePage();
             printMenu.displayPage(printer);
         });
     }
 
-    public void showPurgePage(Page previousPage, RootPrinter printer) {
+    public void showSecurityMenu(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
+            if (securityMenu == null) {
+                securityMenu = (SecurityMenuController)(loadPage(menuURL, SecurityMenuController.class));
+            }
             previousPage.hidePage();
-            purgePage.displayPage(printer);
+            securityMenu.displayPage(printer);
         });
     }
 
-    public void showPurgeIntroPage(Page previousPage, RootPrinter printer) {
-        Platform.runLater(() -> {
-            previousPage.hidePage();
-            purgeIntroPage.displayPage(printer);
-        });
-    }
-
-    public void showRemoveHeadPage(Page previousPage, RootPrinter printer) {
-        Platform.runLater(() -> {
-            // previousPage.hidePage();
-            //purgePage.displayPage(printer);
-        });
-    }
     public void showSettingsMenu(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
+            if (settingsMenu == null) {
+                settingsMenu = (SettingsMenuController)(loadPage(menuURL, SettingsMenuController.class));
+            }
             previousPage.hidePage();
             settingsMenu.displayPage(printer);
         });
@@ -344,15 +397,21 @@ public class RootStackController implements Initializable {
     
     public void showServerSettingsMenu(Page previousPage) {
         Platform.runLater(() -> {
+            if (serverSettingsMenu == null) {
+                serverSettingsMenu = (ServerSettingsMenuController)(loadPage(menuURL, ServerSettingsMenuController.class));
+            }
             previousPage.hidePage();
             serverSettingsMenu.displayPage(null);
         });
     }
 
-    public void showTweakPage(Page previousPage, RootPrinter printer) {
+    public void showTestAxisSpeedMenu(Page previousPage, RootPrinter printer) {
         Platform.runLater(() -> {
+            if (testAxisSpeedMenu == null) {
+                testAxisSpeedMenu = (TestAxisSpeedMenuController)(loadPage(menuURL, TestAxisSpeedMenuController.class));
+            }
             previousPage.hidePage();
-            tweakPage.displayPage(printer);
+            testAxisSpeedMenu.displayPage(printer);
         });
     }
 
@@ -378,8 +437,9 @@ public class RootStackController implements Initializable {
              .forEach(p -> p.hidePage());
     }
     
-    private Page loadPage(URL pageURL, Class controller) throws IOException {
-            Page page = null;
+    private Page loadPage(URL pageURL, Class controller) {
+        Page page = null;
+        try {
             FXMLLoader pageLoader =  new FXMLLoader(pageURL, null);
             if (controller != null) {
                 
@@ -399,7 +459,13 @@ public class RootStackController implements Initializable {
             page.setRootStackController(this);
             pages.add(page);
             rootAnchorPane.getChildren().add(pagePane);
-            return page;
+        }
+        catch (IOException ex) {
+            System.out.println(ex);
+            ex.printStackTrace(System.err);
+            System.exit(1);
+        }
+        return page;
     }
     
     private void setAnchors(Node n) {
