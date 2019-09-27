@@ -21,13 +21,13 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 public class PrinterSelectController implements Initializable, Page {
     private static class PrinterPanel {
@@ -36,6 +36,12 @@ public class PrinterSelectController implements Initializable, Page {
         public ImageView statusIV;
         public ProgressBar progress;
         public Label nameLabel;
+        public RootPrinter printer;
+        public String printerColour;
+        public String armedColour;
+        public String statusIcon;
+        public boolean useDark;
+        public boolean armed;
         
         public PrinterPanel(GridPane panelPane,
                             ImageView errorIV,
@@ -47,6 +53,41 @@ public class PrinterSelectController implements Initializable, Page {
             this.statusIV = statusIV;
             this.progress = progress;
             this.nameLabel = nameLabel;
+            clearPrinterData();
+        }
+        
+        public final void clearPrinterData() {
+            printer = null;
+            printerColour = null;
+            armedColour = null;
+            statusIcon = null;
+            useDark = false;
+        }
+
+        public final void reset() {
+            clearPrinterData();
+            panelPane.setVisible(false);
+            panelPane.setStyle("");
+            panelPane.pseudoClassStateChanged(DARK_PS, false);
+            errorIV.pseudoClassStateChanged(DARK_PS, false);
+            errorIV.setVisible(false);
+            statusIV.pseudoClassStateChanged(DARK_PS, false);
+            statusIV.pseudoClassStateChanged(PAUSED_PS, false);
+            statusIV.pseudoClassStateChanged(PRINTING_PS, false);
+            progress.setVisible(false);
+            progress.setProgress(0.0);
+            progress.pseudoClassStateChanged(DARK_PS, false);
+            nameLabel.setText("-");
+            armed = false;
+        }
+        
+        public void setPanelColour() {
+            panelPane.setStyle("-fx-background-color: "
+                               + (armed ? armedColour : printerColour)
+                               +";"
+                               + "-fx-background-image: url(\""
+                               + statusIcon
+                               + "\");");
         }
     }
     
@@ -141,7 +182,37 @@ public class PrinterSelectController implements Initializable, Page {
         if (rootController != null)
         {
             Node b = (Node)event.getSource();
-            rootController.showHomePage(this, (RootPrinter)b.getUserData());
+            PrinterPanel pp = (PrinterPanel)b.getUserData();
+            if (pp != null && pp.printer != null)
+                rootController.showHomePage(this, pp.printer);
+        }
+    }
+    
+    @FXML
+    void armAction(MouseEvent event)
+    {
+        if (rootController != null)
+        {
+            Node b = (Node)event.getSource();
+            PrinterPanel pp = (PrinterPanel)b.getUserData();
+            if (pp != null) {
+                pp.armed = true;
+                pp.setPanelColour();
+            }
+        }
+    }
+    
+    @FXML
+    void disarmAction(MouseEvent event)
+    {
+        if (rootController != null)
+        {
+            Node b = (Node)event.getSource();
+            PrinterPanel pp = (PrinterPanel)b.getUserData();
+            if (pp != null) {
+                pp.armed = false;
+                pp.setPanelColour();
+            }
         }
     }
     
@@ -157,9 +228,9 @@ public class PrinterSelectController implements Initializable, Page {
     private RootStackController rootController = null;
     private RootServer rootServer = null;
     private PrinterPanel[] panelArray = null;
-    private final PseudoClass darkPS = PseudoClass.getPseudoClass("dark");
-    private final PseudoClass pausedPS = PseudoClass.getPseudoClass("paused");
-    private final PseudoClass printingPS = PseudoClass.getPseudoClass("printing");
+    private final static PseudoClass DARK_PS = PseudoClass.getPseudoClass("dark");
+    private final static PseudoClass PAUSED_PS = PseudoClass.getPseudoClass("paused");
+    private final static PseudoClass PRINTING_PS = PseudoClass.getPseudoClass("printing");
             
     @Override
     public void setRootStackController(RootStackController rootController) {
@@ -175,12 +246,20 @@ public class PrinterSelectController implements Initializable, Page {
         noPrintersVBox.setManaged(true);
         noPrintersVBox.setVisible(true);
         panelArray = new PrinterPanel[]
-            { new PrinterPanel(printer00Pane, printer00Error, printer00Status, printer00Progress, printer00Name), 
-              new PrinterPanel(printer01Pane, printer01Error, printer01Status, printer01Progress, printer01Name), 
-              new PrinterPanel(printer10Pane, printer10Error, printer10Status, printer10Progress, printer10Name), 
-              new PrinterPanel(printer11Pane, printer11Error, printer11Status, printer11Progress, printer11Name), 
-              new PrinterPanel(printer20Pane, printer20Error, printer20Status, printer20Progress, printer20Name), 
-              new PrinterPanel(printer21Pane, printer21Error, printer21Status, printer21Progress, printer21Name)};
+            {
+                new PrinterPanel(printer00Pane, printer00Error, printer00Status, printer00Progress, printer00Name), 
+                new PrinterPanel(printer01Pane, printer01Error, printer01Status, printer01Progress, printer01Name), 
+                new PrinterPanel(printer10Pane, printer10Error, printer10Status, printer10Progress, printer10Name), 
+                new PrinterPanel(printer11Pane, printer11Error, printer11Status, printer11Progress, printer11Name), 
+                new PrinterPanel(printer20Pane, printer20Error, printer20Status, printer20Progress, printer20Name), 
+                new PrinterPanel(printer21Pane, printer21Error, printer21Status, printer21Progress, printer21Name)
+            };
+        printer00Pane.setUserData(panelArray[0]);
+        printer01Pane.setUserData(panelArray[1]);
+        printer10Pane.setUserData(panelArray[2]);
+        printer11Pane.setUserData(panelArray[3]);
+        printer20Pane.setUserData(panelArray[4]);
+        printer21Pane.setUserData(panelArray[5]);
     }
     
     private ChangeListener<ServerStatusResponse> serverStatusListener = (ob, ov, nv) -> {
@@ -210,6 +289,7 @@ public class PrinterSelectController implements Initializable, Page {
     public void stopUpdates() {
         rootServer.getCurrentStatusProperty().removeListener(serverStatusListener);
         rootServer.getCurrentPrinterMap().removeListener(printerMapListener);
+        clearPrinterGrid();
     }
 
     @Override
@@ -237,19 +317,35 @@ public class PrinterSelectController implements Initializable, Page {
         });
     }
 
+    private void clearPrinterGrid() {
+        //System.out.println("RemoteServer::clearPrinterGrid");
+        Platform.runLater(() -> {
+            // Remove the lost printers.
+            for (int index = 0; index < 6; ++index) {
+                PrinterPanel pp = panelArray[index];
+                RootPrinter printer = pp.printer;
+                if (printer != null)
+                {
+                    printer.getCurrentStatusProperty().removeListener(printerStatusListener);
+                    pp.reset();
+                }
+            }
+        });
+    }
+
     private void updatePrinterGrid() {
         //System.out.println("RemoteServer::updatePrinterGrid");
+        Map<String, RootPrinter> currentPrinterMap = rootServer.getCurrentPrinterMap();
         Platform.runLater(() -> {
-            Map<String, RootPrinter> currentPrinterMap = rootServer.getCurrentPrinterMap();
                
             // Remove the lost printers.
             for (int index = 0; index < 6; ++index) {
                 PrinterPanel pp = panelArray[index];
-                RootPrinter printer = (RootPrinter)(pp.panelPane.getUserData());
+                RootPrinter printer = pp.printer;
                 if (printer != null && !currentPrinterMap.containsKey(printer.getPrinterId()))
                 {
                     printer.getCurrentStatusProperty().removeListener(printerStatusListener);
-                    pp.panelPane.setUserData(null);
+                    pp.reset();
                 }
             }
             
@@ -286,26 +382,14 @@ public class PrinterSelectController implements Initializable, Page {
                         PrinterPanel pp = panelArray[index];
                         if (pIndex < printerList.size()) {
                             RootPrinter printer = printerList.get(pIndex);
-                            pp.panelPane.setUserData(printer);
+                            pp.printer = printer;
                             printer.getCurrentStatusProperty().addListener(printerStatusListener);
                             updatePrinterStatus(printer.getCurrentStatusProperty().get());
                             pp.panelPane.setVisible(true);
                             ++pIndex;
                         }
                         else {
-                            pp.panelPane.setVisible(false);
-                            pp.panelPane.setUserData(null);
-                            pp.panelPane.setStyle("");
-                            pp.panelPane.pseudoClassStateChanged(darkPS, false);
-                            pp.errorIV.pseudoClassStateChanged(darkPS, false);
-                            pp.errorIV.setVisible(false);
-                            pp.statusIV.pseudoClassStateChanged(darkPS, false);
-                            pp.statusIV.pseudoClassStateChanged(pausedPS, false);
-                            pp.statusIV.pseudoClassStateChanged(printingPS, false);
-                            pp.progress.setVisible(false);
-                            pp.progress.setProgress(0.0);
-                            pp.progress.pseudoClassStateChanged(darkPS, false);
-                            pp.nameLabel.setText("-");
+                            pp.reset();
                         }
                     }
                 }
@@ -316,14 +400,33 @@ public class PrinterSelectController implements Initializable, Page {
     private void updatePrinterStatus(PrinterStatusResponse printerStatus) {
         for (int index = 0; index < 6; ++index) {
             PrinterPanel pp = panelArray[index];
-            RootPrinter p = (RootPrinter)(pp.panelPane.getUserData());
+            RootPrinter p = pp.printer;
             if (p != null && printerStatus != null && p.getPrinterId().equalsIgnoreCase(printerStatus.getPrinterID())) {
-                String printerName = printerStatus.getPrinterName();
-                String printerColour = printerStatus.getPrinterWebColourString();
+                pp.printerColour = printerStatus.getPrinterWebColourString();
                 MachineDetails md = MachineDetails.getDetails(printerStatus.getPrinterTypeCode());
-                String statusIcon = md.getStatusIcon(printerColour, MachineDetails.OPACITY.PC20);
+                pp.statusIcon = md.getStatusIcon(pp.printerColour, MachineDetails.OPACITY.PC20);
+                pp.useDark = MachineDetails.getComplimentaryOption(pp.printerColour, true, false);
+                Color pc = Color.web(pp.printerColour);
+                // Derive a darker or lighter colour to show when the printer panel is armed.
+                // It seems that sometimes darker()/brighter() may not do anything. If this
+                // happens, then we try the alternative.
+                Color ac;
+                if (pp.useDark) {
+                    ac = pc.darker().darker();
+                    if (ac.equals(pc))
+                        ac = pc.brighter().brighter();
+                }
+                else {
+                    ac = pc.brighter().brighter();
+                    if (ac.equals(pc))
+                        ac = pc.darker().darker();
+                }
 
-                boolean useDark = MachineDetails.getComplimentaryOption(printerColour, true, false);
+                pp.armedColour = String.format("#%1$02X%2$02X%3$02X",
+                                               Math.round(255.0 * ac.getRed()),
+                                               Math.round(255.0 * ac.getGreen()),
+                                               Math.round(255.0 * ac.getBlue()));
+
                 boolean idleState = printerStatus.getPrinterStatusEnumValue().startsWith("IDLE");
                 boolean pausedState = printerStatus.getPrinterStatusEnumValue().startsWith("PAUSE");
                 boolean printingState = !idleState && !pausedState;
@@ -337,34 +440,26 @@ public class PrinterSelectController implements Initializable, Page {
                         timeElapsed = 0.0;
                     progress = ((double)timeElapsed / printerStatus.getTotalDurationSeconds());
                 }
-                double progressValue = progress; // Need an effectively static local variable for use in lambda.
+                
+                pp.nameLabel.setText(printerStatus.getPrinterName());
+                pp.setPanelColour();
+                pp.panelPane.pseudoClassStateChanged(DARK_PS, pp.useDark);
+                pp.progress.pseudoClassStateChanged(DARK_PS, pp.useDark);
+                if (progress >= 0.0) {
+                    pp.progress.setProgress(progress);
+                    pp.progress.setVisible(true);
+                }
+                else {
+                    pp.progress.setProgress(0.0);
+                    pp.progress.setVisible(false);
+                }
 
-                Platform.runLater(() -> {
-                    pp.nameLabel.setText(printerName);
-                    pp.panelPane.setStyle("-fx-background-color: "
-                                           + printerColour
-                                           +";"
-                                           + "-fx-background-image: url(\""
-                                           + statusIcon
-                                           + "\");");
-                    pp.panelPane.pseudoClassStateChanged(darkPS, useDark);
-                    pp.progress.pseudoClassStateChanged(darkPS, useDark);
-                    if (progressValue >= 0.0) {
-                        pp.progress.setProgress(progressValue);
-                        pp.progress.setVisible(true);
-                    }
-                    else {
-                        pp.progress.setProgress(0.0);
-                        pp.progress.setVisible(false);
-                    }
-                    
-                    pp.errorIV.pseudoClassStateChanged(darkPS, useDark);
-                    pp.errorIV.setVisible(errorState);
+                pp.errorIV.pseudoClassStateChanged(DARK_PS, pp.useDark);
+                pp.errorIV.setVisible(errorState);
 
-                    pp.statusIV.pseudoClassStateChanged(darkPS, useDark);
-                    pp.statusIV.pseudoClassStateChanged(pausedPS, pausedState);
-                    pp.statusIV.pseudoClassStateChanged(printingPS, printingState);
-                });
+                pp.statusIV.pseudoClassStateChanged(DARK_PS, pp.useDark);
+                pp.statusIV.pseudoClassStateChanged(PAUSED_PS, pausedState);
+                pp.statusIV.pseudoClassStateChanged(PRINTING_PS, printingState);
                 break;
             }
         }

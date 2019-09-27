@@ -30,7 +30,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <GridPane fx:id="printer00Pane" onMouseClicked="#selectPrinterAction">
+                  <GridPane fx:id="printer00Pane" onMouseClicked="#selectPrinterAction" onMousePressed="#armAction" onMouseReleased="#disarmAction">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
                       <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
@@ -69,7 +69,7 @@
                         <String fx:value="printer-panel" />
                      </styleClass>
                   </GridPane>
-                  <GridPane fx:id="printer01Pane" onMouseClicked="#selectPrinterAction" GridPane.columnIndex="1">
+                  <GridPane fx:id="printer01Pane" onMouseClicked="#selectPrinterAction" onMousePressed="#armAction" onMouseReleased="#disarmAction" GridPane.columnIndex="1">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
                       <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
@@ -108,7 +108,7 @@
                         <String fx:value="printer-panel" />
                      </styleClass>
                   </GridPane>
-                  <GridPane fx:id="printer10Pane" onMouseClicked="#selectPrinterAction" GridPane.rowIndex="1">
+                  <GridPane fx:id="printer10Pane" onMouseClicked="#selectPrinterAction" onMousePressed="#armAction" onMouseReleased="#disarmAction" GridPane.rowIndex="1">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
                       <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
@@ -147,7 +147,7 @@
                         <String fx:value="printer-panel" />
                      </styleClass>
                   </GridPane>
-                  <GridPane fx:id="printer11Pane" onMouseClicked="#selectPrinterAction" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <GridPane fx:id="printer11Pane" onMouseClicked="#selectPrinterAction" onMousePressed="#armAction" onMouseReleased="#disarmAction" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
                       <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
@@ -186,7 +186,7 @@
                         <String fx:value="printer-panel" />
                      </styleClass>
                   </GridPane>
-                  <GridPane fx:id="printer20Pane" onMouseClicked="#selectPrinterAction" GridPane.rowIndex="2">
+                  <GridPane fx:id="printer20Pane" onMouseClicked="#selectPrinterAction" onMousePressed="#armAction" onMouseReleased="#disarmAction" GridPane.rowIndex="2">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
                       <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
@@ -225,7 +225,7 @@
                         <String fx:value="printer-panel" />
                      </styleClass>
                   </GridPane>
-                  <GridPane fx:id="printer21Pane" onMouseClicked="#selectPrinterAction" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <GridPane fx:id="printer21Pane" onMouseClicked="#selectPrinterAction" onMousePressed="#armAction" onMouseReleased="#disarmAction" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
                       <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
