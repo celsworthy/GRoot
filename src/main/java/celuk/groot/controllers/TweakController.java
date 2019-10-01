@@ -6,7 +6,10 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
 import java.util.function.BiConsumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
@@ -33,7 +36,13 @@ public class TweakController implements Initializable, Page {
             String data = String.format("{\"name\":\"%s\",\"tag\":\"%s\",\"value\":%s}",
                                         fieldName,
                                         tagName, Integer.toString(value));
-            printer.runSetPrintAdjustDataTask(data);
+            try {
+                printer.runSetPrintAdjustDataTask(data).get();
+            } catch (InterruptedException ex) {
+                System.err.println("Interrupt exception when running print adjust request.");
+            } catch (ExecutionException ex) {
+                System.err.println("Execution exception when running print adjust request.");
+            }
         }
     };
     

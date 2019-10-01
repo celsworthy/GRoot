@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -125,7 +126,7 @@ public class RootServer extends Updater {
         return hostPort;
     }
 
-    protected byte[] makeHTTPRequest(String request, boolean isGetRequest, String content) {
+    protected byte[] makeHTTPRequest(String request, boolean isGetRequest, String content, int connectTimeout, int readTimeout) {
         String url = HTTP_PREFIX + hostAddress + ":" + hostPort + request;
         byte[] requestData = null;
 
@@ -140,43 +141,47 @@ public class RootServer extends Updater {
             con.setRequestProperty("User-Agent", USER_AGENT);
             con.setRequestProperty("Authorization", "Basic " + StringToBase64Encoder.encode("root:" + getPIN()));
 
-            con.setConnectTimeout(CONNECT_TIMEOUT_SHORT);
-            con.setReadTimeout(READ_TIMEOUT_SHORT);
+            con.setConnectTimeout(connectTimeout);
+            con.setReadTimeout(readTimeout);
 
             if (content != null) {
+                byte[] data = content.getBytes(StandardCharsets.UTF_8);
                 con.setDoOutput(true);
                 con.setRequestProperty("Content-Type", "application/json");
-                con.setRequestProperty("Content-Length", "" + content.length());
-                con.getOutputStream().write(content.getBytes());
+                con.setRequestProperty("Content-Length", "" + data.length);
+                con.getOutputStream().write(data);
             }
 
             int responseCode = con.getResponseCode();
 
             switch (responseCode) {
                 case 200:
+                    //System.out.println("200 response for request \"" + request + "\"");
                     int availChars = con.getInputStream().available();
                     requestData = new byte[availChars];
                     con.getInputStream().read(requestData, 0, availChars);
                     authorisedProperty.set(true);
                     break;
                 case 204:
+                    //System.out.println("204 responsefor request \"" + request + "\"");
                     requestData = new byte[0];
                     authorisedProperty.set(true);
                     break;
                 case 401:
+                    //System.out.println("401 response - unauthorised request \"" + request + "\"");
                     authorisedProperty.set(false);
                     break;
                 default:
-                    System.out.println("Invalid response (" + Integer.toString(responseCode) +") after making request \"" + request + "\" from @" + hostAddress + ":" + hostPort);
+                    System.err.println("Invalid response (" + Integer.toString(responseCode) +") after making request \"" + request + "\" from @" + hostAddress + ":" + hostPort);
                     break;
             }
         } 
         catch (java.net.SocketTimeoutException ex) {
             long t2 = System.currentTimeMillis();
-            System.out.println("Timeout whilst making request \"" + request + "\" from @" + hostAddress + ":" + hostPort + " - time taken = " + Long.toString(t2 - t1));
+            System.err.println("Timeout whilst making request \"" + request + "\" from @" + hostAddress + ":" + hostPort + " - time taken = " + Long.toString(t2 - t1));
         }
         catch (IOException ex) {
-            System.out.println("Error whilst making request \"" + request + "\" from @" + hostAddress + ":" + hostPort + " - " + ex);
+            System.err.println("Error whilst making request \"" + request + "\" from @" + hostAddress + ":" + hostPort + " - " + ex);
         }
         
         return requestData;
@@ -186,25 +191,25 @@ public class RootServer extends Updater {
         return executorService.submit(backgroundTask);
     }
 
-    public <R> Future<R> runRequestTask(String command, boolean isGetRequest, String content, BiFunction<byte[], ObjectMapper, R> responseMapper) {
+    public <R> Future<R> runRequestTask(String command, boolean isGetRequest, int readTimeout, String content, BiFunction<byte[], ObjectMapper, R> responseMapper) {
         return executorService.submit(() -> {
             R response = null;
             try {
-                byte[] requestData = makeHTTPRequest(command, isGetRequest, content);
+                byte[] requestData = makeHTTPRequest(command, isGetRequest, content, CONNECT_TIMEOUT_SHORT, readTimeout);
                 if (requestData != null) {
-                    // System.out.println("Calling response mapper for \"" + command + "\"");
+                    //System.out.println("Calling response mapper for \"" + command + "\"");
                     response = responseMapper.apply(requestData, mapper);
                 }
             }
             catch (Exception ex) {
-                System.out.println("Error whilst requesting \"" + command + "\" from @" + hostAddress + ":" + hostPort + " - " + ex);
+                System.err.println("Error whilst requesting \"" + command + "\" from @" + hostAddress + ":" + hostPort + " - " + ex);
             }
             return response;
         });
     }
 
     public Future<ObservableMap<String, RootPrinter>> runListAttachedPrintersTask() {
-        return runRequestTask(LIST_PRINTERS_COMMAND, true, null,
+        return runRequestTask(LIST_PRINTERS_COMMAND, true, READ_TIMEOUT_SHORT, null,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 try {
                     if (requestData.length > 0) {
@@ -233,14 +238,14 @@ public class RootServer extends Updater {
                     }
                 }
                 catch (IOException ex) {
-                    System.out.println("Error whilst decoding printer list from @" + hostAddress + ":" + hostPort + " - " + ex);
+                    System.err.println("Error whilst decoding printer list from @" + hostAddress + ":" + hostPort + " - " + ex);
                 }
                 return currentPrinterMap;
             });
     }
 
     public Future<ServerStatusResponse> runRequestServerStatusTask() {
-        return runRequestTask(WHO_ARE_YOU_COMMAND, true, null,
+        return runRequestTask(WHO_ARE_YOU_COMMAND, true, READ_TIMEOUT_SHORT, null,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 ServerStatusResponse serverStatus = null;
                 try {
@@ -251,7 +256,7 @@ public class RootServer extends Updater {
                     }
                 }
                 catch (IOException ex) {
-                    System.out.println("Error whilst decoding printer list from @" + hostAddress + ":" + hostPort + " - " + ex);
+                    System.err.println("Error whilst decoding printer list from @" + hostAddress + ":" + hostPort + " - " + ex);
                 }
                 return serverStatus;
             });
@@ -259,7 +264,7 @@ public class RootServer extends Updater {
     
     public Future<Void> runUpdatePINTask(String pin) {
         String data = String.format("\"%s\"", pin);
-        return runRequestTask(UPDATE_PIN_COMMAND, false, data,
+        return runRequestTask(UPDATE_PIN_COMMAND, false, READ_TIMEOUT_SHORT, data,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 return null;
             });
@@ -267,14 +272,14 @@ public class RootServer extends Updater {
 
     public Future<Void> runResetPINTask(String serial) {
         String data = String.format("\"%s\"", serial);
-        return runRequestTask(RESET_PIN_COMMAND, false, data,
+        return runRequestTask(RESET_PIN_COMMAND, false, READ_TIMEOUT_SHORT, data,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 return null;
             });
     }
     
     public Future<WifiStatusResponse> runRequestWifiStatusTask() {
-        return runRequestTask(GET_CURRENT_WIFI_STATE_COMMAND, false, null,
+        return runRequestTask(GET_CURRENT_WIFI_STATE_COMMAND, false, READ_TIMEOUT_LONG, null,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 WifiStatusResponse wifiStatus = null;
                 try {
@@ -285,7 +290,7 @@ public class RootServer extends Updater {
                     }
                 }
                 catch (IOException ex) {
-                    System.out.println("Error whilst decoding printer list from @" + hostAddress + ":" + hostPort + " - " + ex);
+                    System.err.println("Error whilst decoding printer list from @" + hostAddress + ":" + hostPort + " - " + ex);
                 }
                 return wifiStatus;
             });
@@ -293,7 +298,7 @@ public class RootServer extends Updater {
     
     public Future<Void> runSetServerNameTask(String serverName) {
         String data = String.format("\"%s\"", serverName);
-        return runRequestTask(SET_SERVER_NAME_COMMAND, false, data,
+        return runRequestTask(SET_SERVER_NAME_COMMAND, false, READ_TIMEOUT_SHORT, data,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 return null;
             });
@@ -302,7 +307,7 @@ public class RootServer extends Updater {
     public Future<Void> runEnableDisableWifiTask(boolean enableWifi) {
         String data = enableWifi ? "\"true\""
                                  : "\"false\"";
-        return runRequestTask(ENABLE_DISABLE_WIFI_COMMAND, false, data,
+        return runRequestTask(ENABLE_DISABLE_WIFI_COMMAND, false, READ_TIMEOUT_LONG, data,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 return null;
             });
@@ -310,7 +315,7 @@ public class RootServer extends Updater {
     
     public Future<Void> runSetWiFiCredentialsTask(String ssid, String password) {
         String data = String.format("\"%s:%s\"", ssid, password);
-        return runRequestTask(SET_WIFI_CREDENTIALS_COMMAND, false, data,
+        return runRequestTask(SET_WIFI_CREDENTIALS_COMMAND, false, READ_TIMEOUT_LONG, data,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 return null;
             });

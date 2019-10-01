@@ -50,15 +50,15 @@
                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label fx:id="filament1TypeLabel" styleClass="material-1, filament-type, large-text" text="Label">
+                  <Label fx:id="filament1TypeLabel" styleClass="material-1, filament-type, large-text" text=" ">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></Label>
-                  <Label fx:id="filament1DescriptionLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="filament-description, medium-text" text="Label" GridPane.columnSpan="3" GridPane.rowIndex="1">
+                  <Label fx:id="filament1DescriptionLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="filament-description, medium-text" text=" " GridPane.columnSpan="3" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" />
                      </GridPane.margin></Label>
-                  <Label fx:id="filament1RemainingLabel" styleClass="medium-text" text="Label" GridPane.columnIndex="1">
+                  <Label fx:id="filament1RemainingLabel" styleClass="medium-text" text=" " GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></Label>
@@ -72,15 +72,15 @@
                         <Insets bottom="10.0" left="26.0" right="26.0" top="30.0" />
                      </GridPane.margin>
                   </Button>
-                  <Label fx:id="filament2TypeLabel" styleClass="material-2, filament-type, large-text" text="Label" GridPane.rowIndex="2">
+                  <Label fx:id="filament2TypeLabel" styleClass="material-2, filament-type, large-text" text=" " GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></Label>
-                  <Label fx:id="filament2DescriptionLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="filament-description, medium-text" text="Label" GridPane.columnSpan="3" GridPane.rowIndex="3">
+                  <Label fx:id="filament2DescriptionLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="filament-description, medium-text" text=" " GridPane.columnSpan="3" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" />
                      </GridPane.margin></Label>
-                  <Label fx:id="filament2RemainingLabel" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" styleClass="medium-text" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Label fx:id="filament2RemainingLabel" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" styleClass="medium-text" text=" " GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></Label>
@@ -152,11 +152,11 @@
                         <Label fx:id="jobNameTitleLabel" text="printJob.name" />
                         <Label fx:id="jobCreatedTitleLabel" text="printJob.created" GridPane.rowIndex="1" />
                         <Label fx:id="jobDurationTitleLabel" text="printJob.duration" GridPane.rowIndex="2" />
-                        <Label fx:id="jobNameLabel" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="2" />
-                        <Label fx:id="jobCreatedLabel" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                        <Label fx:id="jobDurationLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="jobNameLabel" text=" " GridPane.columnIndex="1" GridPane.columnSpan="2" />
+                        <Label fx:id="jobCreatedLabel" text=" " GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                        <Label fx:id="jobDurationLabel" text=" " GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label fx:id="jobProfileTitleLabel" text="printJob.profile" GridPane.rowIndex="3" />
-                        <Label fx:id="jobProfileLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="jobProfileLabel" text=" " GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Pane fx:id="jobProfileIcon" prefHeight="48.0" prefWidth="48.0" styleClass="jobProfileIcon" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.rowSpan="2" />
                      </children>
                      <VBox.margin>
@@ -175,7 +175,7 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </HBox.margin>
                               </Pane>
-                                <Label fx:id="jobStatusLabel" maxWidth="1.7976931348623157E308" text="Label" HBox.hgrow="SOMETIMES">
+                                <Label fx:id="jobStatusLabel" maxWidth="1.7976931348623157E308" text=" " HBox.hgrow="SOMETIMES">
                                    <font>
                                       <Font size="24.0" />
                                    </font>
@@ -185,7 +185,7 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </HBox.margin>
                               </Pane>
-                                <Label fx:id="jobEtcLabel" maxWidth="1.7976931348623157E308" text="Label" HBox.hgrow="SOMETIMES">
+                                <Label fx:id="jobEtcLabel" maxWidth="1.7976931348623157E308" text=" " HBox.hgrow="SOMETIMES">
                                    <font>
                                       <Font size="24.0" />
                                    </font>

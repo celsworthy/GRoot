@@ -232,6 +232,8 @@ public class PrintController implements Initializable, Page {
     private String usbPrintTitleText = "usbprint.title";
     private String noSuitableJobsTitleText = "print.noSuitableJobsTitle";
     private String noSuitableJobsDetailsText = "print.noSuitableJobsDetails";
+    private String loadingDetailsText = "print.loadingDetails";
+    private String loadingTitleText = "print.loadingTitle";
     private String noJobsTitleText = "print.noJobsTitle";
     private String noJobsDetailsText = "print.noJobsDetails";
     private String noMediaTitleText = "print.noMediaTitle";
@@ -271,6 +273,8 @@ public class PrintController implements Initializable, Page {
 
         reprintTitleText = I18n.t(reprintTitleText);
         usbPrintTitleText = I18n.t(usbPrintTitleText);
+        loadingDetailsText = I18n.t(loadingDetailsText);
+        loadingTitleText = I18n.t(loadingTitleText);
         noSuitableJobsTitleText = I18n.t(noSuitableJobsTitleText);
         noSuitableJobsDetailsText = I18n.t(noSuitableJobsDetailsText);
         noJobsTitleText = I18n.t(noJobsTitleText);
@@ -433,8 +437,8 @@ public class PrintController implements Initializable, Page {
             p.jobGrid.setUserData(null);
             p.jobGrid.pseudoClassStateChanged(activePS, false);
         }
-        String titleText = " ";
-        String detailsText = " ";
+        String titleText = loadingTitleText;
+        String detailsText = loadingDetailsText;
         if (status != null) {
             switch (status) {
                 case NO_SUITABLE_JOBS:
@@ -452,6 +456,7 @@ public class PrintController implements Initializable, Page {
                 case NO_PRINTER:
                     titleText = noPrinterTitleText;
                     detailsText = noPrinterDetailsText;
+                    break;
                 case ERROR:
                     titleText = errorTitleText;
                     detailsText = errorDetailsText;
@@ -465,20 +470,25 @@ public class PrintController implements Initializable, Page {
     private void updatePrintableJobs(PrintJobListData jobList) {
         Platform.runLater(() -> {
             currentJobList = jobList;
-            if (jobList.getStatus() == PrintJobListData.ListStatus.OK) {
-                jobsPanel.setVisible(true);
-                jobsPanel.setManaged(true);
-                noPrintPanel.setVisible(false);
-                noPrintPanel.setManaged(false);
-                currentPage = 0;
-                nPages = (int)Math.floor(currentJobList.getJobs().size() / (double)JOBS_PER_PAGE);
-                if ((currentJobList.getJobs().size() % JOBS_PER_PAGE) > 0 || nPages == 0)
-                    nPages++;
+            if (jobList != null) {
+                if (jobList.getStatus() == PrintJobListData.ListStatus.OK) {
+                    jobsPanel.setVisible(true);
+                    jobsPanel.setManaged(true);
+                    noPrintPanel.setVisible(false);
+                    noPrintPanel.setManaged(false);
+                    currentPage = 0;
+                    nPages = (int)Math.floor(currentJobList.getJobs().size() / (double)JOBS_PER_PAGE);
+                    if ((currentJobList.getJobs().size() % JOBS_PER_PAGE) > 0 || nPages == 0)
+                        nPages++;
 
-                displayCurrentPage();
+                    displayCurrentPage();
+                }
+                else
+                    clearPrintableJobs(jobList.getStatus());
             }
-            else
-                clearPrintableJobs(jobList.getStatus());
+            else {
+                clearPrintableJobs(PrintJobListData.ListStatus.ERROR);
+            }
         });
     }
 

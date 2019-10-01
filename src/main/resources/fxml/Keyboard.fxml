@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -31,7 +32,7 @@
       <Button id="twoKey" fx:id="twoKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyboardAction" styleClass="keyboard-key" text="2" GridPane.columnIndex="2" GridPane.rowIndex="5" />
       <Button id="threeKey" fx:id="threeKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyboardAction" styleClass="keyboard-key" text="3" GridPane.columnIndex="3" GridPane.rowIndex="5" />
       <Button id="fourKey" fx:id="fourKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyboardAction" styleClass="keyboard-key" text="4" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-      <Button id="backspaceKey" fx:id="backspaceKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyboardAction" text="keyboard.backspace" GridPane.columnIndex="5" GridPane.rowSpan="2">
+      <Button id="backspaceKey" fx:id="backspaceKey" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyboardAction" text="keyboard.backspace" GridPane.columnIndex="5" GridPane.rowSpan="2">
          <styleClass>
             <String fx:value="keyboard-key" />
             <String fx:value="backspace-key" />
@@ -42,7 +43,7 @@
       <Button id="sevenKey" fx:id="sevenKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyboardAction" styleClass="keyboard-key" text="7" GridPane.columnIndex="3" GridPane.rowIndex="6" />
       <Button id="eightKey" fx:id="eightKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyboardAction" styleClass="keyboard-key" text="8" GridPane.columnIndex="4" GridPane.rowIndex="6" />
       <Button id="nineKey" fx:id="nineKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keyboardAction" styleClass="keyboard-key" text="9" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-      <Button id="enterKey" fx:id="enterKey" defaultButton="true" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#enterAction" text="keyboard.enter" GridPane.columnIndex="5" GridPane.rowIndex="5" GridPane.rowSpan="3">
+      <Button id="enterKey" fx:id="enterKey" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" defaultButton="true" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#enterAction" text="keyboard.enter" GridPane.columnIndex="5" GridPane.rowIndex="5" GridPane.rowSpan="3">
          <styleClass>
             <String fx:value="keyboard-key" />
             <String fx:value="enter-key" />
@@ -87,4 +88,7 @@
    <stylesheets>
       <String fx:value="styles/Keyboard.css" />
    </stylesheets>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
 </GridPane>

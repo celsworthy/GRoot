@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package celuk.groot.controllers;
 
 import celuk.groot.remote.ErrorDetails;
@@ -13,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -137,8 +135,8 @@ public class ErrorAlertController {
 
                 // Error needs to be raised for the user
                 String errorMessage = errorData.getErrorMessage();
-                if (errorMessage.length() > 64)
-                    errorMessage = errorMessage.substring(0, 60).concat(" ...");
+                if (errorMessage.length() > 504)
+                    errorMessage = errorMessage.substring(0, 500).concat(" ...");
                 errorAlert.setHeaderText(errorData.getErrorTitle());
                 errorAlert.setContentText(errorMessage);
                 errorAlert.setTitle(dialogTitleText.replace("#1", printerName));
@@ -182,38 +180,81 @@ public class ErrorAlertController {
 
                 // Show the dialog.
                 Optional<ButtonType> result = errorAlert.showAndWait();
+                errorAlert.hide();
                 if (result.isPresent()) {
                     ButtonType bt = result.get();
                     String typeCode = result.get().getButtonData().getTypeCode();
                     //System.out.println("Returned " + typeCode);
                     switch(typeCode) {
                         case "O":
+                        {
+                            // OK/Continue button.
+                            printer.runResumeTask();
+                            try {
+                                printer.runClearErrorTask(errorCode).get();
+                            }
+                            catch (InterruptedException ex) {
+                                System.err.println("Interrupt exception while clearing error");
+                            } 
+                            catch (ExecutionException ex) {
+                                System.err.println("Execution exception while clearing error");
+                            }
                             // OK/Continue button.
                             //System.out.println("OK");
-                            server.runBackgroundTask(() -> {
-                                printer.runResumeTask();
-                                printer.runClearErrorTask(errorCode);
-                                return null;
-                            });
+                            //server.runBackgroundTask(() -> {
+                            //    printer.runResumeTask();
+                            //    printer.runClearErrorTask(errorCode);
+                            //    return null;
+                            //});
                             break;
+                        }
+
                         case "A":
+                        {
+                            // Apply/Eject button.
+                            printer.runEjectFilamentTask(errorCode == 28 ? 1 : 0);
+                            try {
+                                printer.runClearErrorTask(errorCode).get();
+                            }
+                            catch (InterruptedException ex) {
+                                System.err.println("Interrupt exception while clearing error");
+                            } 
+                            catch (ExecutionException ex) {
+                                System.err.println("Execution exception while clearing error");
+                            }
                             // Apply/Eject button.
                             //System.out.println("Eject");
-                            server.runBackgroundTask(() -> {
-                                printer.runEjectFilamentTask(errorCode == 28 ? 1 : 0);
-                                printer.runClearErrorTask(errorCode);
-                                return null;
-                            });
+                            //server.runBackgroundTask(() -> {
+                            //    printer.runEjectFilamentTask(errorCode == 28 ? 1 : 0);
+                            //    printer.runClearErrorTask(errorCode);
+                            //    return null;
+                            //});
                             break;
+                        }
+                        
                         case "C":
+                        {
+                            // Cancel/Abort button.
+                            printer.runCancelTask();
+                            try {
+                                printer.runClearErrorTask(errorCode).get();
+                            }
+                            catch (InterruptedException ex) {
+                                System.err.println("Interrupt exception while clearing error");
+                            } 
+                            catch (ExecutionException ex) {
+                                System.err.println("Execution exception while clearing error");
+                            }
                             // Cancel/Abort button.
                             //System.out.println("Abort");
-                            server.runBackgroundTask(() -> {
-                                printer.runCancelTask();
-                                printer.runClearErrorTask(errorCode);
-                                return null;
-                            });
+                            //server.runBackgroundTask(() -> {
+                            //    printer.runCancelTask();
+                            //    printer.runClearErrorTask(errorCode);
+                            //    return null;
+                            //});
                             break;
+                        }
+                        
                         default:
                             break;
                     }

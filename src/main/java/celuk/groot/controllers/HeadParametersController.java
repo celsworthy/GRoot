@@ -153,9 +153,12 @@ public class HeadParametersController implements Initializable, Page {
         }
     }
 
+    private static final float MAX_SPINNER_VALUE = 20.0F;
+    private static final float MIN_SPINNER_VALUE = -20.0F;
+    
     protected RootStackController rootController = null;
     protected RootPrinter printer = null;
-    private Map<String, FloatSpinnerController> spinnerMap = new HashMap<>();
+    private final Map<String, FloatSpinnerController> spinnerMap = new HashMap<>();
     private int nozzleCount = 0;
     private boolean valveFitted = false;
     protected boolean modified = false;
@@ -256,14 +259,14 @@ public class HeadParametersController implements Initializable, Page {
         headHoursField.setText("");
         maxTempField.setText("");
 
-        setSpinnerData("rightX", 0.0F, -2.0F, 5.0F);
-        setSpinnerData("rightY", 0.0F, -2.0F, 5.0F);
-        setSpinnerData("rightZ", 0.0F, -2.0F, 5.0F);
-        setSpinnerData("rightB", 0.0F, -2.0F, 5.0F);
-        setSpinnerData("leftX", 0.0F, -2.0F, 5.0F);
-        setSpinnerData("leftY", 0.0F, -2.0F, 5.0F);
-        setSpinnerData("leftZ", 0.0F, -2.0F, 5.0F);
-        setSpinnerData("leftB", 0.0F, -2.0F, 5.0F);
+        setSpinnerData("rightX", 0.0F, MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
+        setSpinnerData("rightY", 0.0F, MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
+        setSpinnerData("rightZ", 0.0F, MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
+        setSpinnerData("rightB", 0.0F, MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
+        setSpinnerData("leftX", 0.0F, MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
+        setSpinnerData("leftY", 0.0F, MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
+        setSpinnerData("leftZ", 0.0F, MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
+        setSpinnerData("leftB", 0.0F, MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
     }
 
     public void updateHeadEEPROMData(HeadEEPROMData headData)
@@ -307,9 +310,9 @@ public class HeadParametersController implements Initializable, Page {
             headHoursField.setText(String.format("%d %s", (int)headData.getHourCount(), I18n.t("unit.hours")));
             maxTempField.setText(String.format("%d %s",(int)headData.getMaxTemp(), I18n.t("unit.temp")));
 
-            setSpinnerData("rightX", headData.getRightNozzleXOffset(), -2.0F, 5.0F);
-            setSpinnerData("rightY", headData.getRightNozzleYOffset(), -2.0F, 5.0F);
-            setSpinnerData("rightZ", headData.getRightNozzleZOverrun(), -2.0F, 5.0F);
+            setSpinnerData("rightX", headData.getRightNozzleXOffset(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
+            setSpinnerData("rightY", headData.getRightNozzleYOffset(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
+            setSpinnerData("rightZ", headData.getRightNozzleZOverrun(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
         }
         else
         {
@@ -324,18 +327,18 @@ public class HeadParametersController implements Initializable, Page {
         }
         
         if (valveFitted) {
-            setSpinnerData("rightB", headData.getRightNozzleBOffset(), -2.0F, 5.0F);
+            setSpinnerData("rightB", headData.getRightNozzleBOffset(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
         }
         else {
             spinnerMap.get("rightB").setVisible(false);
         }
         
         if (nozzleCount > 1) {
-            setSpinnerData("leftX", headData.getLeftNozzleXOffset(), -2.0F, 5.0F);
-            setSpinnerData("leftY", headData.getLeftNozzleYOffset(), -2.0F, 5.0F);
-            setSpinnerData("leftZ", headData.getLeftNozzleZOverrun(), -2.0F, 5.0F);
+            setSpinnerData("leftX", headData.getLeftNozzleXOffset(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
+            setSpinnerData("leftY", headData.getLeftNozzleYOffset(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
+            setSpinnerData("leftZ", headData.getLeftNozzleZOverrun(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
             if (valveFitted) {
-                setSpinnerData("leftB", headData.getLeftNozzleBOffset(), -2.0F, 5.0F);
+                setSpinnerData("leftB", headData.getLeftNozzleBOffset(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
             }
             else {
                 spinnerMap.get("leftB").setVisible(false);
@@ -377,7 +380,7 @@ public class HeadParametersController implements Initializable, Page {
             if (valveFitted)
                 headData.setLeftNozzleBOffset(spinnerMap.get("leftB").value);
         }
-        printer.runWriteHeadEEPROMDataTask(headData);
-        rootController.showHomePage(this, printer);
+        printer.runSetHeadEEPROMDataTask(headData);
+        setModified(false);
     }
 }

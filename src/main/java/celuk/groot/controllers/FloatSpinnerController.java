@@ -57,6 +57,7 @@ public class FloatSpinnerController  {
         this.maxValue = 0.0F;
         this.step = step;
         this.format = format;
+        this.updater = updater;
     }
 
     public void initialize() {
