@@ -70,7 +70,7 @@ public class GRoot extends Application {
         I18n.loadMessages(COMMAND_LINE_ARGS.installDirectory,
                           I18n.getDefaultApplicationLocale(COMMAND_LINE_ARGS.languageTag));
         if (COMMAND_LINE_ARGS.showSplashScreen)
-            System.setProperty("javafx.preloader", "celuk.groot.GRootPreloader");
+            System.setProperty("javafx.preloader", GRootPreloader.class.getName());
         launch(args);
     }
 }
