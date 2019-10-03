@@ -1,6 +1,6 @@
 .filament-description {
     -fx-text-fill: black;
-    -fx-font-size: 12pt;
+    -fx-font-size: 14pt;
     -fx-background-color: white;
 }
 
@@ -49,18 +49,23 @@
 }
 
 .machine-address {
-    -fx-font-weight: bold;
+    -fx-font-weight: normal;
     -fx-font-size: 12pt;
+}
+
+.machine-icon {
+	-fx-border-color: white;
+	-fx-border-width: 2px;
 }
 
 .machine-model {
     -fx-text-fill: -robox-blue;
-    -fx-font-weight: bold;
-    -fx-font-size: 12pt;
+    -fx-font-weight: normal;
+    -fx-font-size: 18pt;
 }
 
 .machine-name {
-    -fx-font-weight: bold;
+    -fx-font-weight: normal;
     -fx-font-size: 18pt;
 }
 

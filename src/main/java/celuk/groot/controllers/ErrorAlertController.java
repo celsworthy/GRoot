@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -169,13 +167,13 @@ public class ErrorAlertController {
                 if (errorCode == 28) { // E_UNLOAD_ERROR
                     buttonList.add(ButtonType.APPLY);
                     Button b = (Button)errorAlert.getDialogPane().lookupButton(ButtonType.APPLY);
-                    b.setText(ejectFilament2Text);
+                    b.setText(ejectFilament1Text);
                 }
                 else if (errorCode == 29) { // D_UNLOAD_ERROR
                     // D_UNLOAD_ERROR
                     buttonList.add(ButtonType.APPLY);
                     Button b = (Button)errorAlert.getDialogPane().lookupButton(ButtonType.APPLY);
-                    b.setText(ejectFilament1Text);
+                    b.setText(ejectFilament2Text);
                 }
 
                 // Show the dialog.
