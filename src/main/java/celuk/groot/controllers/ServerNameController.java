@@ -123,6 +123,7 @@ public class ServerNameController implements Initializable, Page {
             String v = newValue.trim();
             rightButton.setDisable(v.isBlank() || v.equals(currentName));
         });
+        middleButton.setDisable(true);
     }
     
     @Override

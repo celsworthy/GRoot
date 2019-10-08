@@ -214,7 +214,7 @@ public class RootPrinter extends Updater {
                 fakeError.setOptions(3);
             }
             if (errorList == null)
-                errorList = new ArrayList<ErrorDetails>();
+                errorList = new ArrayList<>();
             errorList.add(fakeError);
         }
         return errorList;
@@ -460,7 +460,7 @@ public class RootPrinter extends Updater {
                 HeadEEPROMData headData = null;
                 try {
                     if (requestData.length > 0) {
-                        System.out.println("Updating print adjust data of \"" + getPrinterId() + "\" - \"" + new String(requestData) + "\"");
+                        // System.out.println("Updating print adjust data of \"" + getPrinterId() + "\" - \"" + new String(requestData) + "\"");
                         headData = jMapper.readValue(requestData, HeadEEPROMData.class);
                     }
                 }
@@ -477,7 +477,7 @@ public class RootPrinter extends Updater {
     }
     
     public Future<Void> runSetHeadEEPROMDataTask(HeadEEPROMData headData) {
-        System.out.println("Setting head EEPROM data from printer \"" + printerId + "\"");
+        //System.out.println("Setting head EEPROM data from printer \"" + printerId + "\"");
         Future<Void> f;
         try {
             String mappedData = rootServer.getMapper().writeValueAsString(headData);
@@ -535,7 +535,7 @@ public class RootPrinter extends Updater {
     }
     
     public Future<Void> runPurgeTask(PurgeTarget targetData) {
-        //System.out.println("Writing head EEPROM data from printer \"" + printerId + "\"");
+        //System.out.println("Running purge on printer \"" + printerId + "\"");
         Future<Void> f;
         try {
             String mappedData = rootServer.getMapper().writeValueAsString(targetData);

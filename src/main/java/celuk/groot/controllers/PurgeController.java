@@ -52,6 +52,7 @@ public class PurgeController implements Initializable, Page {
     private Label m1PrevTempValue;
     @FXML
     private Label m1PrevTempSuffix;
+
     @FXML
     private Label m1NewTempLabel;
     @FXML
@@ -149,6 +150,7 @@ public class PurgeController implements Initializable, Page {
     private Map<String, IntegerSpinnerController> spinnerMap = new HashMap<>();
     private boolean showPanel1 = false;
     private boolean showPanel2 = false;
+    private int rightNozzleIndex = 0;    
     private String purgePromptText = "purge.prompt";
     private String purgeUnavailableText = "purge.unavailable";
     private Node[] panel1Nodes = null;
@@ -288,6 +290,7 @@ public class PurgeController implements Initializable, Page {
         Platform.runLater(() -> {
             showPanel1 = false;
             showPanel2 = false;
+            rightNozzleIndex = 0;
             HeadEEPROMData headData = null;
             FilamentDetails[] attachedFilaments = null;
             if (pData != null) {
@@ -304,6 +307,7 @@ public class PurgeController implements Initializable, Page {
                              attachedFilaments[1] != null &&
                              attachedFilaments[1].getMaterialLoaded() &&
                              attachedFilaments[1].getCanEject();
+                rightNozzleIndex = headData.getNozzleCount() - 1;
             }
             
             if (showPanel1 || showPanel2) {
@@ -321,7 +325,10 @@ public class PurgeController implements Initializable, Page {
                 m1CheckBox.selectedProperty().set(true);
                 disableNodes(panel1Nodes, false);
                 m1PreviousTemp = (int)Math.round(headData.getRightNozzleLastFTemp());
-                m1PrevTempValue.setText(Integer.toString(m1PreviousTemp));
+                if (m1PreviousTemp > -1)
+                    m1PrevTempValue.setText(Integer.toString(m1PreviousTemp));
+                else
+                    m1PrevTempValue.setText("-");
                 m1Material.setText(attachedFilaments[0].getFilamentName());
                 m1NewTemp = (int)Math.round(attachedFilaments[0].getFilamentTemperature());
                 m1NewTempValue.setText(Integer.toString(m1NewTemp));
@@ -344,10 +351,14 @@ public class PurgeController implements Initializable, Page {
             if (showPanel2) {
                 m2Pane.setVisible(true);
                 m2Pane.setManaged(true);
+                m2Pane.setDisable(false);
                 disableNodes(panel2Nodes, false);
                 m2CheckBox.selectedProperty().set(true);
                 m2PreviousTemp = (int)Math.round(headData.getLeftNozzleLastFTemp());
-                m2PrevTempValue.setText(Integer.toString(m2PreviousTemp));
+                if (m2PreviousTemp > -1)
+                    m2PrevTempValue.setText(Integer.toString(m2PreviousTemp));
+                else
+                    m2PrevTempValue.setText("-");
                 m2Material.setText(attachedFilaments[1].getFilamentName());
                 m2NewTemp = (int)Math.round(attachedFilaments[1].getFilamentTemperature());
                 m2NewTempValue.setText(Integer.toString(m2NewTemp));
@@ -359,7 +370,6 @@ public class PurgeController implements Initializable, Page {
             else {
                 m2Pane.setVisible(false);
                 m2Pane.setManaged(false);
-                m2Pane.setDisable(true);
                 m2Material.setText("");
                 m2CheckBox.selectedProperty().set(false);
                 m2PrevTempValue.setText("");
@@ -375,15 +385,15 @@ public class PurgeController implements Initializable, Page {
         targetData.setSafetyOn(printer.getSafetiesOnProperty().get());
 
         if (showPanel1 && m1CheckBox.isSelected()) {
-            targetData.getLastTemperature()[0] = m1PreviousTemp;
-            targetData.getNewTemperature()[0] = m1NewTemp;
-            targetData.getTargetTemperature()[0] = spinnerMap.get("m1PurgeTemp").value;
+            targetData.getLastTemperature()[rightNozzleIndex] = m1PreviousTemp;
+            targetData.getNewTemperature()[rightNozzleIndex] = m1NewTemp;
+            targetData.getTargetTemperature()[rightNozzleIndex] = spinnerMap.get("m1PurgeTemp").value;
         }
         
         if (showPanel2 && m2CheckBox.isSelected()) {
-            targetData.getLastTemperature()[1] = m2PreviousTemp;
-            targetData.getNewTemperature()[1] = m2NewTemp;
-            targetData.getTargetTemperature()[1] = spinnerMap.get("m2PurgeTemp").value;
+            targetData.getLastTemperature()[0] = m2PreviousTemp;
+            targetData.getNewTemperature()[0] = m2NewTemp;
+            targetData.getTargetTemperature()[0] = spinnerMap.get("m2PurgeTemp").value;
         }
         
         printer.runPurgeTask(targetData);

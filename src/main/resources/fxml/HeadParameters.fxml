@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane id="HeadParametersPane" fx:id="headParametersPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800" prefWidth="480.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="celuk.groot.controllers.HeadParametersController">
+<StackPane id="HeadParametersPane" fx:id="headParametersPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800" prefWidth="480.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="celuk.groot.controllers.HeadParametersController">
    <children>
       <VBox fx:id="headParametersVBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" StackPane.alignment="TOP_CENTER">
          <children>
@@ -21,18 +21,18 @@
                <VBox.margin>
                   <Insets left="5.0" right="5.0" top="5.0" />
                </VBox.margin></Label>
-            <GridPane hgap="5.0" styleClass="panel" vgap="5.0" VBox.vgrow="SOMETIMES">
+            <GridPane hgap="5.0" maxWidth="1.7976931348623157E308" styleClass="panel" vgap="5.0" VBox.vgrow="NEVER">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                <ColumnConstraints hgrow="NEVER" minWidth="10.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
                   <ColumnConstraints hgrow="NEVER" maxWidth="1.7976931348623157E308" minWidth="5.0" prefWidth="5.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="146.0" minWidth="10.0" prefWidth="141.0" />
+                  <ColumnConstraints hgrow="NEVER" maxWidth="128.0" minWidth="10.0" prefWidth="128.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Pane fx:id="headIcon" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="128.0" prefWidth="128.0">
+                  <Pane fx:id="headIcon" maxHeight="1.7976931348623157E308" prefHeight="100.0" prefWidth="100.0">
                      <GridPane.margin>
                         <Insets top="5.0" />
                      </GridPane.margin>
@@ -41,7 +41,7 @@
                         <String fx:value="head-params-head-icon" />
                      </styleClass></Pane>
                   <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-gap" GridPane.columnIndex="2" />
-                  <VBox GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.vgrow="SOMETIMES">
+                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.vgrow="SOMETIMES">
                      <children>
                         <HBox maxWidth="1.7976931348623157E308" styleClass=".head-params-head-title">
                            <children>
@@ -51,8 +51,16 @@
                                     <String fx:value="head-params-bold" />
                                  </styleClass>
                               </Label>
-                              <Label fx:id="headTitleLight" maxWidth="1.7976931348623157E308" styleClass="head-params-head-title" text=" " />
-                              <Label fx:id="headTitleEdition" maxWidth="1.7976931348623157E308" styleClass="head-params-head-title" text=" " />
+                              <Label fx:id="headTitleLight" maxWidth="1.7976931348623157E308" text=" ">
+                                 <styleClass>
+                                    <String fx:value="head-params-head-title" />
+                                    <String fx:value="head-params-normal" />
+                                 </styleClass></Label>
+                              <Label fx:id="headTitleEdition" maxWidth="1.7976931348623157E308" text=" ">
+                                 <styleClass>
+                                    <String fx:value="head-params-head-title" />
+                                    <String fx:value="head-params-normal" />
+                                 </styleClass></Label>
                            </children>
                         </HBox>
                         <Label fx:id="headDescription" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-head-description" text=" " />
@@ -66,58 +74,46 @@
                   <Insets left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </GridPane>
-            <GridPane VBox.vgrow="SOMETIMES">
+            <GridPane maxWidth="1.7976931348623157E308" VBox.vgrow="NEVER">
               <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="10.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label fx:id="serialNumberLabel" styleClass="head-params-label" text="headParameters.serialNumber">
                      <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </Label>
                   <Label fx:id="printHoursLabel" styleClass="head-params-label" text="headParameters.headHours" GridPane.rowIndex="1">
                      <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
                   </Label>
                   <Label fx:id="maxTempLabel" styleClass="head-params-label" text="headParameters.maxTemp" GridPane.rowIndex="2">
                      <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label fx:id="serialNumberField" GridPane.columnIndex="1">
+                  <Label fx:id="serialNumberField" styleClass="head-params-data" GridPane.columnIndex="1">
                      <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
-                     <styleClass>
-                        <String fx:value="label" />
-                        <String fx:value="medium-text" />
-                     </styleClass>
                   </Label>
-                  <Label fx:id="headHoursField" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label fx:id="headHoursField" styleClass="head-params-data" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
-                     <styleClass>
-                        <String fx:value="label" />
-                        <String fx:value="medium-text" />
-                     </styleClass>
                   </Label>
-                  <Label fx:id="maxTempField" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Label fx:id="maxTempField" styleClass="head-params-data" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" />
                      </GridPane.margin>
-                     <styleClass>
-                        <String fx:value="label" />
-                        <String fx:value="medium-text" />
-                     </styleClass>
                   </Label>
                </children>
                <VBox.margin>
@@ -139,8 +135,8 @@
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="15.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="10.0" vgrow="NEVER" />
                 <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES" />
@@ -151,7 +147,7 @@
               </rowConstraints>
                <children>
                   <Button fx:id="leftBDec" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#decAction" styleClass="head-params-left-dec" GridPane.rowIndex="8" />
-                  <TextField id="leftB" fx:id="leftBField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                  <TextField id="leftB" fx:id="leftBField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="1" GridPane.rowIndex="8">
                      <GridPane.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </GridPane.margin></TextField>
@@ -170,31 +166,31 @@
                   <Button fx:id="rightXInc" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#incAction" styleClass="head-params-right-inc" GridPane.columnIndex="6" GridPane.rowIndex="2" />
                   <Button fx:id="rightYInc" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#incAction" styleClass="head-params-right-inc" GridPane.columnIndex="6" GridPane.rowIndex="4" />
                   <Button fx:id="rightZInc" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#incAction" styleClass="head-params-right-inc" GridPane.columnIndex="6" GridPane.rowIndex="6" />
-                  <TextField id="leftX" fx:id="leftXField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <TextField id="leftX" fx:id="leftXField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </GridPane.margin></TextField>
-                  <TextField id="leftY" fx:id="leftYField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <TextField id="leftY" fx:id="leftYField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </GridPane.margin></TextField>
-                  <TextField id="leftZ" fx:id="leftZField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                  <TextField id="leftZ" fx:id="leftZField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="1" GridPane.rowIndex="6">
                      <GridPane.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </GridPane.margin></TextField>
-                  <TextField id="rightY" fx:id="rightYField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                  <TextField id="rightY" fx:id="rightYField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="5" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </GridPane.margin></TextField>
-                  <TextField id="rightZ" fx:id="rightZField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="5" GridPane.rowIndex="6">
+                  <TextField id="rightZ" fx:id="rightZField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="5" GridPane.rowIndex="6">
                      <GridPane.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </GridPane.margin></TextField>
-                  <TextField id="rightX" fx:id="rightXField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                  <TextField id="rightX" fx:id="rightXField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="5" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </GridPane.margin></TextField>
-                  <TextField id="rightB" fx:id="rightBField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="5" GridPane.rowIndex="8">
+                  <TextField id="rightB" fx:id="rightBField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="5" GridPane.rowIndex="8">
                      <GridPane.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </GridPane.margin></TextField>
@@ -236,22 +232,22 @@
                      </GridPane.margin></Pane>
                   <Label fx:id="leftNozzleTitle" styleClass="head-params-left-title" text="common.leftNozzle" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT">
                      <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </Label>
                   <Label fx:id="leftNozzleSubtitle" styleClass="head-params-left-subtitle" text="common.material2" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                      <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" />
                      </GridPane.margin>
                   </Label>
                   <Label fx:id="rightNozzleTitle" styleClass="head-params-right-title" text="common.rightNozzle" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.halignment="LEFT">
                      <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </Label>
                   <Label fx:id="rightNozzleSubtitle" styleClass="head-params-right-subtitle" text="common.material1" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                      <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" />
                      </GridPane.margin>
                   </Label>
                   <Pane maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="2.0" styleClass="head-params-separator" GridPane.columnIndex="3" GridPane.rowSpan="2">

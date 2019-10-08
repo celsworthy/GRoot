@@ -1,12 +1,49 @@
+.head-params-bold {
+    -fx-font-weight: bold;
+}
+
+.head-params-normal {
+    -fx-font-weight: 300;
+}
+
+.head-params-field {
+    -fx-font-size: 18pt;
+	-fx-font-weight: 300;
+    -fx-text-fill: black;
+    -fx-padding: 0 0 0 0;
+}
+
 .head-params-gap {
     -fx-background-color: -robox-light-grey;
+}
+
+.head-params-head-change {
+    -fx-graphic:url("/image/head-change-white.png");
+}
+
+.head-params-head-description {
+    -fx-font-size: 14pt;
+	-fx-font-weight: 300;
+    -fx-text-fill: white;
 }
 
 .head-params-head-icon {
 }
 
+.head-params-head-title {
+    -fx-font-size: 20pt;
+    -fx-text-fill: white;
+}
+
+.head-params-data {
+    -fx-font-size: 16pt;
+	-fx-font-weight: 300;
+    -fx-text-fill: white;
+}
+
 .head-params-label {
-    -fx-font-size: 14pt;
+    -fx-font-size: 16pt;
+	-fx-font-weight: 300;
     -fx-text-fill: -robox-blue;
 }
 
@@ -25,45 +62,22 @@
 }
 
 .head-params-left-subtitle {
-    -fx-font-size: 14pt;
+    -fx-font-size: 18pt;
+	-fx-font-style: italic;
+	-fx-font-weight: 300;
     -fx-text-fill: -robox-orange;
 }
 
-.head-params-head-change {
-    -fx-graphic:url("/image/head-change-grey.png");
+.head-params-left-title {
+    -fx-font-size: 18pt;
+	-fx-font-weight: 300;
+    -fx-text-fill: white;
 }
 
 .head-params-param-title {
-    -fx-font-size: 16pt;
+    -fx-font-size: 20pt;
+	-fx-font-weight: 300;
     -fx-text-fill: white;
-}
-
-.head-params-left-title {
-    -fx-font-size: 16pt;
-    -fx-text-fill: white;
-}
-
-.head-params-head-change {
-    -fx-graphic:url("/image/head-change-white.png");
-}
-
-.head-params-bold {
-    -fx-font-weight: bold;
-}
-
-.head-params-head-title {
-    -fx-font-size: 16pt;
-    -fx-text-fill: white;
-}
-
-.head-params-head-description {
-    -fx-font-size: 14pt;
-    -fx-text-fill: white;
-}
-
-.head-params-field {
-    -fx-font-size: 16pt;
-    -fx-text-fill: black;
 }
 
 .head-params-right-dec {
@@ -81,17 +95,18 @@
 }
 
 .head-params-right-subtitle {
-    -fx-font-size: 14pt;
+    -fx-font-size: 18pt;
+	-fx-font-style: italic;
+	-fx-font-weight: 300;
     -fx-text-fill: -robox-blue;
 }
 
 .head-params-right-title {
-    -fx-font-size: 16pt;
+    -fx-font-size: 18pt;
+	-fx-font-weight: 300;
     -fx-text-fill: white;
 }
 
 .head-params-separator {
     -fx-background-color: grey;
 }
-
-

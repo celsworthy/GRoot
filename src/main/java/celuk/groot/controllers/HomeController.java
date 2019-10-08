@@ -451,7 +451,6 @@ public class HomeController implements Initializable, Page {
                 leftNozzleTempLabel.setManaged(false);
                 leftNozzleTitleLabel.setVisible(false);
                 leftNozzleTitleLabel.setManaged(false);
-                leftNozzleTitleLabel.setText("");
                 
                 rightNozzleTempLabel.setVisible(true);
                 rightNozzleTempLabel.setManaged(true);

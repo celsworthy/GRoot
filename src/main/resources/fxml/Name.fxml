@@ -68,7 +68,7 @@
                      <styleClass>
                         <String fx:value="bottom-bar" />
                         <String fx:value="centered-background-image" />
-                        <String fx:value="bottom-bar-home" />
+                        <String fx:value="bottom-bar-none" />
                      </styleClass>
                   </Button>
                   <Button fx:id="rightButton" contentDisplay="GRAPHIC_ONLY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#rightButtonAction" prefHeight="63.0" GridPane.columnIndex="2">

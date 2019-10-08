@@ -22,6 +22,16 @@ import javafx.scene.control.ButtonType;
  * @author Tony
  */
 public class ErrorAlertController {
+    private class AlertData {
+        public RootPrinter printer;
+        public ErrorDetails errorData;
+        
+        public AlertData(RootPrinter printer, ErrorDetails errorData) {
+            this.printer = printer;
+            this.errorData = errorData;
+        }
+    };
+    
     private final Map<String, ChangeListener<Boolean>> listenerMap = new HashMap<>();
     private final RootServer server;
     private String abortText = "error.abort";
@@ -51,6 +61,9 @@ public class ErrorAlertController {
         dialogTitleText = I18n.t(dialogTitleText);
         server.getCurrentPrinterMap().addListener(printerMapListener);
         processPrinterMap(server.getCurrentPrinterMap());
+        errorAlert.setOnHidden(e -> {
+            handleAlertResponse();
+        });
     }
     
     public RootServer getServer() {
@@ -104,162 +117,121 @@ public class ErrorAlertController {
     }
 
     private void handleError(RootPrinter printer, Map<Integer, ErrorDetails> errorMap) {
- 
-        if (errorMap.isEmpty()) {
-            if (errorAlert.isShowing()) {
-                RootPrinter alertPrinter = (RootPrinter)errorAlert.getDialogPane().getUserData();
-                if (alertPrinter != null && alertPrinter.getPrinterId().equals(printer.getPrinterId())) {
+        if (errorAlert.isShowing()) {
+            AlertData aData = (AlertData)errorAlert.getDialogPane().getUserData();
+            if (aData != null && aData.printer.getPrinterId().equals(printer.getPrinterId())) {
+                if (errorMap == null || errorMap.isEmpty() || !errorMap.containsKey(aData.errorData.getErrorCode())) {
                     errorAlert.hide();
                     errorAlert.getDialogPane().setUserData(null);
-                }
+               }
             }
         }
-        else {
-            if (errorAlert.isShowing()) {
-                // An alert is already being shown. Do nothing.
-                // If the alert is for another error, this one
-                // will be shown once that one has been acknowledged.
+        if (errorMap != null && !errorMap.isEmpty() && !errorAlert.isShowing()) {
+            // Select the highest priority error.
+            String printerName = printer.getPrinterName();
+
+            Map.Entry<Integer, ErrorDetails> errorEntry = errorMap.entrySet()
+                .stream()
+                .reduce(null, (a, b) -> (a != null && a.getKey() < b.getKey() ? a : b));
+
+            int errorCode = errorEntry.getKey();
+            ErrorDetails errorData = errorEntry.getValue();
+
+            // Error needs to be raised for the user
+            String errorMessage = errorData.getErrorMessage();
+            errorAlert.setHeaderText(errorData.getErrorTitle());
+            errorAlert.setContentText(errorMessage);
+            errorAlert.setTitle(dialogTitleText.replace("#1", printerName));
+            AlertData aData = new AlertData(printer, errorData);
+            errorAlert.getDialogPane().setUserData(aData);
+            List<ButtonType> buttonList = errorAlert.getButtonTypes();
+            buttonList.clear();
+            int options = errorData.getOptions();
+            // ABORT(1),
+            // CLEAR_CONTINUE(2),
+            // RETRY(4),
+            // OK(8),
+            // OK_ABORT(16),
+            // OK_CONTINUE(32);
+            if ((options & 17) != 0) { // ABORT or OK_ABORT
+                buttonList.add(ButtonType.CANCEL);
+                Button b = (Button)errorAlert.getDialogPane().lookupButton(ButtonType.CANCEL);
+                b.setText(abortText);
             }
-            else {
-                // Select the highest priority error.
-                String printerName = printer.getPrinterName();
 
-                Map.Entry<Integer, ErrorDetails> errorEntry = errorMap.entrySet()
-                    .stream()
-                    .reduce(null, (a, b) -> (a != null && a.getKey() < b.getKey() ? a : b));
+            if (options == 0 || // Nothing or
+                (options & 46) != 0) { // CLEAR_CONTINUE or RETRY or OK or OK_CONTINUE.
+                String buttonText = ((options & 4) != 0 ? retryText : continueText);
+                buttonList.add(ButtonType.OK);
+                Button b = (Button)errorAlert.getDialogPane().lookupButton(ButtonType.OK);
+                b.setText(buttonText);
+            }
 
-                int errorCode = errorEntry.getKey();
-                ErrorDetails errorData = errorEntry.getValue();
+            if (errorCode == 28) { // E_UNLOAD_ERROR
+                buttonList.add(ButtonType.APPLY);
+                Button b = (Button)errorAlert.getDialogPane().lookupButton(ButtonType.APPLY);
+                b.setText(ejectFilament1Text);
+            }
+            else if (errorCode == 29) { // D_UNLOAD_ERROR
+                // D_UNLOAD_ERROR
+                buttonList.add(ButtonType.APPLY);
+                Button b = (Button)errorAlert.getDialogPane().lookupButton(ButtonType.APPLY);
+                b.setText(ejectFilament2Text);
+            }
 
-                // Error needs to be raised for the user
-                String errorMessage = errorData.getErrorMessage();
-                if (errorMessage.length() > 504)
-                    errorMessage = errorMessage.substring(0, 500).concat(" ...");
-                errorAlert.setHeaderText(errorData.getErrorTitle());
-                errorAlert.setContentText(errorMessage);
-                errorAlert.setTitle(dialogTitleText.replace("#1", printerName));
-                errorAlert.getDialogPane().setUserData(printer);
-                List<ButtonType> buttonList = errorAlert.getButtonTypes();
-                buttonList.clear();
-                int options = errorData.getOptions();
-                // ABORT(1),
-                // CLEAR_CONTINUE(2),
-                // RETRY(4),
-                // OK(8),
-                // OK_ABORT(16),
-                // OK_CONTINUE(32);
-                if ((options & 17) != 0) { // ABORT or OK_ABORT
-                    buttonList.add(ButtonType.CANCEL);
-                    Button b = (Button)errorAlert.getDialogPane().lookupButton(ButtonType.CANCEL);
-                    b.setText(abortText);
-                }
-                else {
-                }
+            errorAlert.show();
+        }
+    }
 
-                if (options == 0 || // Nothing or
-                    (options & 46) != 0) { // CLEAR_CONTINUE or RETRY or OK or OK_CONTINUE.
-                    String buttonText = ((options & 4) != 0 ? retryText : continueText);
-                    buttonList.add(ButtonType.OK);
-                    Button b = (Button)errorAlert.getDialogPane().lookupButton(ButtonType.OK);
-                    b.setText(buttonText);
-                }
-
-                if (errorCode == 28) { // E_UNLOAD_ERROR
-                    buttonList.add(ButtonType.APPLY);
-                    Button b = (Button)errorAlert.getDialogPane().lookupButton(ButtonType.APPLY);
-                    b.setText(ejectFilament1Text);
-                }
-                else if (errorCode == 29) { // D_UNLOAD_ERROR
-                    // D_UNLOAD_ERROR
-                    buttonList.add(ButtonType.APPLY);
-                    Button b = (Button)errorAlert.getDialogPane().lookupButton(ButtonType.APPLY);
-                    b.setText(ejectFilament2Text);
-                }
-
-                // Show the dialog.
-                Optional<ButtonType> result = errorAlert.showAndWait();
-                errorAlert.hide();
-                if (result.isPresent()) {
-                    ButtonType bt = result.get();
-                    String typeCode = result.get().getButtonData().getTypeCode();
-                    //System.out.println("Returned " + typeCode);
-                    switch(typeCode) {
-                        case "O":
-                        {
-                            // OK/Continue button.
-                            printer.runResumeTask();
-                            try {
-                                printer.runClearErrorTask(errorCode).get();
-                            }
-                            catch (InterruptedException ex) {
-                                System.err.println("Interrupt exception while clearing error");
-                            } 
-                            catch (ExecutionException ex) {
-                                System.err.println("Execution exception while clearing error");
-                            }
-                            // OK/Continue button.
-                            //System.out.println("OK");
-                            //server.runBackgroundTask(() -> {
-                            //    printer.runResumeTask();
-                            //    printer.runClearErrorTask(errorCode);
-                            //    return null;
-                            //});
-                            break;
+    private void handleAlertResponse() {
+        AlertData aData = (AlertData)errorAlert.getDialogPane().getUserData();
+        ButtonType result = errorAlert.getResult();
+        if (aData != null && result != null) {
+            String typeCode = result.getButtonData().getTypeCode();
+            //System.out.println("Returned " + typeCode);
+            switch(typeCode) {
+                case "O":
+                {
+                    // OK/Continue button.
+                    System.out.println("OK");
+                    server.runBackgroundTask(() -> {
+                        if ((aData.errorData.getOptions() & 38) != 0) { // CLEAR_CONTINUE or RETRY or OK_CONTINUE.
+                            aData.printer.runResumeTask();
                         }
-
-                        case "A":
-                        {
-                            // Apply/Eject button.
-                            printer.runEjectFilamentTask(errorCode == 28 ? 1 : 0);
-                            try {
-                                printer.runClearErrorTask(errorCode).get();
-                            }
-                            catch (InterruptedException ex) {
-                                System.err.println("Interrupt exception while clearing error");
-                            } 
-                            catch (ExecutionException ex) {
-                                System.err.println("Execution exception while clearing error");
-                            }
-                            // Apply/Eject button.
-                            //System.out.println("Eject");
-                            //server.runBackgroundTask(() -> {
-                            //    printer.runEjectFilamentTask(errorCode == 28 ? 1 : 0);
-                            //    printer.runClearErrorTask(errorCode);
-                            //    return null;
-                            //});
-                            break;
-                        }
-                        
-                        case "C":
-                        {
-                            // Cancel/Abort button.
-                            printer.runCancelTask();
-                            try {
-                                printer.runClearErrorTask(errorCode).get();
-                            }
-                            catch (InterruptedException ex) {
-                                System.err.println("Interrupt exception while clearing error");
-                            } 
-                            catch (ExecutionException ex) {
-                                System.err.println("Execution exception while clearing error");
-                            }
-                            // Cancel/Abort button.
-                            //System.out.println("Abort");
-                            //server.runBackgroundTask(() -> {
-                            //    printer.runCancelTask();
-                            //    printer.runClearErrorTask(errorCode);
-                            //    return null;
-                            //});
-                            break;
-                        }
-                        
-                        default:
-                            break;
-                    }
+                        aData.printer.runClearErrorTask(aData.errorData.getErrorCode());
+                        return null;
+                    });
+                    break;
                 }
 
-                printer.acknowledgeError(errorData);
+                case "A":
+                {
+                    // Apply/Eject button.
+                    System.out.println("Eject");
+                    server.runBackgroundTask(() -> {
+                        aData.printer.runEjectFilamentTask(aData.errorData.getErrorCode() == 28 ? 1 : 0);
+                        aData.printer.runClearErrorTask(aData.errorData.getErrorCode());
+                        return null;
+                    });
+                    break;
+                }
+
+                case "C":
+                {
+                    // Cancel/Abort button.
+                    System.out.println("Abort");
+                    server.runBackgroundTask(() -> {
+                        aData.printer.runCancelTask();
+                        aData.printer.runClearErrorTask(aData.errorData.getErrorCode());
+                        return null;
+                    });
+                    break;
+                }
+
+                default:
+                    break;
             }
         }
+        aData.printer.acknowledgeError(aData.errorData);
     }
 }

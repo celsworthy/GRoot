@@ -8,8 +8,8 @@
 
 .keypad-key {
     -fx-background-color: -robox-light-grey;
-    -fx-font-size: 24pt;
-    -fx-font-weight: 300;
+    -fx-font-size: 20pt;
+    -fx-font-weight: normal;
     -fx-text-fill: white;
 }
 

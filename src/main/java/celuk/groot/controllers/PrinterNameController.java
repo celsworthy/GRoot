@@ -117,6 +117,7 @@ public class PrinterNameController implements Initializable, Page {
             String v = newValue.trim();
             rightButton.setDisable(v.isBlank() || v.equals(currentName));
         });
+        middleButton.setDisable(true);
     }
     
     @Override

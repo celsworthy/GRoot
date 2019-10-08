@@ -133,12 +133,10 @@ public class KeyboardController implements Initializable {
                 }
             }
             KeyCode k = (KeyCode)(b.getUserData());
-            // Simulate holding down shift key for letter keys,
-            // to get capital letters.
-            if (upperCaseLetters && k.isLetterKey())
+            if (shiftRequired)
                 keyRobot.keyPress(KeyCode.SHIFT);
             keyRobot.keyType(k);
-            if (upperCaseLetters && k.isLetterKey())
+            if (shiftRequired)
                 keyRobot.keyRelease(KeyCode.SHIFT);
         }
     }
@@ -146,7 +144,7 @@ public class KeyboardController implements Initializable {
     @FXML
     void shiftAction(ActionEvent event) {
         if (event.getSource() instanceof Button) {
-            setCase(!upperCaseLetters);
+            setCase(!shiftRequired);
         }
     }
 
@@ -175,14 +173,15 @@ public class KeyboardController implements Initializable {
         }
     }
 
-    
     private final Robot keyRobot = new Robot();
-    private boolean upperCaseLetters = false;
+    private boolean shiftRequired = false;
     private String keyboardUppercaseText = "keyboard.uppercase";
     private String keyboardLowercaseText = "keyboard.lowercase";
     private TextInputControl focusFields[] = null;
     private Button alphaKeys[] = null;
     private Button digitKeys[] = null;
+    private String digitTextLower[] = null;
+    private String digitTextUpper[] = null;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -226,6 +225,32 @@ public class KeyboardController implements Initializable {
             sevenKey,
             eightKey,
             nineKey
+        };
+
+        digitTextLower = new String[] {
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+        };
+
+        digitTextUpper = new String[] {
+            ")",
+            "!",
+            "\"",
+            "£",
+            "$",
+            "%",
+            "^",
+            "&",
+            "*",
+            "("
         };
 
         backspaceKey.setText(I18n.t(backspaceKey.getText()));
@@ -291,15 +316,21 @@ public class KeyboardController implements Initializable {
     public void setCase(boolean uppercase) {
         if (uppercase) {
             shiftKey.setText(keyboardLowercaseText);
-            upperCaseLetters = true;
+            shiftRequired = true;
             for (Button key : alphaKeys)
                 key.setText(key.getText().toUpperCase());
+            for (int i = 0; i < digitKeys.length; ++i) {
+                digitKeys[i].setText(digitTextUpper[i]);
+            }
         }
         else {
             shiftKey.setText(keyboardUppercaseText);
-            upperCaseLetters = false;
+            shiftRequired = false;
             for (Button key : alphaKeys)
                 key.setText(key.getText().toLowerCase());
+            for (int i = 0; i < digitKeys.length; ++i) {
+                digitKeys[i].setText(digitTextLower[i]);
+            }
         }
     }
 }

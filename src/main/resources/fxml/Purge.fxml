@@ -25,17 +25,20 @@
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin></Label>
-                  <Label fx:id="purgePrompt" styleClass="medium-text" text="purge.prompt" wrapText="true">
+                  <Label fx:id="purgePrompt" styleClass="page-description" text="purge.prompt" wrapText="true">
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </VBox.margin></Label>
-                  <GridPane fx:id="m1Pane" hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="panel" vgap="5.0">
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding></Label>
+                  <GridPane fx:id="m1Pane" hgap="5.0" styleClass="panel" vgap="5.0">
                      <columnConstraints>
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" percentWidth="40.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="36.0" />
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="36.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" percentWidth="15.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="36.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES" />
@@ -52,7 +55,10 @@
                            </styleClass>
                         </Label>
                         <Button id="m1PurgeTemp" fx:id="m1PurgeTempDec" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="m1-decrement" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <TextField id="m1Temp" fx:id="m1PurgeTempValue" maxWidth="1.7976931348623157E308" minWidth="10.0" prefColumnCount="4" styleClass="field-value" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <TextField id="m1Temp" fx:id="m1PurgeTempValue" alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="10.0" minWidth="10.0" prefColumnCount="4" styleClass="field-value" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin></TextField>
                         <Button id="m1PurgeTemp" fx:id="m1PurgeTempInc" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="m1-increment" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                         <Label fx:id="m1PurgeTempSuffix" text="unit.temp" GridPane.columnIndex="4" GridPane.rowIndex="4">
                            <styleClass>
@@ -60,7 +66,7 @@
                               <String fx:value="field-suffix" />
                            </styleClass>
                         </Label>
-                        <HBox alignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="4">
+                        <HBox alignment="CENTER" spacing="5.0" GridPane.columnIndex="0" GridPane.columnSpan="4">
                            <children>
                               <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" styleClass="m1-icon">
                                  <HBox.margin>
@@ -103,9 +109,12 @@
                            </styleClass>
                         </Label>
                         <Label fx:id="m1Material" styleClass="panel-material" text="purge.m1Material" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
-                        <CheckBox fx:id="m1CheckBox" mnemonicParsing="false" onAction="#checkAction" GridPane.columnIndex="4" />
-                        <Label fx:id="m1PrevTempValue" text="purge.temp" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <Label fx:id="m1NewTempValue" text="purge.temp" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <CheckBox fx:id="m1CheckBox" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="20.0" minWidth="20.0" mnemonicParsing="false" onAction="#checkAction" styleClass="purge-check-box" GridPane.columnIndex="4">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin></CheckBox>
+                        <Label fx:id="m1PrevTempValue" styleClass="field-value" text="purge.temp" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Label fx:id="m1NewTempValue" styleClass="field-value" text="purge.temp" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -116,11 +125,11 @@
                   </GridPane>
                   <GridPane fx:id="m2Pane" hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="panel" vgap="5.0">
                     <columnConstraints>
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" percentWidth="40.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" prefWidth="36.0" />
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" prefWidth="36.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" percentWidth="15.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" prefWidth="36.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -136,15 +145,18 @@
                               <String fx:value="field-label" />
                            </styleClass>
                         </Label>
-                        <Button id="m2PurgeTemp" fx:id="m2PurgeTempDec" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="m2-decrement" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <TextField id="m2Temp" fx:id="m2PurgeTempValue" maxWidth="1.7976931348623157E308" minWidth="10.0" prefColumnCount="4" styleClass="field-value" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <Button id="m2PurgeTemp" fx:id="m2PurgeTempDec" contentDisplay="GRAPHIC_ONLY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="m2-decrement" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField id="m2Temp" fx:id="m2PurgeTempValue" alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="10.0" prefColumnCount="3" styleClass="field-value" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin></TextField>
                         <Button id="m2PurgeTemp" fx:id="m2PurgeTempInc" contentDisplay="GRAPHIC_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="m2-increment" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                         <Label fx:id="m2PurgeTempSuffix" text="unit.temp" GridPane.columnIndex="4" GridPane.rowIndex="4">
                            <styleClass>
                               <String fx:value="material-2" />
                               <String fx:value="field-suffix" />
                            </styleClass></Label>
-                        <HBox alignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="4">
+                        <HBox alignment="CENTER" spacing="5.0" GridPane.columnIndex="0" GridPane.columnSpan="4">
                            <children>
                               <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" styleClass="m2-icon">
                                  <HBox.margin>
@@ -187,9 +199,12 @@
                            </styleClass>
                         </Label>
                         <Label fx:id="m2Material" styleClass="panel-material" text="purge.m2Material" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
-                        <CheckBox fx:id="m2CheckBox" mnemonicParsing="false" onAction="#checkAction" GridPane.columnIndex="4" />
-                        <Label fx:id="m2PrevTempValue" text="purge.temp" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <Label fx:id="m2NewTempValue" text="purge.temp" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <CheckBox fx:id="m2CheckBox" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" minHeight="20.0" minWidth="20.0" mnemonicParsing="false" onAction="#checkAction" styleClass="purge-check-box" GridPane.columnIndex="4">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin></CheckBox>
+                        <Label fx:id="m2PrevTempValue" styleClass="field-value" text="purge.temp" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Label fx:id="m2NewTempValue" styleClass="field-value" text="purge.temp" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -221,14 +236,14 @@
                      <styleClass>
                         <String fx:value="bottom-bar" />
                         <String fx:value="centered-background-image" />
-                        <String fx:value="bottom-bar-main-menu" />
+                        <String fx:value="bottom-bar-home" />
                      </styleClass>
                   </Button>
                   <Button fx:id="rightButton" contentDisplay="GRAPHIC_ONLY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#rightButtonAction" prefHeight="63.0" GridPane.columnIndex="2">
                      <styleClass>
                         <String fx:value="bottom-bar" />
                         <String fx:value="centered-background-image" />
-                        <String fx:value="bottom-bar-next" />
+                        <String fx:value="bottom-bar-play" />
                      </styleClass>
                   </Button>
                </children>
