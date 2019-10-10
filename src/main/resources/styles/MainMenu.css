@@ -1,6 +1,6 @@
 .main-menu-button {
     -fx-background-color: -robox-grey;
-	-fx-font-size: 20pt;
+    -fx-font-size: 20pt;
     -fx-font-weight: 300;
     -fx-text-fill: -robox-blue;
 }

@@ -24,7 +24,10 @@
                      <styleClass>
                         <String fx:value="centered-background-image" />
                         <String fx:value="machine-icon" />
-                     </styleClass></Button>
+                     </styleClass>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin></Button>
                   <VBox fx:id="printerNameVBox" maxWidth="1.7976931348623157E308" styleClass="panel" HBox.hgrow="ALWAYS">
                      <children>
                         <Label fx:id="modelLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="machine-model" text="Robox" />
@@ -54,21 +57,25 @@
                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label fx:id="filament1TypeLabel" contentDisplay="TEXT_ONLY" styleClass="material-1, filament-type, large-text" text=" ">
+                  <Label fx:id="filament1TypeLabel" contentDisplay="TEXT_ONLY" text=" ">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                      <padding>
                         <Insets left="5.0" right="5.0" />
-                     </padding></Label>
-                  <Label fx:id="filament1DescriptionLabel" contentDisplay="TEXT_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="filament-description, medium-text" text=" " GridPane.columnSpan="3" GridPane.rowIndex="1">
+                     </padding>
+                     <styleClass>
+                        <String fx:value="material-1" />
+                        <String fx:value="filament-type" />
+                     </styleClass></Label>
+                  <Label fx:id="filament1DescriptionLabel" contentDisplay="TEXT_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="filament-description" text=" " GridPane.columnSpan="3" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" />
                      </GridPane.margin>
                      <padding>
                         <Insets left="5.0" right="5.0" />
                      </padding></Label>
-                  <Label fx:id="filament1RemainingLabel" contentDisplay="TEXT_ONLY" styleClass="medium-text" text=" " GridPane.columnIndex="1">
+                  <Label fx:id="filament1RemainingLabel" contentDisplay="TEXT_ONLY" styleClass="filament-length" text=" " GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></Label>
@@ -79,24 +86,28 @@
                         <String fx:value="material-1-eject" />
                      </styleClass>
                      <GridPane.margin>
-                        <Insets bottom="10.0" left="26.0" right="26.0" top="30.0" />
+                        <Insets bottom="13.0" left="26.0" right="26.0" top="27.0" />
                      </GridPane.margin>
                   </Button>
-                  <Label fx:id="filament2TypeLabel" contentDisplay="TEXT_ONLY" styleClass="material-2, filament-type, large-text" text=" " GridPane.rowIndex="2">
+                  <Label fx:id="filament2TypeLabel" contentDisplay="TEXT_ONLY" text=" " GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                      <padding>
                         <Insets left="5.0" right="5.0" />
-                     </padding></Label>
-                  <Label fx:id="filament2DescriptionLabel" contentDisplay="TEXT_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="filament-description, medium-text" text=" " GridPane.columnSpan="3" GridPane.rowIndex="3">
+                     </padding>
+                     <styleClass>
+                        <String fx:value="material-2" />
+                        <String fx:value="filament-type" />
+                     </styleClass></Label>
+                  <Label fx:id="filament2DescriptionLabel" contentDisplay="TEXT_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="filament-description" text=" " GridPane.columnSpan="3" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" />
                      </GridPane.margin>
                      <padding>
                         <Insets left="5.0" right="5.0" />
                      </padding></Label>
-                  <Label fx:id="filament2RemainingLabel" contentDisplay="TEXT_ONLY" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" styleClass="medium-text" text=" " GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Label fx:id="filament2RemainingLabel" contentDisplay="TEXT_ONLY" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" styleClass="filament-length" text=" " GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></Label>
@@ -107,7 +118,7 @@
                         <String fx:value="material-2-eject" />
                      </styleClass>
                      <GridPane.margin>
-                        <Insets bottom="10.0" left="26.0" right="26.0" top="30.0" />
+                        <Insets bottom="13.0" left="26.0" right="26.0" top="27.0" />
                      </GridPane.margin>
                   </Button>
                </children>
@@ -118,7 +129,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </GridPane>
-            <GridPane fx:id="temperatureGrid" hgap="5.0" styleClass="panel" vgap="5.0">
+            <GridPane fx:id="temperatureGrid" hgap="5.0" styleClass="panel">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />

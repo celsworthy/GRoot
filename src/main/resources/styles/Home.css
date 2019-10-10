@@ -1,11 +1,18 @@
 .filament-description {
     -fx-text-fill: black;
-    -fx-font-size: 14pt;
+    -fx-font-size: 18pt;
+    -fx-font-weight: 300;
     -fx-background-color: white;
+}
+
+.filament-length {
+    -fx-font-size: 18pt;
+    -fx-font-weight: 300;
 }
 
 .filament-type {
     -fx-font-size: 24pt;
+    -fx-font-weight: 600;
 }
 
 .job-cancel {

@@ -79,20 +79,21 @@
 }
 
 .root {
-	-robox-blue: #0093ff;
-	-robox-orange: #eb672a;
-	-robox-grey: #303030;
-	-robox-light-grey: #414141;
-	-robox-yellow: #ffc800;
-	-robox-green: #1eb43c;
+    -robox-blue: #0093ff;
+    -robox-orange: #eb672a;
+    -robox-grey: #303030;
+    -robox-light-grey: #414141;
+    -robox-yellow: #ffc800;
+    -robox-green: #1eb43c;
 
     -fx-background-color: #414141;
-	-fx-font-family: "Source Sans Pro", "sans-serif";
-	-fx-text-fill: white;
+    -fx-font-family: "Source Sans Pro", "sans-serif";
+    -fx-text-fill: white;
 }
 
 .button {
     -fx-background-color: inherit;
+    -fx-font-family: "Source Sans Pro", "sans-serif";
     -fx-font-weight: bold;
     -fx-text-fill: white;
 }
@@ -102,13 +103,16 @@
 }
 
 .label {
+    -fx-font-family: "Source Sans Pro", "sans-serif";
     -fx-text-fill: white;
 }
 
 .text-area {
+    -fx-font-family: "Source Sans Pro", "sans-serif";
 }
 
 .text-field {
+    -fx-font-family: "Source Sans Pro", "sans-serif";
 }
 
 .bottom-bar-back {

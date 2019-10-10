@@ -243,8 +243,8 @@ public class KeyboardController implements Initializable {
         digitTextUpper = new String[] {
             ")",
             "!",
-            "\"",
-            "£",
+            "@",
+            "#",
             "$",
             "%",
             "^",
@@ -322,6 +322,8 @@ public class KeyboardController implements Initializable {
             for (int i = 0; i < digitKeys.length; ++i) {
                 digitKeys[i].setText(digitTextUpper[i]);
             }
+            dashKey.setText("_");
+            pointKey.setText(">");
         }
         else {
             shiftKey.setText(keyboardUppercaseText);
@@ -331,6 +333,8 @@ public class KeyboardController implements Initializable {
             for (int i = 0; i < digitKeys.length; ++i) {
                 digitKeys[i].setText(digitTextLower[i]);
             }
+            dashKey.setText("-");
+            pointKey.setText(".");
         }
     }
 }

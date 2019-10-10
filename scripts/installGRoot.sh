@@ -1,7 +1,7 @@
 #!/bin/bash
 serviceFinalDir=/etc/systemd/system
 grootServiceFile=roboxgroot.service
-installDir=`pwd`
+installDir=/home/pi/ARM-32bit/GRoot
 
 echo ${installDir}
 
@@ -26,7 +26,7 @@ echo '[Install]' >> ${serviceFinalDir}/${grootServiceFile}
 echo 'WantedBy=multi-user.target' >> ${serviceFinalDir}/${grootServiceFile}
 
 systemctl daemon-reload
-systemctl enable ${grootServiceFile}
-systemctl start ${grootServiceFile}
+systemctl enable roboxgroot
+systemctl start roboxgroot
 
-echo Installed Robox Root Node service
+echo Installed Robox GRoot GUI service
