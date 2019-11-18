@@ -265,24 +265,24 @@ public class PrinterSelectController implements Initializable, Page {
     }
     
     private ChangeListener<ServerStatusResponse> serverStatusListener = (ob, ov, nv) -> {
-        //System.out.println("RemoteServer::serverStatusListener");
+        //System.out.println("PrinterSelectController::serverStatusListener");
         updateServerStatus(nv);
     };
     
-    private MapChangeListener<String, RootPrinter> printerMapListener = (c) ->  {
-        //System.out.println("RemoteServer::printerMapListener");
+    private ChangeListener<Boolean> printerMapHeartbeatListener = (pr, ov, nv) ->  {
+        //System.out.println("PrinterSelectController::printerMapHeartbeatListener");
         updatePrinterGrid();
     };
     
     private ChangeListener<PrinterStatusResponse> printerStatusListener = (ob, ov, nv) -> {
-        //System.out.println("RemoteServer::printerStatusListener");
+        //System.out.println("PrinterSelectController::printerStatusListener");
         updatePrinterStatus(nv);
     };
 
     @Override
     public void startUpdates() {
         rootServer.getCurrentStatusProperty().addListener(serverStatusListener);
-        rootServer.getCurrentPrinterMap().addListener(printerMapListener);
+        rootServer.getCurrentPrinterMapHeartbeatProperty().addListener(printerMapHeartbeatListener);
         updateServerStatus(rootServer.getCurrentStatusProperty().get());
         updatePrinterGrid();
     }
@@ -290,7 +290,7 @@ public class PrinterSelectController implements Initializable, Page {
     @Override
     public void stopUpdates() {
         rootServer.getCurrentStatusProperty().removeListener(serverStatusListener);
-        rootServer.getCurrentPrinterMap().removeListener(printerMapListener);
+        rootServer.getCurrentPrinterMapHeartbeatProperty().removeListener(printerMapHeartbeatListener);
         clearPrinterGrid();
     }
 

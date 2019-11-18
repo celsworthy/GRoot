@@ -46,11 +46,12 @@ public class RootServer extends Updater {
     protected final ExecutorService executorService;
     protected SimpleStringProperty pinProperty = new SimpleStringProperty("1111");
 
+    private final SimpleBooleanProperty currentPrinterMapHeartbeatProperty = new SimpleBooleanProperty(false);
     private final SimpleBooleanProperty authorisedProperty = new SimpleBooleanProperty(false);
     private final SimpleObjectProperty<ServerStatusResponse> currentStatusProperty = new SimpleObjectProperty<>();
     private final SimpleObjectProperty<WifiStatusResponse> wifiStatusProperty = new SimpleObjectProperty<>();
     private final ObservableMap<String, RootPrinter> currentPrinterMap = FXCollections.observableMap(new HashMap<>());
-
+    
     private final String hostAddress;
     private final String hostPort;
     
@@ -72,6 +73,10 @@ public class RootServer extends Updater {
     
     protected ObjectMapper getMapper() {
         return mapper;
+    }
+    
+    public SimpleBooleanProperty getCurrentPrinterMapHeartbeatProperty() {
+        return currentPrinterMapHeartbeatProperty;
     }
     
     public ObservableMap<String, RootPrinter> getCurrentPrinterMap() {
@@ -235,6 +240,10 @@ public class RootServer extends Updater {
                             e.getValue().stopUpdating();
                             currentPrinterMap.remove(e.getKey());
                         });
+                        // The original idea was to have a listener on the currentPrinterMapHeartbeatProperty, which was to be called every
+                        // time the map is updated. Unfortunately, this fails to trigger for the initial updates.
+                        // So instead we have a heartbeat property that is toggled every time the map is updated.
+                        currentPrinterMapHeartbeatProperty.set(!currentPrinterMapHeartbeatProperty.get());
                     }
                 }
                 catch (IOException ex) {

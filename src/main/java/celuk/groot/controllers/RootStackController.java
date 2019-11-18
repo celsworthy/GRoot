@@ -78,9 +78,9 @@ public class RootStackController implements Initializable {
     private ErrorAlertController errorManager = null;
     private RootPrinter currentPrinter = null;
     
-    private final MapChangeListener<String, RootPrinter> printerMapListener = (c) ->  {
+    private ChangeListener<Boolean> printerMapHeartbeatListener = (pr, ov, nv) ->  {
         RootPrinter p = currentPrinter;
-        if (p != null && !c.getMap().containsKey(p.getPrinterId())) {
+        if (p != null && !server.getCurrentPrinterMap().containsKey(p.getPrinterId())) {
             Platform.runLater(() -> {
                 currentPrinter = null;
                 hidePages(printerSelectPage);
@@ -111,7 +111,7 @@ public class RootStackController implements Initializable {
         // Menus - all but the main menu use the same FXML page.
         mainMenu = (MainMenuController)(loadPage(mainMenuURL, null));
 
-        server.getCurrentPrinterMap().addListener(printerMapListener);
+        server.getCurrentPrinterMapHeartbeatProperty().addListener(printerMapHeartbeatListener);
         server.getAuthorisedProperty().addListener(authorisedListener);
         errorManager = new ErrorAlertController(server);
         errorManager.prepareDialog();

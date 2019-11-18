@@ -42,13 +42,14 @@ public class ErrorAlertController {
     private String ejectFilament1Text = "error.ejectFilament1";
     private String ejectFilament2Text = "error.ejectFilament2";
     private final Alert errorAlert = new Alert(Alert.AlertType.NONE); 
-    MapChangeListener<String, RootPrinter> printerMapListener = (var c) -> {
-        System.out.println("");
-        processPrinterMap(c.getMap());
-    };
+    private final ChangeListener<Boolean> printerMapHeartbeatListener;
     
     public ErrorAlertController(RootServer server) {
         this.server = server;
+        printerMapHeartbeatListener = (pr, ov, nv) -> {
+            System.out.println("");
+            processPrinterMap(server.getCurrentPrinterMap());
+        };
     }
     
     public void prepareDialog() {
@@ -59,7 +60,7 @@ public class ErrorAlertController {
         ejectFilament1Text = I18n.t(ejectFilament1Text);
         ejectFilament2Text = I18n.t(ejectFilament2Text);
         dialogTitleText = I18n.t(dialogTitleText);
-        server.getCurrentPrinterMap().addListener(printerMapListener);
+        server.getCurrentPrinterMapHeartbeatProperty().addListener(printerMapHeartbeatListener);
         processPrinterMap(server.getCurrentPrinterMap());
         errorAlert.setOnHidden(e -> {
             handleAlertResponse();

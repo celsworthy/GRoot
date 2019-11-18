@@ -9,7 +9,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
-import javafx.collections.MapChangeListener;
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -191,17 +190,17 @@ public class HomeController implements Initializable, Page {
     }
 
     private ChangeListener<ServerStatusResponse> serverStatusListener = (ob, ov, nv) -> {
-        //System.out.println("RemotePrinter \"" + printer.getPrinterId() + "\" serverStatusListener");
+        //System.out.println("HomeController \"" + printer.getPrinterId() + "\" serverStatusListener");
         updateServerStatus(nv);
     };
 
-    private MapChangeListener<String, RootPrinter> printerMapListener = (c) ->  {
-        //System.out.println("RemoteServer::printerMapListener");
+    private ChangeListener<Boolean> printerMapHeartbeatListener = (pr, ov, nv) ->  {
+        //System.out.println("HomeController::printerMapHeartbeatListener");
         configureBackButton();
     };
 
     private ChangeListener<PrinterStatusResponse> printerStatusListener = (ob, ov, nv) -> {
-        //System.out.println("RemotePrinter \"" + printer.getPrinterId() + "\"printerStatusListener");
+        //System.out.println("HomeController \"" + printer.getPrinterId() + "\"printerStatusListener");
         updatePrinterStatus(nv);
     };
     
@@ -235,7 +234,7 @@ public class HomeController implements Initializable, Page {
     @Override
     public void startUpdates() {
         printer.getRootServer().getCurrentStatusProperty().addListener(serverStatusListener);
-        printer.getRootServer().getCurrentPrinterMap().addListener(printerMapListener);
+        printer.getRootServer().getCurrentPrinterMapHeartbeatProperty().addListener(printerMapHeartbeatListener);
         printer.getCurrentStatusProperty().addListener(printerStatusListener);
         updateServerStatus(printer.getRootServer().getCurrentStatusProperty().get());
         updatePrinterStatus(printer.getCurrentStatusProperty().get());
@@ -248,7 +247,7 @@ public class HomeController implements Initializable, Page {
         // the home page has never been shown.
         if (printer != null) {
             printer.getRootServer().getCurrentStatusProperty().removeListener(serverStatusListener);
-            printer.getRootServer().getCurrentPrinterMap().removeListener(printerMapListener);
+            printer.getRootServer().getCurrentPrinterMapHeartbeatProperty().removeListener(printerMapHeartbeatListener);
             printer.getCurrentStatusProperty().removeListener(printerStatusListener);
             printer = null;
         }
