@@ -7,12 +7,9 @@ import celuk.language.I18n;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
-import javafx.collections.MapChangeListener;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -139,7 +136,8 @@ public class ErrorAlertController {
             ErrorDetails errorData = errorEntry.getValue();
 
             // Error needs to be raised for the user
-            String errorMessage = errorData.getErrorMessage();
+            // Remove HTML tags from error message.
+            String errorMessage = errorData.getErrorMessage().replaceAll("<([^>]*)>", "");
             errorAlert.setHeaderText(errorData.getErrorTitle());
             errorAlert.setContentText(errorMessage);
             errorAlert.setTitle(dialogTitleText.replace("#1", printerName));
