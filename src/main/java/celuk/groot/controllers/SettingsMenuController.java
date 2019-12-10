@@ -16,6 +16,7 @@ public class SettingsMenuController extends MenuController {
                           "settingsMenu.security",
                           "settingsMenu.trash",
                           "settingsMenu.about");
+        leftButton.setVisible(false);
         rightButton.setVisible(false);
     }
     
