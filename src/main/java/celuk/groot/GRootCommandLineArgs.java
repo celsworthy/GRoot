@@ -1,8 +1,6 @@
 package celuk.groot;
 
 import com.beust.jcommander.Parameter;
-
-import java.nio.file.Path;
 import java.util.Locale;
 
 /**
