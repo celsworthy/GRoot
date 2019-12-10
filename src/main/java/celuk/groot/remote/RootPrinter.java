@@ -14,8 +14,6 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
@@ -227,8 +225,11 @@ public class RootPrinter extends Updater {
         if (errorList != null) {
             errorList.forEach(e -> {
                 int errorCode = e.getErrorCode();
-                if (errorCode == 25 || errorCode == 33 || errorCode == 41) {
-                    // Ignore these errors for now
+                if (errorCode == 25 || // B_POSITION_LOST
+                    errorCode == 33 || // B_POSITION_WARNING
+                    errorCode == 41) { // BED_TEMPERATURE_DROOP
+                    // Ignore these errors for now. Note that they are not cleared,
+                    // in case another app wants to display them.
                 }
                 else {
                     if (acknowledgedErrorSet.contains(e.getErrorCode()))
