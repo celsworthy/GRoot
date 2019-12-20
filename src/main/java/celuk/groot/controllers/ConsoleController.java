@@ -151,6 +151,7 @@ public class ConsoleController implements Initializable, Page {
                         if (history.size() > MAX_HISTORY_SIZE)
                             history.remove(0, history.size() - MAX_HISTORY_SIZE);
                     }
+                    gcodeHistory.scrollTo(gcodeHistory.getItems().size() - 1);
                 } catch (InterruptedException | ExecutionException ex) {
                 }
             }
