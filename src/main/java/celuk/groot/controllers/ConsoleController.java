@@ -140,6 +140,7 @@ public class ConsoleController implements Initializable, Page {
                 try {
                     String response = printer.runSendGCodeTask(gCode).get();
                     gcodeHistory.getItems().add(gCode);
+                    gcodeField.clear();
                     if (!response.isEmpty()) {
 //                        List<String> lines = new ArrayList<>();
 //                        int lastIndex = 0;
