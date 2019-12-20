@@ -44,7 +44,7 @@ public class ErrorAlertController {
     public ErrorAlertController(RootServer server) {
         this.server = server;
         printerMapHeartbeatListener = (pr, ov, nv) -> {
-            System.out.println("");
+            //System.out.println("");
             processPrinterMap(server.getCurrentPrinterMap());
         };
     }
@@ -192,7 +192,7 @@ public class ErrorAlertController {
                 case "O":
                 {
                     // OK/Continue button.
-                    System.out.println("OK");
+                    //System.out.println("OK");
                     server.runBackgroundTask(() -> {
                         if ((aData.errorData.getOptions() & 38) != 0) { // CLEAR_CONTINUE or RETRY or OK_CONTINUE.
                             aData.printer.runResumeTask();
@@ -206,7 +206,7 @@ public class ErrorAlertController {
                 case "A":
                 {
                     // Apply/Eject button.
-                    System.out.println("Eject");
+                    //System.out.println("Eject");
                     server.runBackgroundTask(() -> {
                         aData.printer.runEjectFilamentTask(aData.errorData.getErrorCode() == 28 ? 1 : 0);
                         aData.printer.runClearErrorTask(aData.errorData.getErrorCode());
@@ -218,7 +218,7 @@ public class ErrorAlertController {
                 case "C":
                 {
                     // Cancel/Abort button.
-                    System.out.println("Abort");
+                    //System.out.println("Abort");
                     server.runBackgroundTask(() -> {
                         aData.printer.runCancelTask();
                         aData.printer.runClearErrorTask(aData.errorData.getErrorCode());

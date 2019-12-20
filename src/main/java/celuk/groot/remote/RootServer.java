@@ -1,5 +1,6 @@
 package celuk.groot.remote;
 
+import celuk.groot.GRootPIN;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -44,27 +45,30 @@ public class RootServer extends Updater {
     private static final String WHO_ARE_YOU_COMMAND = "/api/discovery/whoareyou?pc";
     protected final ObjectMapper mapper = new ObjectMapper();
     protected final ExecutorService executorService;
-    protected SimpleStringProperty pinProperty = new SimpleStringProperty("1111");
+    protected SimpleStringProperty pinProperty = new SimpleStringProperty("");
 
     private final SimpleBooleanProperty currentPrinterMapHeartbeatProperty = new SimpleBooleanProperty(false);
     private final SimpleBooleanProperty authorisedProperty = new SimpleBooleanProperty(false);
-    private final SimpleObjectProperty<ServerStatusResponse> currentStatusProperty = new SimpleObjectProperty<>();
-    private final SimpleObjectProperty<WifiStatusResponse> wifiStatusProperty = new SimpleObjectProperty<>();
+    private final SimpleObjectProperty<ServerStatusResponse> currentStatusProperty = new SimpleObjectProperty<>(null);
+    private final SimpleObjectProperty<WifiStatusResponse> wifiStatusProperty = new SimpleObjectProperty<>(null);
     private final ObservableMap<String, RootPrinter> currentPrinterMap = FXCollections.observableMap(new HashMap<>());
     
     private final String hostAddress;
     private final String hostPort;
+    private final String configurationDirectory;
     
-    public RootServer(String hostAddress, String hostPort) {
+    public RootServer(String hostAddress, String hostPort, String configurationDirectory) {
         super();
         this.hostAddress = hostAddress;
         this.hostPort = hostPort;
+        this.configurationDirectory = configurationDirectory;
         ThreadFactory threadFactory = (Runnable runnable) -> {
             Thread thread = Executors.defaultThreadFactory().newThread(runnable);
             thread.setDaemon(true);
             return thread;
         };
         executorService = Executors.newFixedThreadPool(6, threadFactory);
+        
     }
     
     protected ExecutorService getExecutorService() {
@@ -90,7 +94,7 @@ public class RootServer extends Updater {
     public SimpleObjectProperty<ServerStatusResponse> getCurrentStatusProperty() {
         return currentStatusProperty;
     }
-    
+
     public SimpleObjectProperty<WifiStatusResponse> getWifiStatusProperty() {
         return wifiStatusProperty;
     }
@@ -111,7 +115,7 @@ public class RootServer extends Updater {
         return currentStatusProperty.get().getPrinterColours();
     }
     
-        public SimpleStringProperty getPINProperty() {
+    public SimpleStringProperty getPINProperty() {
         return pinProperty;
     }
     
@@ -119,8 +123,22 @@ public class RootServer extends Updater {
         return pinProperty.get();
     }
     
+    public void initPIN(String pin) {
+        if (pin.isBlank()) {
+            GRootPIN persistentPIN = GRootPIN.loadFromJSON(configurationDirectory);
+            pinProperty.set(persistentPIN.getPIN());
+        }
+        else
+            setPIN(pin);
+    }
+
     public void setPIN(String pin) {
         pinProperty.set(pin);
+        if (!configurationDirectory.isBlank()) {
+            GRootPIN persistentPIN = new GRootPIN();
+            persistentPIN.setPIN(pin);
+            persistentPIN.saveToJSON(configurationDirectory);
+        }
     }
 
     public String getHostAddress() {
@@ -335,7 +353,7 @@ public class RootServer extends Updater {
         runRequestServerStatusTask();
         runListAttachedPrintersTask();
     }
-    
+
     public boolean checkPrinterExists(String printerId) {
         return currentPrinterMap.containsKey(printerId);
     }

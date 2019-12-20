@@ -16,12 +16,16 @@ public class GRoot extends Application {
 
     private static final GRootCommandLineArgs COMMAND_LINE_ARGS = new GRootCommandLineArgs();
     private Parent root = null;
-    RootStackController rootController = null;
-    RootServer server = null;
+    private RootStackController rootController = null;
+    private RootServer server = null;
     
     @Override
     public void init() throws Exception {
-        server = new RootServer(COMMAND_LINE_ARGS.hostName, COMMAND_LINE_ARGS.portNumber);
+        String configurationDirectory = COMMAND_LINE_ARGS.configurationDirectory;
+        if (configurationDirectory.isBlank())
+            COMMAND_LINE_ARGS.configurationDirectory = COMMAND_LINE_ARGS.installDirectory;
+        server = new RootServer(COMMAND_LINE_ARGS.hostName, COMMAND_LINE_ARGS.portNumber, COMMAND_LINE_ARGS.configurationDirectory);
+        server.initPIN(COMMAND_LINE_ARGS.pin);
         server.startUpdating(COMMAND_LINE_ARGS.updateInterval);
     }
     

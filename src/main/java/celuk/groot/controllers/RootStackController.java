@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
-import javafx.collections.MapChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -27,6 +26,7 @@ public class RootStackController implements Initializable {
     
     private final URL aboutPageURL = getClass().getResource(FXML_RESOURCE_PATH + "About.fxml");
     private final URL accessPINPageURL = getClass().getResource(FXML_RESOURCE_PATH + "AccessPIN.fxml");
+    private final URL connectingPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Connecting.fxml");
     private final URL consolePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Console.fxml");
     private final URL controlPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Control.fxml");
     private final URL headParametersPageURL = getClass().getResource(FXML_RESOURCE_PATH + "HeadParameters.fxml");
@@ -46,6 +46,7 @@ public class RootStackController implements Initializable {
 
     private AboutController aboutPage = null;
     private AccessPINController accessPINPage = null;
+    private ConnectingController connectingPage = null;
     private ConsoleController consolePage = null;
     private ControlController controlPage = null;
     private HeadParametersController headParametersPage = null;
@@ -104,6 +105,7 @@ public class RootStackController implements Initializable {
 
         // Most pages are loaded when first shown. The following commonly used
         // pages are loaded immediately.
+        connectingPage = (ConnectingController)(loadPage(connectingPageURL, null));
         homePage = (HomeController)(loadPage(homePageURL, null));
         loginPage = (LoginController)(loadPage(loginPageURL, null));
         printerSelectPage = (PrinterSelectController)(loadPage(printerSelectPageURL, null));
@@ -116,8 +118,8 @@ public class RootStackController implements Initializable {
         errorManager = new ErrorAlertController(server);
         errorManager.prepareDialog();
 
-        hidePages(printerSelectPage);
-        printerSelectPage.displayPage(null);
+        hidePages(connectingPage);
+        connectingPage.displayPage(null);
     }
     
     public void showAboutPage(Page previousPage, RootPrinter printer) {
@@ -137,6 +139,17 @@ public class RootStackController implements Initializable {
             }
             previousPage.hidePage();
             accessPINPage.displayPage(printer);
+        });
+    }
+
+    public void showConnectingPage(Page previousPage, RootPrinter printer) {
+        Platform.runLater(() -> {
+            if (connectingPage == null) {
+                connectingPage = (ConnectingController)(loadPage(connectingPageURL, null));
+            }
+            if (previousPage != null)
+                previousPage.hidePage();
+            connectingPage.displayPage(printer);
         });
     }
 

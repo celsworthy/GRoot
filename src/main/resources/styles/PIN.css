@@ -1,3 +1,7 @@
+.backspace-key {
+	-fx-graphic:url("/image/keyboard-backspace.png");
+}
+
 .keypad-key {
     -fx-background-color: -robox-grey;
     -fx-font-size: 24pt;
@@ -17,4 +21,3 @@
 .pin-label {
     -fx-font-size: 24pt;
 }
-

@@ -20,7 +20,7 @@
             <Label fx:id="loginTitle" styleClass="page-title" text="login.title" />
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="5.0" styleClass="panel">
                <children>
-                  <Label fx:id="pinLabel" styleClass="login-label" text="login.pinLabel">
+                  <Label fx:id="pinLabel" styleClass="pin-label" text="login.pinLabel">
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
@@ -48,39 +48,38 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </VBox>
-            <Pane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="SOMETIMES" />
-            <GridPane hgap="5.0" vgap="5.0">
+            <Pane maxWidth="1.7976931348623157E308" VBox.vgrow="SOMETIMES" />
+            <GridPane hgap="5.0" vgap="5.0" VBox.vgrow="SOMETIMES">
               <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="16.667" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="16.667" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="16.667" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="16.667" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="16.667" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="16.667" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="25.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="25.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="25.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="25.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" />
-                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" />
+                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="33.33333333333" />
+                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="33.33333333333" />
+                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="33.33333333333" />
               </rowConstraints>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
                <children>
-                  <Button id="zeroKey" fx:id="zeroKey" contentDisplay="TEXT_ONLY" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="0" />
-                  <Button id="oneKey" fx:id="oneKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="1" GridPane.columnIndex="1" />
-                  <Button id="twoKey" fx:id="twoKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="2" GridPane.columnIndex="2" />
-                  <Button id="threeKey" fx:id="threeKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="3" GridPane.columnIndex="3" />
-                  <Button id="fourKey" fx:id="fourKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="4" GridPane.columnIndex="4" />
-                  <Button id="enterKey" fx:id="backspaceKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" text="keypad.backspace" GridPane.columnIndex="5" GridPane.rowSpan="2">
+                  <Button id="zeroKey" fx:id="zeroKey" contentDisplay="TEXT_ONLY" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <Button id="oneKey" fx:id="oneKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="1" />
+                  <Button id="twoKey" fx:id="twoKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="2" GridPane.columnIndex="1" />
+                  <Button id="threeKey" fx:id="threeKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="3" GridPane.columnIndex="2" />
+                  <Button id="fourKey" fx:id="fourKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="4" GridPane.rowIndex="1" />
+                  <Button id="enterKey" fx:id="backspaceKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" text="keypad.backspace" GridPane.columnIndex="3" GridPane.rowSpan="2">
                      <styleClass>
                         <String fx:value="keypad-key" />
                         <String fx:value="backspace-key" />
                      </styleClass></Button>
-                  <Button id="fiveKey" fx:id="fiveKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="5" GridPane.rowIndex="1" />
-                  <Button id="sixKey" fx:id="sixKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="6" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button id="sevenKey" fx:id="sevenKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="7" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <Button id="eightKey" fx:id="eightKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="8" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <Button id="nineKey" fx:id="nineKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="9" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <Button id="fiveKey" fx:id="fiveKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="5" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button id="sixKey" fx:id="sixKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="6" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button id="sevenKey" fx:id="sevenKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="7" GridPane.rowIndex="2" />
+                  <Button id="eightKey" fx:id="eightKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="8" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Button id="nineKey" fx:id="nineKey" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#keypadAction" styleClass="keypad-key" text="9" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                </children>
             </GridPane>
             <GridPane fx:id="bottomBarGrid" styleClass="bottom-bar">
@@ -121,6 +120,6 @@
    </children>
    <stylesheets>
       <String fx:value="styles/Styles.css" />
-      <String fx:value="styles/Login.css" />
+      <String fx:value="styles/PIN.css" />
    </stylesheets>
 </StackPane>

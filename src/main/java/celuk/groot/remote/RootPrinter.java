@@ -196,30 +196,7 @@ public class RootPrinter extends Updater {
             });
     }
 
-    private List<ErrorDetails> generateFakeError(List<ErrorDetails> errorList) {
-        if (fakeCount <= 20) {
-            ++fakeCount;
-            System.out.println("fakeCount = " + Integer.toString(fakeCount));
-        }
-        if (fakeCount > 20) {
-            if (fakeError == null) { 
-                fakeError = new ErrorDetails();
-                //Z_TOP_SWITCH("error.ERROR_Z_TOP_SWITCH", 17, true, CLEAR_CONTINUE, ABORT),
-                fakeError.setErrorCode(17);
-                fakeError.setErrorTitle("Error 17");
-                fakeError.setErrorMessage("ERROR_Z_TOP_SWITCH");
-                fakeError.setUserToClear(true);
-                fakeError.setOptions(3);
-            }
-            if (errorList == null)
-                errorList = new ArrayList<>();
-            errorList.add(fakeError);
-        }
-        return errorList;
-    }
-
     private void processErrorList(List<ErrorDetails> errorList) {
-        //errorList = generateFakeError(errorList);
         Map<Integer, ErrorDetails> activeMap = new HashMap<>();
         Set<Integer> ackSet = new HashSet<>();
         if (errorList != null) {

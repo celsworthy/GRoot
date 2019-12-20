@@ -120,10 +120,7 @@ public class AccessPINController implements Initializable, Page {
             pinField.getText().length() == 4 &&
             pinField.getText().equals(confirmField.getText())) {
             rootController.getRootServer().runUpdatePINTask(pinField.getText());
-            if (printer == null)
-                rootController.showPrinterSelectPage(this);
-            else
-                rootController.showHomePage(this, printer);
+            rootController.showLoginPage(this, printer);
         }
     }
 
