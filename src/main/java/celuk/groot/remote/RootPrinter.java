@@ -1,11 +1,8 @@
 package celuk.groot.remote;
 
-import static celuk.groot.remote.RootServer.READ_TIMEOUT_LONG;
-import static celuk.groot.remote.RootServer.READ_TIMEOUT_SHORT;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -57,7 +54,7 @@ public class RootPrinter extends Updater {
     private final SimpleObjectProperty<Map<Integer, ErrorDetails>> activeErrorMapProperty = new SimpleObjectProperty<>();
     private final SimpleBooleanProperty activeErrorHeartbeatProperty = new SimpleBooleanProperty(false);
     private final SimpleBooleanProperty hasActiveErrorProperty = new SimpleBooleanProperty(false);
-    private final SimpleBooleanProperty safetiesOnProperty = new SimpleBooleanProperty(true);
+    private final SimpleBooleanProperty safetiesOnProperty = new SimpleBooleanProperty(false);
     private Set<Integer> acknowledgedErrorSet = new HashSet<>();
     
     private ErrorDetails fakeError = null;
