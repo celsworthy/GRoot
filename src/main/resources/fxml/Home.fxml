@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <StackPane id="HomePane" fx:id="homePane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800" prefWidth="480.0" stylesheets="styles/Styles.css, styles/Home.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="celuk.groot.controllers.HomeController">
    <children>
@@ -32,10 +31,13 @@
                      <children>
                         <Label fx:id="modelLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="machine-model" text="Robox" />
                         <Label fx:id="nameLabel" maxWidth="1.7976931348623157E308" styleClass="machine-name" text="Printer" />
-                        <Label fx:id="addressLabel" maxWidth="1.7976931348623157E308" styleClass="machine-address" text="---.---.---.---" />
+                        <Label fx:id="addressLabel" maxWidth="1.7976931348623157E308" styleClass="machine-address" text="---.---.---.---">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin></Label>
                      </children>
                      <HBox.margin>
-                        <Insets left="5.0" />
+                        <Insets bottom="5.0" left="5.0" top="5.0" />
                      </HBox.margin>
                   </VBox>
                </children>
@@ -141,18 +143,46 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label fx:id="leftNozzleTempLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="material-1, large-text" text="-" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                  <Label fx:id="leftNozzleTitleLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="material-1, medium-text" text="common.leftNozzle" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                  <Label fx:id="rightNozzleTempLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="material-2, large-text" text="-" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                  <Label fx:id="rightNozzleTitleLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="material-2, medium-text" text="common.rightNozzle" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                  <Label fx:id="bedTempLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="bed, large-text" text="-" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                  <Label fx:id="leftNozzleTempLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="-" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <styleClass>
+                        <String fx:value="material-1" />
+                        <String fx:value="temperature-text" />
+                     </styleClass></Label>
+                  <Label fx:id="leftNozzleTitleLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="common.leftNozzle" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <styleClass>
+                        <String fx:value="material-1" />
+                        <String fx:value="temperature-title" />
+                     </styleClass></Label>
+                  <Label fx:id="rightNozzleTempLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="-" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <styleClass>
+                        <String fx:value="material-2" />
+                        <String fx:value="temperature-text" />
+                     </styleClass></Label>
+                  <Label fx:id="rightNozzleTitleLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="common.rightNozzle" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <styleClass>
+                        <String fx:value="material-2" />
+                        <String fx:value="temperature-title" />
+                     </styleClass></Label>
+                  <Label fx:id="bedTempLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="-" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <styleClass>
+                        <String fx:value="bed" />
+                        <String fx:value="temperature-text" />
+                     </styleClass></Label>
                   <Label fx:id="bedTitleLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="common.bed" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <styleClass>
                         <String fx:value="bed" />
-                        <String fx:value="medium-text" />
+                        <String fx:value="temperature-title" />
                      </styleClass></Label>
-                  <Label fx:id="ambientTempLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="ambient, large-text" text="-" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                  <Label fx:id="ambientTitleLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="ambient, medium-text" text="common.ambient" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                  <Label fx:id="ambientTempLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="-" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <styleClass>
+                        <String fx:value="ambient" />
+                        <String fx:value="temperature-text" />
+                     </styleClass></Label>
+                  <Label fx:id="ambientTitleLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="common.ambient" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <styleClass>
+                        <String fx:value="ambient" />
+                        <String fx:value="temperature-title" />
+                     </styleClass></Label>
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -161,13 +191,12 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </GridPane>
-            <VBox fx:id="idleVBox" styleClass="centered-background-image" VBox.vgrow="ALWAYS">
+            <VBox fx:id="idleVBox" maxHeight="1.7976931348623157E308" styleClass="centered-background-image" VBox.vgrow="ALWAYS">
                <children>
-                  <GridPane fx:id="jobStatusGrid" hgap="5.0" styleClass="panel">
+                  <GridPane fx:id="jobStatusGrid" hgap="5.0" maxHeight="1.7976931348623157E308" VBox.vgrow="SOMETIMES">
                     <columnConstraints>
                       <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" />
                       <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -176,53 +205,48 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label fx:id="jobNameTitleLabel" text="printJob.name" />
-                        <Label fx:id="jobCreatedTitleLabel" text="printJob.created" GridPane.rowIndex="1" />
-                        <Label fx:id="jobDurationTitleLabel" text="printJob.duration" GridPane.rowIndex="2" />
-                        <Label fx:id="jobNameLabel" text=" " GridPane.columnIndex="1" GridPane.columnSpan="2" />
-                        <Label fx:id="jobCreatedLabel" text=" " GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                        <Label fx:id="jobDurationLabel" text=" " GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label fx:id="jobProfileTitleLabel" text="printJob.profile" GridPane.rowIndex="3" />
-                        <Label fx:id="jobProfileLabel" text=" " GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Pane fx:id="jobProfileIcon" prefHeight="48.0" prefWidth="48.0" styleClass="jobProfileIcon" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.rowSpan="2" />
+                        <Label fx:id="jobNameTitleLabel" styleClass="job-description-title" text="printJob.name" GridPane.halignment="RIGHT" />
+                        <Label fx:id="jobCreatedTitleLabel" styleClass="job-description-title" text="printJob.created" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                        <Label fx:id="jobDurationTitleLabel" styleClass="job-description-title" text="printJob.duration" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                        <Label fx:id="jobNameLabel" styleClass="job-description-text" text=" " GridPane.columnIndex="1" />
+                        <Label fx:id="jobCreatedLabel" styleClass="job-description-text" text=" " GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="jobDurationLabel" styleClass="job-description-text" text=" " GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="jobProfileTitleLabel" styleClass="job-description-title" text="printJob.profile" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                        <Label fx:id="jobProfileLabel" styleClass="job-description-text" text=" " GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                      <VBox.margin>
-                        <Insets />
+                        <Insets bottom="5.0" />
                      </VBox.margin>
                      <padding>
                         <Insets left="5.0" right="5.0" />
                      </padding>
+                     <styleClass>
+                        <String fx:value="panel" />
+                        <String fx:value="job-description-icon" />
+                     </styleClass>
                   </GridPane>
-                  <VBox fx:id="jobVBox" styleClass="job-panel">
+                  <VBox fx:id="jobVBox" styleClass="job-progress-panel">
                      <children>
-                          <HBox fx:id="jobStatusHBox" styleClass="job-panel">
+                          <HBox fx:id="jobStatusHBox" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" VBox.vgrow="SOMETIMES">
                              <children>
                               <Pane fx:id="jobStatusIcon" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="22.0" prefWidth="22.0" styleClass="job-status-icon">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </HBox.margin>
                               </Pane>
-                                <Label fx:id="jobStatusLabel" maxWidth="1.7976931348623157E308" text=" " HBox.hgrow="SOMETIMES">
-                                   <font>
-                                      <Font size="24.0" />
-                                   </font>
-                                </Label>
+                                <Label fx:id="jobStatusLabel" maxWidth="1.7976931348623157E308" styleClass="job-status-text" text=" " HBox.hgrow="SOMETIMES" />
+                                <Label fx:id="jobEtcLabel" maxWidth="-Infinity" styleClass="job-remaining-text" text=" " HBox.hgrow="SOMETIMES" />
                               <Pane fx:id="jobRemainingIcon" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="22.0" prefWidth="22.0" styleClass="job-remaining-icon">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </HBox.margin>
                               </Pane>
-                                <Label fx:id="jobEtcLabel" maxWidth="1.7976931348623157E308" text=" " HBox.hgrow="SOMETIMES">
-                                   <font>
-                                      <Font size="24.0" />
-                                   </font>
-                                </Label>
                              </children>
                              <VBox.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                              </VBox.margin>
                           </HBox>
-                          <ProgressBar fx:id="jobProgressBar" maxWidth="1.7976931348623157E308" progress="0.0" styleClass="job-panel">
+                          <ProgressBar fx:id="jobProgressBar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" progress="0.0" styleClass="job-panel" VBox.vgrow="SOMETIMES">
                              <VBox.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                              </VBox.margin>
@@ -230,7 +254,7 @@
                                 <Insets left="5.0" right="5.0" />
                              </padding>
                           </ProgressBar>
-                          <HBox fx:id="jobControlHBox">
+                          <HBox fx:id="jobControlHBox" maxHeight="1.7976931348623157E308" VBox.vgrow="SOMETIMES">
                              <children>
                                 <Button fx:id="tweakButton" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#tweakButtonAction" prefHeight="65.0" HBox.hgrow="SOMETIMES">
                                  <styleClass>
@@ -265,7 +289,7 @@
                   </VBox>
                </children>
                <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                  <Insets left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </VBox>
             <GridPane styleClass="bottom-bar">

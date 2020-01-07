@@ -446,23 +446,23 @@ public class HomeController implements Initializable, Page {
                 rightNozzleTempLabel.setText("");
                 break;
             case 1:
-                leftNozzleTempLabel.setVisible(false);
-                leftNozzleTempLabel.setManaged(false);
-                leftNozzleTitleLabel.setVisible(false);
-                leftNozzleTitleLabel.setManaged(false);
+                leftNozzleTempLabel.setVisible(true);
+                leftNozzleTempLabel.setManaged(true);
+                leftNozzleTitleLabel.setVisible(true);
+                leftNozzleTitleLabel.setManaged(true);
                 
-                rightNozzleTempLabel.setVisible(true);
-                rightNozzleTempLabel.setManaged(true);
-                rightNozzleTitleLabel.setVisible(true);
-                rightNozzleTitleLabel.setManaged(true);
+                rightNozzleTempLabel.setVisible(false);
+                rightNozzleTempLabel.setManaged(false);
+                rightNozzleTitleLabel.setVisible(false);
+                rightNozzleTitleLabel.setManaged(false);
 
                 if (printerStatus.getHeadTypeCode().equalsIgnoreCase("RBX01-SM") || 
                     printerStatus.getHeadTypeCode().equalsIgnoreCase("RBX01-S2"))
-                    rightNozzleTitleLabel.setText(nozzlesTitle);
+                    leftNozzleTitleLabel.setText(nozzlesTitle);
                 else
-                    rightNozzleTitleLabel.setText(nozzleTitle);
+                    leftNozzleTitleLabel.setText(nozzleTitle);
                 if (printerStatus.getNozzleTemperature()[0] > 0.0)
-                    rightNozzleTemperature = Integer.toString(printerStatus.getNozzleTemperature()[0]) + "°C";
+                    leftNozzleTemperature = Integer.toString(printerStatus.getNozzleTemperature()[0]) + "°C";
                 break;
             case 2:
                 leftNozzleTempLabel.setVisible(true);

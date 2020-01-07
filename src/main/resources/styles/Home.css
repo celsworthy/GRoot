@@ -11,15 +11,32 @@
 }
 
 .filament-type {
-    -fx-font-size: 24pt;
-    -fx-font-weight: 600;
+    -fx-font-size: 30pt;
+    -fx-font-weight: 900;
 }
 
 .job-cancel {
     -fx-graphic: url("/image/job-cancel-white.png");
 }
 
-.job-panel {
+.job-description-icon {
+    -fx-background-image: url("/image/job-profile-blue.png");
+    -fx-background-position: bottom 10 right 10;
+    -fx-background-repeat: no-repeat;
+}
+
+.job-description-text {
+    -fx-font-size: 18pt;
+    -fx-font-weight: 300;
+}
+
+.job-description-title {
+    -fx-font-size: 18pt;
+    -fx-font-weight: 600;
+    -fx-text-fill: -robox-blue;
+}
+
+.job-progress-panel {
     -fx-background-color: -robox-blue;
 }
 
@@ -32,23 +49,32 @@
 }
 
 .job-remaining-icon {
-    -fx-graphic: url("/image/job-remaining-icon.png");
+    -fx-background-image: url("/image/job-remaining-icon.png");
+    -fx-background-position: center;
+}
+
+.job-remaining-text {
+    -fx-font-size: 24pt;
 }
 
 .job-status-icon {
-    -fx-graphic: null;
+    -fx-background-position: center;
 }
 
 .job-status-icon:playing {
-    -fx-graphic: url("/image/job-play-icon.png");
+    -fx-background-image: url("/image/job-play-icon.png");
 }
 
 .job-status-icon:idle {
-    -fx-graphic: url("/image/job-ready-icon.png");
+    -fx-background-image: url("/image/job-ready-icon.png");
 }
 
 .job-status-icon:paused {
-    -fx-graphic: url("/image/job-pause-icon.png");
+    -fx-background-image: url("/image/job-pause-icon.png");
+}
+
+.job-status-text {
+    -fx-font-size: 24pt;
 }
 
 .job-tweak {
@@ -94,4 +120,14 @@
 .reel-image {
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
+}
+
+.temperature-text {
+    -fx-font-weight: 900;
+    -fx-font-size: 24pt;
+}
+
+.temperature-title {
+    -fx-font-weight: normal;
+    -fx-font-size: 12pt;
 }

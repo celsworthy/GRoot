@@ -132,7 +132,7 @@ public class RootPrinter extends Updater {
 
     public Future<PrinterStatusResponse> runRequestPrinterStatusTask() {
         //System.out.println("Requesting status of printer \"" + printerId + "\"");
-        return rootServer.runRequestTask(COMMAND_PREFIX + printerId + REMOTE_CONTROL_COMMAND, true, READ_TIMEOUT_SHORT, null,
+        return rootServer.runRequestTask(COMMAND_PREFIX + printerId + REMOTE_CONTROL_COMMAND, true, RootServer.READ_TIMEOUT_SHORT, null,
             (var requestData, var jMapper) -> {
                 PrinterStatusResponse statusResponse = null;
                 try {
@@ -171,7 +171,7 @@ public class RootPrinter extends Updater {
     }
     
     private Future<PrintAdjustData> runRequestPrintAdjustDataTask() {
-        return rootServer.runRequestTask(COMMAND_PREFIX + printerId + PRINT_ADJUST_COMMAND, true, READ_TIMEOUT_SHORT, null,
+        return rootServer.runRequestTask(COMMAND_PREFIX + printerId + PRINT_ADJUST_COMMAND, true, RootServer.READ_TIMEOUT_SHORT, null,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 PrintAdjustData adjustData = null;
                 try {
@@ -238,7 +238,7 @@ public class RootPrinter extends Updater {
 
     private Future<ActiveErrorStatusData> runRequestErrorStatusTask() {
         //System.out.println("Requesting error status of printer \"" + printerId + "\"");
-        return rootServer.runRequestTask(COMMAND_PREFIX + printerId + ERROR_STATUS_COMMAND, true, READ_TIMEOUT_SHORT, null,
+        return rootServer.runRequestTask(COMMAND_PREFIX + printerId + ERROR_STATUS_COMMAND, true, RootServer.READ_TIMEOUT_SHORT, null,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 ActiveErrorStatusData activeErrorData = null;
                 try {
@@ -269,7 +269,7 @@ public class RootPrinter extends Updater {
         String f = Integer.toString(filamentNumber);
         return rootServer.runRequestTask(COMMAND_PREFIX + printerId + EJECT_FILAMENT_COMMAND,
             false,
-            READ_TIMEOUT_SHORT,
+            RootServer.READ_TIMEOUT_SHORT,
             f,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 return true;
@@ -279,7 +279,7 @@ public class RootPrinter extends Updater {
     public Future<String> runSendGCodeTask(String gCode) {
         return rootServer.runRequestTask(COMMAND_PREFIX + printerId + EXECUTE_GCODE_COMMAND,
             false,
-            READ_TIMEOUT_SHORT,
+            RootServer.READ_TIMEOUT_SHORT,
             gCode,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 String response = "";
@@ -312,7 +312,7 @@ public class RootPrinter extends Updater {
     private Future<Void> runVoidTask(String command, String data) {
         return rootServer.runRequestTask(COMMAND_PREFIX + printerId + command,
             false,
-            READ_TIMEOUT_SHORT,
+            RootServer.READ_TIMEOUT_SHORT,
             data,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 runRequestPrinterStatusTask();
@@ -345,7 +345,7 @@ public class RootPrinter extends Updater {
     public Future<Void> runSetPrintAdjustDataTask(String data) {
         return rootServer.runRequestTask(COMMAND_PREFIX + printerId + SET_PRINT_ADJUST_COMMAND,
             false,
-            READ_TIMEOUT_SHORT,
+            RootServer.READ_TIMEOUT_SHORT,
             data,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 // Wait for update to print adjust data.
@@ -406,7 +406,7 @@ public class RootPrinter extends Updater {
         String command = reprintableMode ? LIST_REPRINTABLE_JOBS_COMMAND : LIST_USB_PRINTABLE_JOBS_COMMAND;
         return rootServer.runRequestTask(COMMAND_PREFIX + printerId + command,
             false,
-            READ_TIMEOUT_LONG,
+            RootServer.READ_TIMEOUT_LONG,
             null,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 PrintJobListData printJobList = null;
@@ -430,7 +430,7 @@ public class RootPrinter extends Updater {
     
     public Future<HeadEEPROMData> runRequestHeadEEPROMDataTask() {
         //System.out.println("Requesting head EEPROM data from printer \"" + printerId + "\"");
-        return rootServer.runRequestTask(COMMAND_PREFIX + printerId + HEAD_EEPROM_COMMAND, true, READ_TIMEOUT_SHORT, null,
+        return rootServer.runRequestTask(COMMAND_PREFIX + printerId + HEAD_EEPROM_COMMAND, true, RootServer.READ_TIMEOUT_SHORT, null,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 HeadEEPROMData headData = null;
                 try {
@@ -471,7 +471,7 @@ public class RootPrinter extends Updater {
 
     public Future<MaterialStatusData> runRequestMaterialStatusTask() {
         //System.out.println("Requesting material status from printer \"" + printerId + "\"");
-        return rootServer.runRequestTask(COMMAND_PREFIX + printerId + MATERIAL_STATUS_COMMAND, true, READ_TIMEOUT_SHORT, null,
+        return rootServer.runRequestTask(COMMAND_PREFIX + printerId + MATERIAL_STATUS_COMMAND, true, RootServer.READ_TIMEOUT_SHORT, null,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 MaterialStatusData materialStatus = null;
                 try {
