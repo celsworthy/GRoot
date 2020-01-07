@@ -503,7 +503,7 @@ public class HomeController implements Initializable, Page {
             jobVBox.setVisible(true);
             jobVBox.setManaged(true);
             boolean showStatusGrid = false;
-            if (printerStatus.getPrintJobName() == null || printerStatus.getPrintJobName().isEmpty()) {
+            if (printerStatus.getPrintJobName() == null || printerStatus.getPrintJobName().isBlank()) {
                 jobNameLabel.setText("");
             }
             else {
@@ -516,14 +516,16 @@ public class HomeController implements Initializable, Page {
             else
             {
                 jobDurationLabel.setText(secondsToHMS(printerStatus.getTotalDurationSeconds()));
-                showStatusGrid = true;
+                // Only show panel if there is a name.
+                // showStatusGrid = true; 
             }
-            if (printerStatus.getPrintJobSettings() == null)
+            if (printerStatus.getPrintJobSettings() == null || printerStatus.getPrintJobSettings().isBlank())
                 jobProfileLabel.setText("");
             else
             {
                 jobProfileLabel.setText(printerStatus.getPrintJobSettings());
-                showStatusGrid = true;
+                // Only show panel if there is a name.
+                // showStatusGrid = true; 
             }
 
             jobStatusGrid.setVisible(showStatusGrid);
