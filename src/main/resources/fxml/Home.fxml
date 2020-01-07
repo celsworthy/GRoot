@@ -231,14 +231,17 @@
                              <children>
                               <Pane fx:id="jobStatusIcon" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="22.0" prefWidth="22.0" styleClass="job-status-icon">
                                  <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                                  </HBox.margin>
                               </Pane>
-                                <Label fx:id="jobStatusLabel" maxWidth="1.7976931348623157E308" styleClass="job-status-text" text=" " HBox.hgrow="SOMETIMES" />
+                                <Label fx:id="jobStatusLabel" maxWidth="1.7976931348623157E308" styleClass="job-status-text" text=" " HBox.hgrow="SOMETIMES">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin></Label>
                                 <Label fx:id="jobEtcLabel" maxWidth="-Infinity" styleClass="job-remaining-text" text=" " HBox.hgrow="SOMETIMES" />
                               <Pane fx:id="jobRemainingIcon" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="22.0" prefWidth="22.0" styleClass="job-remaining-icon">
                                  <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                                  </HBox.margin>
                               </Pane>
                              </children>
