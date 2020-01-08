@@ -106,6 +106,8 @@ public class RootStackController implements Initializable {
         // Most pages are loaded when first shown. The following commonly used
         // pages are loaded immediately.
         connectingPage = (ConnectingController)(loadPage(connectingPageURL, null));
+        consolePage = (ConsoleController)(loadPage(consolePageURL, null));
+        controlPage = (ControlController)(loadPage(controlPageURL, null));
         homePage = (HomeController)(loadPage(homePageURL, null));
         loginPage = (LoginController)(loadPage(loginPageURL, null));
         printerSelectPage = (PrinterSelectController)(loadPage(printerSelectPageURL, null));
