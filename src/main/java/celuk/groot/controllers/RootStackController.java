@@ -452,14 +452,14 @@ public class RootStackController implements Initializable {
              .forEach(p -> p.hidePage());
     }
     
-    private Page loadPage(URL pageURL, Class controller) {
-        Page page = null;
+    private <T extends Page> T loadPage(URL pageURL, Class<T> controller) {
+        T page = null;
         try {
             FXMLLoader pageLoader =  new FXMLLoader(pageURL, null);
             if (controller != null) {
                 
                 try {
-                    page = (Page)controller.getDeclaredConstructor().newInstance();
+                    page = controller.getDeclaredConstructor().newInstance();
                 }
                 catch (Exception ex) {
                     System.err.println("Exception thown when instantiating page controller");
@@ -469,7 +469,7 @@ public class RootStackController implements Initializable {
             StackPane pagePane = pageLoader.load();
             setAnchors(pagePane);
             if (page == null)
-                page = (Page)(pageLoader.getController());
+                page = pageLoader.getController();
 
             page.setRootStackController(this);
             pages.add(page);
