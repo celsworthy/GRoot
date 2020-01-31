@@ -30,7 +30,7 @@ public class GRootCommandLineArgs {
     @Parameter(names={"--show-splash-screen", "-s"}, description = "Show splash screen during startup")
     boolean showSplashScreen = false;
 
-    @Parameter(names={"--update-interval", "-u"}, description = "Update interval in microseconds")
+    @Parameter(names={"--update-interval", "-u"}, description = "Update interval in milliseconds")
     public int updateInterval = 2000;
 
     public GRootCommandLineArgs() {
