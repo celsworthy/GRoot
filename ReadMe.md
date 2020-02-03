@@ -74,7 +74,7 @@ Windows:
 	cd %GROOT_HOME%
 	robocopy Language %INSTALLER_HOME%\GRoot\Language /MIR
 	robocopy target\lib %INSTALLER_HOME%\GRoot\lib /MIR
-	copy target\GRoot.jar %INSTALLER_HOME%\GRoot.jar
+	copy target\GRoot.jar %INSTALLER_HOME%\GRoot\GRoot.jar
 
 Linux:
 
@@ -88,4 +88,4 @@ Linux:
 	cd ${GROOT_HOME}
 	cp -r Language ${INSTALLER_HOME}/GRoot/Language
 	cp -r target/lib ${INSTALLER_HOME}/GRoot/lib
-	cp target/GRoot.jar ${INSTALLER_HOME}/GRoot.jar
+	cp target/GRoot.jar ${INSTALLER_HOME}/GRoot/GRoot.jar
