@@ -125,6 +125,7 @@ public class HomeController implements Initializable, Page {
     private final PseudoClass playingPS = PseudoClass.getPseudoClass("playing");
     private final PseudoClass idlePS = PseudoClass.getPseudoClass("idle");
     private final String rightNozzleTitle = I18n.t("common.rightNozzle");
+    private final String leftNozzleTitle = I18n.t("common.leftNozzle");
     private final String nozzlesTitle = I18n.t("common.nozzles");
     private final String nozzleTitle = I18n.t("common.nozzle");
 
@@ -469,6 +470,7 @@ public class HomeController implements Initializable, Page {
                 leftNozzleTempLabel.setManaged(true);
                 leftNozzleTitleLabel.setVisible(true);
                 leftNozzleTitleLabel.setManaged(true);
+                leftNozzleTitleLabel.setText(leftNozzleTitle);
                 rightNozzleTempLabel.setVisible(true);
                 rightNozzleTempLabel.setManaged(true);
                 rightNozzleTitleLabel.setVisible(true);
