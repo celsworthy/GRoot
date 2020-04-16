@@ -98,16 +98,16 @@ public class LoginController implements Initializable, Page {
             
             rootController.getRootServer().setPIN(pinField.getText());
             if (printer != null)
-                rootController.showHomePage(this, printer);
+                rootController.showHomePage(printer);
             else
-                rootController.showPrinterSelectPage(this);
+                rootController.showPrinterSelectPage();
         }
     }
 
     @FXML
     void rightButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
-            rootController.showResetPINPage(this, printer);
+            rootController.showResetPINPage(printer);
         }
     }
 
@@ -152,6 +152,7 @@ public class LoginController implements Initializable, Page {
         nineKey.setUserData(KeyCode.DIGIT9);
         backspaceKey.setUserData(KeyCode.BACK_SPACE);
 
+        loginPane.setVisible(false);
         leftButton.setVisible(false);
     }
     
@@ -163,17 +164,24 @@ public class LoginController implements Initializable, Page {
     public void stopUpdates() {
         printer = null;
     }
-
+    
     @Override
     public void displayPage(RootPrinter printer) {
         this.printer = printer;
-        startUpdates();
-        loginPane.setVisible(true);
+        if (!loginPane.isVisible()) {
+            startUpdates();
+            loginPane.setVisible(true);
+        }
     }
 
     @Override
     public void hidePage() {
         stopUpdates();
         loginPane.setVisible(false);
+    }
+
+    @Override
+    public boolean isVisible() {
+        return loginPane.isVisible();
     }
 }

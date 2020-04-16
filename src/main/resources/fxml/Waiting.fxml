@@ -6,17 +6,17 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane id="ConnectingPane" fx:id="connectingPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800" prefWidth="480.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="celuk.groot.controllers.ConnectingController">
+<StackPane id="WaitingPane" fx:id="waitingPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800" prefWidth="480.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="celuk.groot.controllers.WaitingController">
    <children>
       <ImageView fitHeight="800.0" fitWidth="480.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../image/connecting.png" />
+            <Image url="@../image/waiting.png" />
          </image>
       </ImageView>
-      <Label fx:id="statusLabel" styleClass="connecting-label" text="connecting.connecting" />
+      <Label fx:id="statusLabel" styleClass="waiting-label" text="waiting.connecting" />
    </children>
    <stylesheets>
       <String fx:value="styles/Styles.css" />
-      <String fx:value="styles/Connecting.css" />
+      <String fx:value="styles/Waiting.css" />
    </stylesheets>
 </StackPane>

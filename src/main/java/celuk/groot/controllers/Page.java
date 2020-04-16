@@ -21,6 +21,7 @@ public interface Page {
     public void stopUpdates();
     public void displayPage(RootPrinter printer);
     public void hidePage();
+    public boolean isVisible();
     
     default String secondsToHMS(int secondsInput) {
         int minutes = (int)Math.floor(secondsInput / 60);

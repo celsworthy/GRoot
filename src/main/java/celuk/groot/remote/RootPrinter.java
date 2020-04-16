@@ -159,7 +159,7 @@ public class RootPrinter extends Updater {
                     }
                 }
                 catch (IOException ex) {
-                    System.err.println("Error whilst decoding status response from @" 
+                    System.err.println("Error whilst decoding printer status response from @" 
                                        + rootServer.getHostAddress()
                                        + ":" 
                                        + rootServer.getHostPort() 
@@ -167,7 +167,8 @@ public class RootPrinter extends Updater {
                                        + ex.getMessage());
                 }
                 return statusResponse;
-            });
+            },
+            null);
     }
     
     private Future<PrintAdjustData> runRequestPrintAdjustDataTask() {
@@ -190,7 +191,8 @@ public class RootPrinter extends Updater {
                 }
                 currentPrintAdjustDataProperty.set(adjustData);
                 return adjustData;
-            });
+            },
+            null);
     }
 
     private void processErrorList(List<ErrorDetails> errorList) {
@@ -256,7 +258,8 @@ public class RootPrinter extends Updater {
                                        + ex.getMessage());
                 }
                 return activeErrorData;
-            });
+            },
+            null);
     }
 
     @Override
@@ -273,7 +276,8 @@ public class RootPrinter extends Updater {
             f,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 return true;
-            });
+            },
+            null);
     }
     
     public Future<String> runSendGCodeTask(String gCode) {
@@ -302,7 +306,8 @@ public class RootPrinter extends Updater {
                                         + ex.getMessage());
                 }
                 return response;
-            });
+            },
+            null);
     }
 
     public Future<String> runUnlockDoorTask() {
@@ -317,7 +322,8 @@ public class RootPrinter extends Updater {
             (byte[] requestData, ObjectMapper jMapper) -> {
                 runRequestPrinterStatusTask();
                 return null;
-            });
+            },
+            null);
     }
 
     public Future<Void> runPauseTask() {
@@ -360,7 +366,8 @@ public class RootPrinter extends Updater {
                     System.err.println("Execution exception during request for print adjust data");
                 }
                 return null;
-            });
+            },
+            null);
     }
     
     public Future<Void> runRenamePrinterTask(String printerName) {
@@ -425,7 +432,8 @@ public class RootPrinter extends Updater {
                                        + ex.getMessage());
                 }
                 return printJobList;
-            });
+            },
+            null);
     }
     
     public Future<HeadEEPROMData> runRequestHeadEEPROMDataTask() {
@@ -448,7 +456,7 @@ public class RootPrinter extends Updater {
                 }
                 currentHeadEEPROMDataProperty.set(headData);
                 return headData;
-            });
+            }, null);
     }
     
     public Future<Void> runSetHeadEEPROMDataTask(HeadEEPROMData headData) {
@@ -489,7 +497,8 @@ public class RootPrinter extends Updater {
                 }
                 currentMaterialStatusDataProperty.set(materialStatus);
                 return materialStatus;
-            });
+            },
+            null);
     }
 
     public Future<PurgeData> runRequestPurgeDataTask() {

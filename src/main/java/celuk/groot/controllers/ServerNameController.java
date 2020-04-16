@@ -59,14 +59,14 @@ public class ServerNameController implements Initializable, Page {
     @FXML
     void leftButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
-            rootController.showServerSettingsMenu(this);
+            rootController.showServerSettingsMenu();
         }
     }
     
     @FXML
     void middleButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
-            rootController.showPrinterSelectPage(this);
+            rootController.showPrinterSelectPage();
         }
     }
 
@@ -77,7 +77,7 @@ public class ServerNameController implements Initializable, Page {
             String serverName = nameField.getText().trim();
             if (!serverName.isEmpty() && !serverName.equals(currentName)) {
                 rootController.getRootServer().runSetServerNameTask(serverName);
-                rootController.showPrinterSelectPage(this);
+                rootController.showPrinterSelectPage();
             }
         }
     }
@@ -124,6 +124,8 @@ public class ServerNameController implements Initializable, Page {
             rightButton.setDisable(v.isBlank() || v.equals(currentName));
         });
         middleButton.setDisable(true);
+        
+        namePane.setVisible(false);
     }
     
     @Override
@@ -143,13 +145,20 @@ public class ServerNameController implements Initializable, Page {
     @Override
     public void displayPage(RootPrinter printer) {
         this.printer = printer;
-        startUpdates();
-        namePane.setVisible(true);
+        if (!namePane.isVisible()) {
+            startUpdates();
+            namePane.setVisible(true);
+        }
     }
 
     @Override
     public void hidePage() {
         stopUpdates();
         namePane.setVisible(false);
+    }
+    
+    @Override
+    public boolean isVisible() {
+        return namePane.isVisible();
     }
 }

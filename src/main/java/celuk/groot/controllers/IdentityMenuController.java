@@ -20,7 +20,7 @@ public class IdentityMenuController extends MenuController {
     protected void menu1Action(ActionEvent event) {
         if (validButtonAction(event)) {
             //System.out.println("identity menu 1");
-            rootController.showPrinterNamePage(this, printer);
+            rootController.showPrinterNamePage(printer);
         }
     }
 
@@ -28,19 +28,19 @@ public class IdentityMenuController extends MenuController {
     protected void menu2Action(ActionEvent event) {
         if (validButtonAction(event)) {
             //System.out.println("identity menu 2");
-            rootController.showPrinterColourPage(this, printer);
+            rootController.showPrinterColourPage(printer);
         }
     }
     
         @Override
     protected void leftButtonAction(ActionEvent event) {
         if (validButtonAction(event))
-            rootController.showSettingsMenu(this, printer);
+            rootController.showSettingsMenu(printer);
     }
     
     @Override
     protected void middleButtonAction(ActionEvent event) {
         if (validButtonAction(event))
-            rootController.showMainMenu(this, printer);
+            rootController.showMainMenu(printer);
     }
 }

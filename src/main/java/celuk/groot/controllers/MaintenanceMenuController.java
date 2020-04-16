@@ -24,7 +24,7 @@ public class MaintenanceMenuController extends MenuController {
     protected void menu1Action(ActionEvent event) {
         if (validButtonAction(event)) {
             //System.out.println("maintenance menu 1");
-            rootController.showPurgeIntroPage(this, printer);
+            rootController.showPurgeIntroPage(printer);
         }
     }
 
@@ -32,7 +32,7 @@ public class MaintenanceMenuController extends MenuController {
     protected void menu2Action(ActionEvent event) {
         if (validButtonAction(event)) {
             //System.out.println("maintenance menu 2");
-            rootController.showEjectStuckMenu(this, printer);
+            rootController.showEjectStuckMenu(printer);
         }
     }
 
@@ -40,7 +40,7 @@ public class MaintenanceMenuController extends MenuController {
     protected void menu3Action(ActionEvent event) {
         if (validButtonAction(event)) {
             //System.out.println("maintenance menu 3");
-            rootController.showCleanNozzlesMenu(this, printer);
+            rootController.showCleanNozzlesMenu(printer);
         }
     }
 
@@ -49,7 +49,7 @@ public class MaintenanceMenuController extends MenuController {
         if (validButtonAction(event)) {
             // System.out.println("maintenance menu 4");
             printer.runRemoveHeadTask();
-            rootController.showHomePage(this, printer);
+            rootController.showHomePage(printer);
         }
     }
 
@@ -57,14 +57,14 @@ public class MaintenanceMenuController extends MenuController {
     protected void menu5Action(ActionEvent event) {
         if (validButtonAction(event)) {
             printer.runMacroTask("LEVEL_GANTRY");
-            rootController.showHomePage(this, printer);
+            rootController.showHomePage(printer);
         }
     }
 
     @Override
     protected void menu6Action(ActionEvent event) {
         if (validButtonAction(event)) {
-            rootController.showTestAxisSpeedMenu(this, printer);
+            rootController.showTestAxisSpeedMenu(printer);
         }
     }
 }

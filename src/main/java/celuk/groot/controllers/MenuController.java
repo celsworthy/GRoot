@@ -73,13 +73,13 @@ abstract public class MenuController implements Initializable, Page {
     @FXML
     protected void leftButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showMainMenu(this, printer);
+            rootController.showMainMenu(printer);
     }
     
     @FXML
     protected void middleButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showHomePage(this, printer);
+            rootController.showHomePage(printer);
     }
 
     @FXML
@@ -91,6 +91,7 @@ abstract public class MenuController implements Initializable, Page {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        menuPane.setVisible(false);
     }
     
     @Override
@@ -121,8 +122,10 @@ abstract public class MenuController implements Initializable, Page {
         menuLogo.setStyle("-fx-background-image: url(\""
                           + logoIcon
                           + "\");");
-        startUpdates();
-        menuPane.setVisible(true);
+        if (!menuPane.isVisible()) {
+            startUpdates();
+            menuPane.setVisible(true);
+        }
     }
 
     @Override
@@ -131,6 +134,11 @@ abstract public class MenuController implements Initializable, Page {
         menuPane.setVisible(false);
     }
     
+    @Override
+    public boolean isVisible() {
+        return menuPane.isVisible();
+    }
+
     protected void translateMenuText(String titleText, String ... buttonTexts) {
         Button[] buttons = {menuButton1, menuButton2, menuButton3,
                             menuButton4, menuButton5, menuButton6};

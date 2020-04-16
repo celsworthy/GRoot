@@ -145,7 +145,7 @@ public class HomeController implements Initializable, Page {
     @FXML
     void tweakButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
-            rootController.showTweakPage(this, printer);
+            rootController.showTweakPage(printer);
         }
     }
 
@@ -173,14 +173,14 @@ public class HomeController implements Initializable, Page {
     @FXML
     void leftButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showPrinterSelectPage(this);
+            rootController.showPrinterSelectPage();
     }
     
     @FXML
     void middleButtonAction(ActionEvent event)
     {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showMainMenu(this, printer);
+            rootController.showMainMenu(printer);
     }
 
     @FXML
@@ -221,7 +221,8 @@ public class HomeController implements Initializable, Page {
                         jobCreatedTitleLabel,
                         jobDurationTitleLabel,
                         jobProfileTitleLabel);
-        
+
+        homePane.setVisible(false);
         jobVBox.setVisible(false);
         jobVBox.setManaged(false);
         jobProgressBar.setVisible(false);
@@ -257,8 +258,10 @@ public class HomeController implements Initializable, Page {
         @Override
     public void displayPage(RootPrinter printer) {
         this.printer = printer;
-        startUpdates();
-        homePane.setVisible(true);
+        if (!homePane.isVisible()) {
+            startUpdates();
+            homePane.setVisible(true);
+        }
     }
     
     @Override
@@ -267,6 +270,11 @@ public class HomeController implements Initializable, Page {
         homePane.setVisible(false);
     }
 
+    @Override
+    public boolean isVisible() {
+        return homePane.isVisible();
+    }
+    
     private void updateServerStatus(ServerStatusResponse serverStatus) {
         Platform.runLater(() -> {
             if (serverStatus != null) {

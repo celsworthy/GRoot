@@ -48,9 +48,9 @@ public class AboutController implements Initializable, Page {
     void leftButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
             if (printer == null)
-                rootController.showServerSettingsMenu(this);
+                rootController.showServerSettingsMenu();
             else
-                rootController.showSettingsMenu(this, printer);
+                rootController.showSettingsMenu(printer);
         }
     }
     
@@ -58,9 +58,9 @@ public class AboutController implements Initializable, Page {
     void middleButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
             if (printer == null)
-                rootController.showPrinterSelectPage(this);
+                rootController.showPrinterSelectPage();
             else
-                rootController.showMainMenu(this, printer);
+                rootController.showMainMenu(printer);
     }
 
     @FXML
@@ -86,6 +86,7 @@ public class AboutController implements Initializable, Page {
                         aboutPara6,
                         aboutPara7);
         versionFormat = I18n.t(versionFormat);
+        aboutPane.setVisible(false);
         rightButton.setVisible(false);
     }
     
@@ -104,13 +105,20 @@ public class AboutController implements Initializable, Page {
     @Override
     public void displayPage(RootPrinter printer) {
         this.printer = printer;
-        startUpdates();
-        aboutPane.setVisible(true);
+        if (!aboutPane.isVisible()) {
+            startUpdates();
+            aboutPane.setVisible(true);
+        }
     }
 
     @Override
     public void hidePage() {
         stopUpdates();
         aboutPane.setVisible(false);
+    }
+    
+    @Override
+    public boolean isVisible() {
+        return aboutPane.isVisible();
     }
 }

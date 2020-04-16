@@ -184,7 +184,7 @@ public class PrinterSelectController implements Initializable, Page {
             Node b = (Node)event.getSource();
             PrinterPanel pp = (PrinterPanel)b.getUserData();
             if (pp != null && pp.printer != null)
-                rootController.showHomePage(this, pp.printer);
+                rootController.showHomePage(pp.printer);
         }
     }
     
@@ -221,7 +221,7 @@ public class PrinterSelectController implements Initializable, Page {
     {
         if (rootController != null && event.getSource() instanceof Button)
         {
-            rootController.showServerSettingsMenu(this);
+            rootController.showServerSettingsMenu();
         }
     }
     
@@ -262,6 +262,8 @@ public class PrinterSelectController implements Initializable, Page {
         printer21Pane.setUserData(panelArray[5]);
         for (PrinterPanel pp : panelArray)
             pp.reset();
+
+        printerSelectPane.setVisible(false);
     }
     
     private ChangeListener<ServerStatusResponse> serverStatusListener = (ob, ov, nv) -> {
@@ -296,8 +298,10 @@ public class PrinterSelectController implements Initializable, Page {
 
     @Override
     public void displayPage(RootPrinter printer) {
-        startUpdates();
-        printerSelectPane.setVisible(true);
+        if (!printerSelectPane.isVisible()) {
+            startUpdates();
+            printerSelectPane.setVisible(true);
+        }
     }
     
     @Override
@@ -305,7 +309,12 @@ public class PrinterSelectController implements Initializable, Page {
         stopUpdates();
         printerSelectPane.setVisible(false);
     }
-
+    
+    @Override
+    public boolean isVisible() {
+        return printerSelectPane.isVisible();
+    }
+    
     private void updateServerStatus(ServerStatusResponse response) {
         Platform.runLater(() -> {
             if (response != null) {
@@ -369,7 +378,7 @@ public class PrinterSelectController implements Initializable, Page {
                                                                  .collect(Collectors.toList());
                 if (printerList.size() == 1) {
                     // Only one printer connected so go straight to the printer home page.
-                    rootController.showHomePage(this, printerList.get(0));
+                    rootController.showHomePage(printerList.get(0));
                 }
                 else {
                     Collections.sort(printerList,

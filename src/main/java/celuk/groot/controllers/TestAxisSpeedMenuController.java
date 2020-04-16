@@ -23,7 +23,7 @@ public class TestAxisSpeedMenuController extends MenuController {
         if (validButtonAction(event)) {
             // System.out.println("test axis speed  menu 1");
             printer.runMacroTask("SPEED_TEST");
-            rootController.showHomePage(this, printer);
+            rootController.showHomePage(printer);
         }
     }
 
@@ -32,7 +32,7 @@ public class TestAxisSpeedMenuController extends MenuController {
         if (validButtonAction(event)) {
             // System.out.println("test axis speed menu 2");
             printer.runMacroTask("TEST_X");
-            rootController.showHomePage(this, printer);
+            rootController.showHomePage(printer);
         }
     }
 
@@ -41,7 +41,7 @@ public class TestAxisSpeedMenuController extends MenuController {
         if (validButtonAction(event)) {
             //System.out.println("test axis speed menu 3");
             printer.runMacroTask("TEST_Y");
-            rootController.showHomePage(this, printer);
+            rootController.showHomePage(printer);
         }
     }
 
@@ -50,19 +50,19 @@ public class TestAxisSpeedMenuController extends MenuController {
         if (validButtonAction(event)) {
             //System.out.println("test axis speed menu 4");
             printer.runMacroTask("TEST_Z");
-            rootController.showHomePage(this, printer);
+            rootController.showHomePage(printer);
         }
     }
     
         @Override
     protected void leftButtonAction(ActionEvent event) {
         if (validButtonAction(event))
-            rootController.showMaintenanceMenu(this, printer);
+            rootController.showMaintenanceMenu(printer);
     }
     
     @Override
     protected void middleButtonAction(ActionEvent event) {
         if (validButtonAction(event))
-            rootController.showMainMenu(this, printer);
+            rootController.showMainMenu(printer);
     }
 }

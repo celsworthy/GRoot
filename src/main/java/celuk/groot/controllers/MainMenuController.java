@@ -47,25 +47,25 @@ public class MainMenuController implements Initializable, Page {
             Button b = (Button)event.getSource();
             switch (b.getId()) {
                 case "calibration":
-                    rootController.showHeadParametersPage(this, printer);
+                    rootController.showHeadParametersPage(printer);
                     break;
                 case "control":
-                    rootController.showControlPage(this, printer);
+                    rootController.showControlPage(printer);
                     break;
                 case "console":
-                    rootController.showConsolePage(this, printer);
+                    rootController.showConsolePage(printer, false);
                     break;
                 case "maintenance":
-                    rootController.showMaintenanceMenu(this, printer);
+                    rootController.showMaintenanceMenu(printer);
                     break;
                 case "print":
-                    rootController.showPrintMenu(this, printer);
+                    rootController.showPrintMenu(printer);
                     break;
                 case "purge":
-                    rootController.showPurgeIntroPage(this, printer);
+                    rootController.showPurgeIntroPage(printer);
                     break;
                 default:
-                    rootController.showHomePage(this, printer);
+                    rootController.showHomePage(printer);
                     break;
             }
         }
@@ -74,19 +74,19 @@ public class MainMenuController implements Initializable, Page {
     @FXML
     void leftButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showHomePage(this, printer);
+            rootController.showHomePage(printer);
     }
     
     @FXML
     void middleButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showHomePage(this, printer);
+            rootController.showHomePage(printer);
     }
 
     @FXML
     void rightButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showSettingsMenu(this, printer);
+            rootController.showSettingsMenu(printer);
     }
 
     private RootStackController rootController = null;
@@ -106,6 +106,7 @@ public class MainMenuController implements Initializable, Page {
                         menu20Button,
                         menu21Button);
         
+        mainMenuPane.setVisible(false);
         leftButton.setVisible(false);
         leftButton.setDisable(true);
     }
@@ -122,13 +123,20 @@ public class MainMenuController implements Initializable, Page {
     @Override
     public void displayPage(RootPrinter printer) {
         this.printer = printer;
-        startUpdates();
-        mainMenuPane.setVisible(true);
+        if (!mainMenuPane.isVisible()) {
+            startUpdates();
+            mainMenuPane.setVisible(true);
+        }
     }
 
     @Override
     public void hidePage() {
         stopUpdates();
         mainMenuPane.setVisible(false);
+    }
+
+    @Override
+    public boolean isVisible() {
+        return mainMenuPane.isVisible();
     }
 }

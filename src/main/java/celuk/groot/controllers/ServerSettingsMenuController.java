@@ -23,7 +23,7 @@ public class ServerSettingsMenuController extends MenuController {
     protected void menu1Action(ActionEvent event) {
         if (validButtonAction(event)) {
             //System.out.println("server settings menu 1");
-            rootController.showServerNamePage(this);
+            rootController.showServerNamePage();
         }
     }
 
@@ -31,7 +31,7 @@ public class ServerSettingsMenuController extends MenuController {
     protected void menu2Action(ActionEvent event) {
         if (validButtonAction(event)) {
             //System.out.println("server settings menu 2");
-            rootController.showWirelessPage(this, printer);
+            rootController.showWirelessPage(printer);
         }
     }
 
@@ -39,7 +39,7 @@ public class ServerSettingsMenuController extends MenuController {
     protected void menu3Action(ActionEvent event) {
         if (validButtonAction(event)) {
             //System.out.println("server settings menu 3");
-            rootController.showSecurityMenu(this, printer);
+            rootController.showSecurityMenu(printer);
         }
     }
 
@@ -47,13 +47,13 @@ public class ServerSettingsMenuController extends MenuController {
     protected void menu4Action(ActionEvent event) {
         if (validButtonAction(event)) {
             //System.out.println("server settings menu 4");
-            rootController.showAboutPage(this, printer);
+            rootController.showAboutPage(printer);
         }
     }
     
     @Override
     protected void leftButtonAction(ActionEvent event) {
         if (validButtonAction(event))
-            rootController.showPrinterSelectPage(this);
+            rootController.showPrinterSelectPage();
     }
 }

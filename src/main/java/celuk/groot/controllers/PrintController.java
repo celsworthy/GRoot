@@ -207,13 +207,13 @@ public class PrintController implements Initializable, Page {
     @FXML
     void leftButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showPrintMenu(this, printer);
+            rootController.showPrintMenu(printer);
     }
     
     @FXML
     void middleButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showHomePage(this, printer);
+            rootController.showHomePage(printer);
     }
 
     @FXML
@@ -336,6 +336,7 @@ public class PrintController implements Initializable, Page {
         noPrintPanel.setVisible(true);
         noPrintPanel.setManaged(true);
         rightButton.setVisible(false);
+        printPane.setVisible(false);
     }
     
     @Override
@@ -366,8 +367,10 @@ public class PrintController implements Initializable, Page {
     @Override
     public void displayPage(RootPrinter printer) {
         this.printer = printer;
-        startUpdates();
-        printPane.setVisible(true);
+        if (!printPane.isVisible()) {
+            startUpdates();
+            printPane.setVisible(true);
+        }
     }
 
     @Override
@@ -376,6 +379,11 @@ public class PrintController implements Initializable, Page {
         printPane.setVisible(false);
     }
     
+    @Override
+    public boolean isVisible() {
+        return printPane.isVisible();
+    }
+
     public void setReprintMode(boolean flag) {
         reprintMode = flag;
         // Set title and nothing available background
@@ -499,7 +507,7 @@ public class PrintController implements Initializable, Page {
                     printer.runReprintJobTask(job.getPrintJobID()).get();
                 else
                     printer.runPrintUSBJobTask(job.getPrintJobID(), job.getPrintJobPath()).get();
-                rootController.showHomePage(this, printer);
+                rootController.showHomePage(printer);
             }
             catch (Exception ex) {
                 System.err.println("Caught exception when attempting to print job " + job.getPrintJobID());

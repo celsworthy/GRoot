@@ -33,19 +33,19 @@ public class PurgeIntroController implements Initializable, Page {
     @FXML
     void leftButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showMainMenu(this, printer);
+            rootController.showMainMenu(printer);
     }
     
     @FXML
     void middleButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showHomePage(this, printer);
+            rootController.showHomePage(printer);
     }
 
     @FXML
     void rightButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showPurgePage(this, printer);
+            rootController.showPurgePage(printer);
     }
 
     private RootStackController rootController = null;
@@ -62,6 +62,7 @@ public class PurgeIntroController implements Initializable, Page {
                         purgeIntro1,
                         purgeIntro2,
                         purgeIntroContinue);
+        purgeIntroPane.setVisible(false);
     }
     
     @Override
@@ -76,13 +77,20 @@ public class PurgeIntroController implements Initializable, Page {
     @Override
     public void displayPage(RootPrinter printer) {
         this.printer = printer;
-        startUpdates();
-        purgeIntroPane.setVisible(true);
+        if (!purgeIntroPane.isVisible()) {
+            startUpdates();
+            purgeIntroPane.setVisible(true);
+        }
     }
 
     @Override
     public void hidePage() {
         stopUpdates();
         purgeIntroPane.setVisible(false);
+    }
+    
+    @Override
+    public boolean isVisible() {
+        return purgeIntroPane.isVisible();
     }
 }

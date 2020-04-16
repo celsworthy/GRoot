@@ -98,9 +98,9 @@ public class AccessPINController implements Initializable, Page {
     void leftButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
             if (printer == null)
-                rootController.showServerSettingsMenu(this);
+                rootController.showServerSettingsMenu();
             else
-                rootController.showSettingsMenu(this, printer);
+                rootController.showSettingsMenu(printer);
         }
     }
     
@@ -108,9 +108,9 @@ public class AccessPINController implements Initializable, Page {
     void middleButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
             if (printer == null)
-                rootController.showPrinterSelectPage(this);
+                rootController.showPrinterSelectPage();
             else
-                rootController.showMainMenu(this, printer);
+                rootController.showMainMenu(printer);
     }
 
     @FXML
@@ -120,7 +120,7 @@ public class AccessPINController implements Initializable, Page {
             pinField.getText().length() == 4 &&
             pinField.getText().equals(confirmField.getText())) {
             rootController.getRootServer().runUpdatePINTask(pinField.getText());
-            rootController.showLoginPage(this, printer);
+            rootController.showLoginPage(printer);
         }
     }
 
@@ -152,6 +152,8 @@ public class AccessPINController implements Initializable, Page {
             rightButton.setDisable(pinField.getText().length() != 4 ||
                                    !pinField.getText().equals(confirmField.getText()));
         };
+        accessPINPane.setVisible(false);
+        
         pinField.setPromptText("••••");
         pinField.setTextFormatter(new TextFormatter <> (NUMERIC_FILTER));
         pinField.textProperty().addListener(l);
@@ -184,13 +186,20 @@ public class AccessPINController implements Initializable, Page {
     @Override
     public void displayPage(RootPrinter printer) {
         this.printer = printer;
-        startUpdates();
-        accessPINPane.setVisible(true);
+        if (!accessPINPane.isVisible()) {
+            startUpdates();
+            accessPINPane.setVisible(true);
+        }
     }
 
     @Override
     public void hidePage() {
         stopUpdates();
         accessPINPane.setVisible(false);
+    }
+    
+    @Override
+    public boolean isVisible() {
+        return accessPINPane.isVisible();
     }
 }

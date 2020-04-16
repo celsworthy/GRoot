@@ -19,7 +19,7 @@ public class SecurityMenuController extends MenuController {
     protected void menu1Action(ActionEvent event) {
         if (validButtonAction(event)) {
             //System.out.println("security menu 1");
-            rootController.showAccessPINPage(this, printer);
+            rootController.showAccessPINPage(printer);
         }
     }
 
@@ -27,18 +27,18 @@ public class SecurityMenuController extends MenuController {
     protected void leftButtonAction(ActionEvent event) {
         if (validButtonAction(event))
             if (printer != null)
-                rootController.showSettingsMenu(this, printer);
+                rootController.showSettingsMenu(printer);
             else
-                rootController.showServerSettingsMenu(this);
+                rootController.showServerSettingsMenu();
     }
     
     @Override
     protected void middleButtonAction(ActionEvent event) {
         if (validButtonAction(event)) {
             if (printer != null)
-                rootController.showMainMenu(this, printer);
+                rootController.showMainMenu(printer);
             else
-                rootController.showPrinterSelectPage(this);
+                rootController.showPrinterSelectPage();
         }
     }
 }

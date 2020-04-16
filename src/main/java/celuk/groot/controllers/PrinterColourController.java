@@ -87,7 +87,7 @@ public class PrinterColourController implements Initializable, Page {
     void leftButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
             printer.runSwitchAmbientLightTask("on");
-            rootController.showMainMenu(this, printer);
+            rootController.showMainMenu(printer);
         }
     }
     
@@ -100,7 +100,7 @@ public class PrinterColourController implements Initializable, Page {
         if (rootController != null && event.getSource() instanceof Button) {
             if (selectedButton != null && selectedButton != currentButton) {
                 printer.runChangePrinterColourTask((String)selectedButton.getUserData());
-                rootController.showHomePage(this, printer);
+                rootController.showHomePage(printer);
             }
         }
     }
@@ -153,6 +153,7 @@ public class PrinterColourController implements Initializable, Page {
         for (int i = 0; i < colourButtons.length; ++i) {
             setButtonColour(colourButtons[i], colours[i]);
         }
+        printerColourPane.setVisible(false);
         middleButton.setVisible(false);
     }
     
@@ -172,14 +173,21 @@ public class PrinterColourController implements Initializable, Page {
     @Override
     public void displayPage(RootPrinter printer) {
         this.printer = printer;
-        startUpdates();
-        printerColourPane.setVisible(true);
+        if (!printerColourPane.isVisible()) {
+            startUpdates();
+            printerColourPane.setVisible(true);
+        }
     }
 
     @Override
     public void hidePage() {
         stopUpdates();
         printerColourPane.setVisible(false);
+    }
+    
+    @Override
+    public boolean isVisible() {
+        return printerColourPane.isVisible();
     }
     
     private void setButtonColour(Button b, String colour) {

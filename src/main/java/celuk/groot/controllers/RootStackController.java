@@ -2,6 +2,7 @@ package celuk.groot.controllers;
 
 import celuk.groot.remote.RootPrinter;
 import celuk.groot.remote.RootServer;
+import celuk.groot.remote.ServerStatusResponse;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class RootStackController implements Initializable {
     
     private final URL aboutPageURL = getClass().getResource(FXML_RESOURCE_PATH + "About.fxml");
     private final URL accessPINPageURL = getClass().getResource(FXML_RESOURCE_PATH + "AccessPIN.fxml");
-    private final URL connectingPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Connecting.fxml");
+    private final URL waitingPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Waiting.fxml");
     private final URL consolePageURL = getClass().getResource(FXML_RESOURCE_PATH + "Console.fxml");
     private final URL controlPageURL = getClass().getResource(FXML_RESOURCE_PATH + "Control.fxml");
     private final URL headParametersPageURL = getClass().getResource(FXML_RESOURCE_PATH + "HeadParameters.fxml");
@@ -46,7 +47,7 @@ public class RootStackController implements Initializable {
 
     private AboutController aboutPage = null;
     private AccessPINController accessPINPage = null;
-    private ConnectingController connectingPage = null;
+    private WaitingController waitingPage = null;
     private ConsoleController consolePage = null;
     private ControlController controlPage = null;
     private HeadParametersController headParametersPage = null;
@@ -78,7 +79,25 @@ public class RootStackController implements Initializable {
     private Insets offsets = new Insets(0.0, 0.0, 0.0, 0.0);
     private ErrorAlertController errorManager = null;
     private RootPrinter currentPrinter = null;
+    private boolean isUpgrading = false;
     
+    private ChangeListener<ServerStatusResponse> serverStatusListener = (ob, ov, nv) -> {
+        //System.out.println("RootStackController::ServeStatusListener()");
+
+        // isUpgrading remains true when contact is lost (i.e. status is null)
+        // so the page keeps showing "Upgrading" when contact is lost.
+        if (nv != null)
+            isUpgrading = (nv.getUpgradeStatus() != null &&
+                           nv.getUpgradeStatus().equalsIgnoreCase("upgrading"));
+        if (nv == null || isUpgrading) {
+            Platform.runLater(() -> {
+                currentPrinter = null;
+                hidePages(waitingPage);
+                showWaitingPage(null, isUpgrading);
+            });
+        }
+    };
+
     private ChangeListener<Boolean> printerMapHeartbeatListener = (pr, ov, nv) ->  {
         RootPrinter p = currentPrinter;
         if (p != null && !server.getCurrentPrinterMap().containsKey(p.getPrinterId())) {
@@ -105,327 +124,332 @@ public class RootStackController implements Initializable {
 
         // Most pages are loaded when first shown. The following commonly used
         // pages are loaded immediately.
-        connectingPage = (ConnectingController)(loadPage(connectingPageURL, null));
         consolePage = (ConsoleController)(loadPage(consolePageURL, null));
         controlPage = (ControlController)(loadPage(controlPageURL, null));
         homePage = (HomeController)(loadPage(homePageURL, null));
         loginPage = (LoginController)(loadPage(loginPageURL, null));
         printerSelectPage = (PrinterSelectController)(loadPage(printerSelectPageURL, null));
-
+        waitingPage = (WaitingController)(loadPage(waitingPageURL, null));
+        
         // Menus - all but the main menu use the same FXML page.
         mainMenu = (MainMenuController)(loadPage(mainMenuURL, null));
 
         server.getCurrentPrinterMapHeartbeatProperty().addListener(printerMapHeartbeatListener);
         server.getAuthorisedProperty().addListener(authorisedListener);
+        server.getCurrentStatusProperty().addListener(serverStatusListener);
         errorManager = new ErrorAlertController(server);
         errorManager.prepareDialog();
 
-        hidePages(connectingPage);
-        connectingPage.displayPage(null);
+        hidePages(waitingPage);
+        waitingPage.setAsConnecting();
+        waitingPage.displayPage(null);
     }
     
-    public void showAboutPage(Page previousPage, RootPrinter printer) {
+    public void showAboutPage(RootPrinter printer) {
         Platform.runLater(() -> {
             if (aboutPage == null) {
                 aboutPage = (AboutController)(loadPage(aboutPageURL, null));
             }
-            previousPage.hidePage();
+            hidePages(aboutPage);
             aboutPage.displayPage(printer);
         });
     }
 
-    public void showAccessPINPage(Page previousPage, RootPrinter printer) {
+    public void showAccessPINPage(RootPrinter printer) {
         Platform.runLater(() -> {
             if (accessPINPage == null) {
                 accessPINPage = (AccessPINController)(loadPage(accessPINPageURL, null));
             }
-            previousPage.hidePage();
+            hidePages(accessPINPage);
             accessPINPage.displayPage(printer);
         });
     }
 
-    public void showConnectingPage(Page previousPage, RootPrinter printer) {
+    public void showWaitingPage(RootPrinter printer, boolean isUpgrading) {
         Platform.runLater(() -> {
-            if (connectingPage == null) {
-                connectingPage = (ConnectingController)(loadPage(connectingPageURL, null));
+            if (waitingPage == null) {
+                waitingPage = (WaitingController)(loadPage(waitingPageURL, null));
             }
-            if (previousPage != null)
-                previousPage.hidePage();
-            connectingPage.displayPage(printer);
+            hidePages(waitingPage);
+            if (isUpgrading)
+                waitingPage.setAsUpgrading();
+            else
+                waitingPage.setAsConnecting();
+            waitingPage.displayPage(printer);
         });
     }
 
-    public void showConsolePage(Page previousPage, RootPrinter printer) {
+    public void showConsolePage(RootPrinter printer, boolean returnToControl) {
         Platform.runLater(() -> {
             if (consolePage == null) {
                 consolePage = (ConsoleController)(loadPage(consolePageURL, null));
             }
-            previousPage.hidePage();
-            consolePage.setReturnToControl(previousPage == controlPage);
+            hidePages(consolePage);
+            consolePage.setReturnToControl(returnToControl);
             consolePage.displayPage(printer);
         });
     }
 
-    public void showControlPage(Page previousPage, RootPrinter printer) {
+    public void showControlPage(RootPrinter printer) {
         Platform.runLater(() -> {
             if (controlPage == null) {
                 controlPage = (ControlController)(loadPage(controlPageURL, null));
             }
-            previousPage.hidePage();
+            hidePages(controlPage);
             controlPage.displayPage(printer);
         });
     }
 
-    public void showHeadParametersPage(Page previousPage, RootPrinter printer) {
+    public void showHeadParametersPage(RootPrinter printer) {
         Platform.runLater(() -> {
             if (headParametersPage == null) {
                 headParametersPage = (HeadParametersController)(loadPage(headParametersPageURL, null));
             }
-            previousPage.hidePage();
+            hidePages(headParametersPage);
             headParametersPage.displayPage(printer);
         });
     }
 
-    public void showHomePage(Page previousPage, RootPrinter printer) {
+    public void showHomePage(RootPrinter printer) {
         Platform.runLater(() -> {
             if (homePage == null) {
                 homePage = (HomeController)(loadPage(homePageURL, null));
             }
-            previousPage.hidePage();
+            hidePages(homePage);
             currentPrinter = printer;
             homePage.displayPage(printer);
         });
     }
     
-    public void showLoginPage(Page previousPage, RootPrinter printer) {
+    public void showLoginPage(RootPrinter printer) {
         Platform.runLater(() -> {
             if (loginPage == null) {
                 loginPage = (LoginController)(loadPage(loginPageURL, null));
             }
-            previousPage.hidePage();
+            hidePages(loginPage);
             loginPage.displayPage(printer);
         });
     }
 
-    public void showPrinterColourPage(Page previousPage, RootPrinter printer) {
+    public void showPrinterColourPage(RootPrinter printer) {
         Platform.runLater(() -> {
             if (printerColourPage == null) {
                 printerColourPage = (PrinterColourController)(loadPage(printerColourPageURL, null));
             }
-            previousPage.hidePage();
+            hidePages(printerColourPage);
             printerColourPage.displayPage(printer);
         });
     }
     
-    public void showPrinterNamePage(Page previousPage, RootPrinter printer) {
+    public void showPrinterNamePage(RootPrinter printer) {
         Platform.runLater(() -> {
             if (printerNamePage == null) {
                 printerNamePage = (PrinterNameController)(loadPage(namePageURL, PrinterNameController.class));
             }
-            previousPage.hidePage();
+            hidePages(printerNamePage);
             printerNamePage.displayPage(printer);
         });
     }
     
-    public void showPrinterSelectPage(Page previousPage) {
+    public void showPrinterSelectPage() {
         Platform.runLater(() -> {
             if (printerSelectPage == null) {
                 printerSelectPage = (PrinterSelectController)(loadPage(printerSelectPageURL, null));
             }
-            previousPage.hidePage();
+            hidePages(printerSelectPage);
             currentPrinter = null;
             printerSelectPage.displayPage(null);
         });
     }
     
-    public void showReprintPage(Page previousPage, RootPrinter printer) {
+    public void showReprintPage(RootPrinter printer) {
         Platform.runLater(() -> {
             if (printPage == null) {
                 printPage = (PrintController)(loadPage(printPageURL, null));
             }
-            previousPage.hidePage();
+            hidePages(printPage);
             printPage.setReprintMode(true);
             printPage.displayPage(printer);
         });
     }
 
-    public void showResetPINPage(Page previousPage, RootPrinter printer) {
+    public void showResetPINPage(RootPrinter printer) {
         Platform.runLater(() -> {
             if (resetPINPage == null) {
                 resetPINPage = (ResetPINController)(loadPage(resetPINPageURL, null));
             }
-            previousPage.hidePage();
+            hidePages(resetPINPage);
             resetPINPage.displayPage(printer);
         });
     }
     
-    public void showPurgePage(Page previousPage, RootPrinter printer) {
+    public void showPurgePage(RootPrinter printer) {
         Platform.runLater(() -> {
             if (purgePage == null) {
                 purgePage = (PurgeController)(loadPage(purgePageURL, null));
             }
-            previousPage.hidePage();
+            hidePages(purgePage);
             purgePage.displayPage(printer);
         });
     }
 
-    public void showPurgeIntroPage(Page previousPage, RootPrinter printer) {
+    public void showPurgeIntroPage(RootPrinter printer) {
         Platform.runLater(() -> {
             if (purgeIntroPage == null) {
                 purgeIntroPage = (PurgeIntroController)(loadPage(purgeIntroPageURL, null));
             }
-            previousPage.hidePage();
+            hidePages(purgePage);
             purgeIntroPage.displayPage(printer);
         });
     }
 
-    public void showRemoveHeadPage(Page previousPage, RootPrinter printer) {
+    public void showRemoveHeadPage(RootPrinter printer) {
         Platform.runLater(() -> {
             //if (removeHeadPage == null) {
             //    removeHeadPage = (RemoveHeadController)(loadPage(removeHeadPageURL, null));
             //}
-            // previousPage.hidePage();
+            // hidePages(removeHeadPage);
             //removeHeadPage.displayPage(printer);
         });
     }
 
-    public void showServerNamePage(Page previousPage) {
+    public void showServerNamePage() {
         Platform.runLater(() -> {
             if (serverNamePage == null) {
                 serverNamePage = (ServerNameController)(loadPage(namePageURL, ServerNameController.class));
             }
-            previousPage.hidePage();
+            hidePages(serverNamePage);
             serverNamePage.displayPage(null);
         });
     }
     
-    public void showTweakPage(Page previousPage, RootPrinter printer) {
+    public void showTweakPage(RootPrinter printer) {
         Platform.runLater(() -> {
             if (tweakPage == null) {
                 tweakPage = (TweakController)(loadPage(tweakPageURL, null));
             }
-            previousPage.hidePage();
+            hidePages(tweakPage);
             tweakPage.displayPage(printer);
         });
     }
 
-    public void showWirelessPage(Page previousPage, RootPrinter printer) {
+    public void showWirelessPage(RootPrinter printer) {
         Platform.runLater(() -> {
             if (wirelessPage == null) {
                 wirelessPage = (WirelessController)(loadPage(wirelessPageURL, null));
             }
-            previousPage.hidePage();
+            hidePages(wirelessPage);
             wirelessPage.displayPage(printer);
         });
     }
 
-    public void showUSBPrintPage(Page previousPage, RootPrinter printer) {
+    public void showUSBPrintPage(RootPrinter printer) {
         Platform.runLater(() -> {
             if (printPage == null) {
                 printPage = (PrintController)(loadPage(printPageURL, null));
             }
-            previousPage.hidePage();
+            hidePages(printPage);
             printPage.setReprintMode(false);
             printPage.displayPage(printer);
         });
     }
 
-    public void showCleanNozzlesMenu(Page previousPage, RootPrinter printer) {
+    public void showCleanNozzlesMenu(RootPrinter printer) {
         Platform.runLater(() -> {
             if (cleanNozzlesMenu == null) {
                 cleanNozzlesMenu = (CleanNozzlesMenuController)(loadPage(menuURL, CleanNozzlesMenuController.class));
             }
-            previousPage.hidePage();
+            hidePages(cleanNozzlesMenu);
             cleanNozzlesMenu.displayPage(printer);
         });
     }
 
-    public void showEjectStuckMenu(Page previousPage, RootPrinter printer) {
+    public void showEjectStuckMenu(RootPrinter printer) {
         Platform.runLater(() -> {
             if (ejectStuckMenu == null) {
                 ejectStuckMenu = (EjectStuckMenuController)(loadPage(menuURL, EjectStuckMenuController.class));
             }
-            previousPage.hidePage();
+            hidePages(ejectStuckMenu);
             ejectStuckMenu.displayPage(printer);
         });
     }
 
-    public void showIdentityMenu(Page previousPage, RootPrinter printer) {
+    public void showIdentityMenu(RootPrinter printer) {
         Platform.runLater(() -> {
             if (identityMenu == null) {
                 identityMenu = (IdentityMenuController)(loadPage(menuURL, IdentityMenuController.class));
             }
-            previousPage.hidePage();
+            hidePages(identityMenu);
             identityMenu.displayPage(printer);
         });
     }
 
-    public void showMainMenu(Page previousPage, RootPrinter printer) {
+    public void showMainMenu(RootPrinter printer) {
         Platform.runLater(() -> {
             if (mainMenu == null) {
                 mainMenu = (MainMenuController)(loadPage(mainMenuURL, null));
             }
-            previousPage.hidePage();
+            hidePages(mainMenu);
             mainMenu.displayPage(printer);
         });
     }
 
-    public void showMaintenanceMenu(Page previousPage, RootPrinter printer) {
+    public void showMaintenanceMenu(RootPrinter printer) {
         Platform.runLater(() -> {
             if (maintenanceMenu == null) {
                 maintenanceMenu = (MaintenanceMenuController)(loadPage(menuURL, MaintenanceMenuController.class));
             }
-            previousPage.hidePage();
+            hidePages(maintenanceMenu);
             maintenanceMenu.displayPage(printer);
         });
     }
 
-    public void showPrintMenu(Page previousPage, RootPrinter printer) {
+    public void showPrintMenu(RootPrinter printer) {
         Platform.runLater(() -> {
             if (printMenu == null) {
                 printMenu = (PrintMenuController)(loadPage(menuURL, PrintMenuController.class));
             }
-            previousPage.hidePage();
+            hidePages(printMenu);
             printMenu.displayPage(printer);
         });
     }
 
-    public void showSecurityMenu(Page previousPage, RootPrinter printer) {
+    public void showSecurityMenu(RootPrinter printer) {
         Platform.runLater(() -> {
             if (securityMenu == null) {
                 securityMenu = (SecurityMenuController)(loadPage(menuURL, SecurityMenuController.class));
             }
-            previousPage.hidePage();
+            hidePages(securityMenu);
             securityMenu.displayPage(printer);
         });
     }
 
-    public void showSettingsMenu(Page previousPage, RootPrinter printer) {
+    public void showSettingsMenu(RootPrinter printer) {
         Platform.runLater(() -> {
             if (settingsMenu == null) {
                 settingsMenu = (SettingsMenuController)(loadPage(menuURL, SettingsMenuController.class));
             }
-            previousPage.hidePage();
+            hidePages(settingsMenu);
             settingsMenu.displayPage(printer);
         });
     }
     
-    public void showServerSettingsMenu(Page previousPage) {
+    public void showServerSettingsMenu() {
         Platform.runLater(() -> {
             if (serverSettingsMenu == null) {
                 serverSettingsMenu = (ServerSettingsMenuController)(loadPage(menuURL, ServerSettingsMenuController.class));
             }
-            previousPage.hidePage();
+            hidePages(serverSettingsMenu);
             serverSettingsMenu.displayPage(null);
         });
     }
 
-    public void showTestAxisSpeedMenu(Page previousPage, RootPrinter printer) {
+    public void showTestAxisSpeedMenu(RootPrinter printer) {
         Platform.runLater(() -> {
             if (testAxisSpeedMenu == null) {
                 testAxisSpeedMenu = (TestAxisSpeedMenuController)(loadPage(menuURL, TestAxisSpeedMenuController.class));
             }
-            previousPage.hidePage();
+            hidePages(testAxisSpeedMenu);
             testAxisSpeedMenu.displayPage(printer);
         });
     }
@@ -448,7 +472,7 @@ public class RootStackController implements Initializable {
         
     private void hidePages(Page pageToShow) {
         pages.stream()
-             .filter(p -> p != pageToShow)
+             .filter(p -> p != pageToShow && p.isVisible())
              .forEach(p -> p.hidePage());
     }
     
@@ -476,7 +500,7 @@ public class RootStackController implements Initializable {
             rootAnchorPane.getChildren().add(pagePane);
         }
         catch (IOException ex) {
-            System.out.println(ex);
+            System.err.println(ex);
             ex.printStackTrace(System.err);
             System.exit(1);
         }

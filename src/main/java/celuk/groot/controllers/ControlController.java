@@ -3,7 +3,6 @@ package celuk.groot.controllers;
 import celuk.groot.remote.FilamentDetails;
 import celuk.groot.remote.PrinterStatusResponse;
 import celuk.groot.remote.RootPrinter;
-import celuk.language.I18n;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
@@ -241,19 +240,19 @@ public class ControlController implements Initializable, Page {
     @FXML
     void leftButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showMainMenu(this, printer);
+            rootController.showMainMenu(printer);
     }
     
     @FXML
     void middleButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showHomePage(this, printer);
+            rootController.showHomePage(printer);
     }
 
     @FXML
     void rightButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showConsolePage(this, printer);
+            rootController.showConsolePage(printer, true);
     }
 
     private RootStackController rootController = null;
@@ -303,6 +302,8 @@ public class ControlController implements Initializable, Page {
         
         headImageMap.put(NO_HEAD_KEY, new Image(getClass().getResourceAsStream("/image/control-head-none.png")));
         headImageMap.put(DEFAULT_HEAD_KEY, new Image(getClass().getResourceAsStream("/image/control-head-default.png")));
+
+        controlPane.setVisible(false);
     }
     
     @Override
@@ -324,14 +325,21 @@ public class ControlController implements Initializable, Page {
     @Override
     public void displayPage(RootPrinter printer) {
         this.printer = printer;
-        startUpdates();
-        controlPane.setVisible(true);
+        if (!controlPane.isVisible()) {
+            startUpdates();
+            controlPane.setVisible(true);
+        }
     }
     
     @Override
     public void hidePage() {
         stopUpdates();
         controlPane.setVisible(false);
+    }
+
+    @Override
+    public boolean isVisible() {
+        return controlPane.isVisible();
     }
 
     private void updatePrinterStatus(PrinterStatusResponse printerStatus) {

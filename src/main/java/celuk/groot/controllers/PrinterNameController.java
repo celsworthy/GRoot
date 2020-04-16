@@ -59,7 +59,7 @@ public class PrinterNameController implements Initializable, Page {
     @FXML
     void leftButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
-            rootController.showMainMenu(this, printer);
+            rootController.showMainMenu(printer);
         }
     }
     
@@ -74,7 +74,7 @@ public class PrinterNameController implements Initializable, Page {
             String printerName = nameField.getText().trim();
             if (!printerName.isEmpty() && !printerName.equals(currentName)) {
                 printer.runRenamePrinterTask(printerName);
-                rootController.showHomePage(this, printer);
+                rootController.showHomePage(printer);
             }
         }
     }
@@ -118,6 +118,7 @@ public class PrinterNameController implements Initializable, Page {
             rightButton.setDisable(v.isBlank() || v.equals(currentName));
         });
         middleButton.setDisable(true);
+        namePane.setVisible(false);
     }
     
     @Override
@@ -137,8 +138,10 @@ public class PrinterNameController implements Initializable, Page {
     @Override
     public void displayPage(RootPrinter printer) {
         this.printer = printer;
-        startUpdates();
-        namePane.setVisible(true);
+        if (!namePane.isVisible()) {
+            startUpdates();
+            namePane.setVisible(true);
+        }
     }
 
     @Override
@@ -146,4 +149,9 @@ public class PrinterNameController implements Initializable, Page {
         stopUpdates();
         namePane.setVisible(false);
     }
-}
+    
+    @Override
+    public boolean isVisible() {
+        return namePane.isVisible();
+    }
+ }

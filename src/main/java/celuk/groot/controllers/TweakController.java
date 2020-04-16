@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 import java.util.function.BiConsumer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
@@ -157,13 +155,13 @@ public class TweakController implements Initializable, Page {
     @FXML
     void leftButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showHomePage(this, printer);
+            rootController.showHomePage(printer);
     }
     
     @FXML
     void middleButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showMainMenu(this, printer);
+            rootController.showMainMenu(printer);
     }
 
     @FXML
@@ -239,6 +237,7 @@ public class TweakController implements Initializable, Page {
         m2Pane.setVisible(false);
         m2Pane.setManaged(false);
 
+        tweakPane.setVisible(false);
         rightButton.setVisible(false);
     }
     
@@ -261,14 +260,21 @@ public class TweakController implements Initializable, Page {
     @Override
     public void displayPage(RootPrinter printer) {
         this.printer = printer;
-        startUpdates();
-        tweakPane.setVisible(true);
+        if (!tweakPane.isVisible()) {
+            startUpdates();
+            tweakPane.setVisible(true);
+        }
     }
     
     @Override
     public void hidePage() {
         stopUpdates();
         tweakPane.setVisible(false);
+    }
+
+    @Override
+    public boolean isVisible() {
+        return tweakPane.isVisible();
     }
 
     private void setSpinnerData(String fieldName, double value, double delta) {
@@ -286,7 +292,7 @@ public class TweakController implements Initializable, Page {
                 // disapper between testing it and using it.
                 RootPrinter p = printer;
                 if (p != null)
-                    rootController.showHomePage(this, p);
+                    rootController.showHomePage(p);
             }
             else {
                 setSpinnerData("bedTemp", adjustData.getBedTargetTemp(), 15.0);

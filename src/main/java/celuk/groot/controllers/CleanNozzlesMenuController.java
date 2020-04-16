@@ -21,7 +21,7 @@ public class CleanNozzlesMenuController extends MenuController {
         if (validButtonAction(event)) {
             //System.out.println("clean left nozzle menu 1");
             printer.runCleanNozzleTask(1);
-            rootController.showHomePage(this, printer);
+            rootController.showHomePage(printer);
         }
     }
 
@@ -30,19 +30,19 @@ public class CleanNozzlesMenuController extends MenuController {
         if (validButtonAction(event)) {
             //System.out.println("clean right nozzle menu 2");
             printer.runCleanNozzleTask(2);
-            rootController.showHomePage(this, printer);
+            rootController.showHomePage(printer);
         }
     }
     
     @Override
     protected void leftButtonAction(ActionEvent event) {
         if (validButtonAction(event))
-            rootController.showMaintenanceMenu(this, printer);
+            rootController.showMaintenanceMenu(printer);
     }
     
     @Override
     protected void middleButtonAction(ActionEvent event) {
         if (validButtonAction(event))
-            rootController.showMainMenu(this, printer);
+            rootController.showMainMenu(printer);
     }
 }

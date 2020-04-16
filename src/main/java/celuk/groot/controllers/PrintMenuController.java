@@ -20,7 +20,7 @@ public class PrintMenuController extends MenuController {
     protected void menu1Action(ActionEvent event) {
         if (validButtonAction(event)) {
             //System.out.println("print menu 1");
-            rootController.showReprintPage(this, printer);
+            rootController.showReprintPage(printer);
         }
     }
 
@@ -28,19 +28,19 @@ public class PrintMenuController extends MenuController {
     protected void menu2Action(ActionEvent event) {
         if (validButtonAction(event)) {
             //System.out.println("print menu 2");
-            rootController.showUSBPrintPage(this, printer);
+            rootController.showUSBPrintPage(printer);
         }
     }
     
         @Override
     protected void leftButtonAction(ActionEvent event) {
         if (validButtonAction(event))
-            rootController.showMainMenu(this, printer);
+            rootController.showMainMenu(printer);
     }
     
     @Override
     protected void middleButtonAction(ActionEvent event) {
         if (validButtonAction(event))
-            rootController.showHomePage(this, printer);
+            rootController.showHomePage(printer);
     }
 }

@@ -125,7 +125,7 @@ public class HeadParametersController implements Initializable, Page {
     @FXML
     protected void headChangeAction(ActionEvent event) {
         printer.runRemoveHeadTask();
-        rootController.showRemoveHeadPage(this, printer);
+        rootController.showRemoveHeadPage(printer);
     }
 
     @FXML
@@ -137,13 +137,13 @@ public class HeadParametersController implements Initializable, Page {
     @FXML
     protected void leftButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showMainMenu(this, printer);
+            rootController.showMainMenu(printer);
     }
     
     @FXML
     protected void middleButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showHomePage(this, printer);
+            rootController.showHomePage(printer);
     }
 
     @FXML
@@ -172,41 +172,43 @@ public class HeadParametersController implements Initializable, Page {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         translateLabels(headParametersTitle,
-                         serialNumberLabel,
-                         printHoursLabel,
-                         maxTempLabel,
-                         leftNozzleSubtitle,
-                         leftNozzleTitle,
-                         rightNozzleSubtitle,
-                         rightNozzleTitle);
-         
-         BiConsumer<FloatSpinnerController, Float> updater = (sc, v) -> { setModified(true); };
-         
-         spinnerMap.put("leftX",
+        translateLabels(headParametersTitle,
+                        serialNumberLabel,
+                        printHoursLabel,
+                        maxTempLabel,
+                        leftNozzleSubtitle,
+                        leftNozzleTitle,
+                        rightNozzleSubtitle,
+                        rightNozzleTitle);
+
+        BiConsumer<FloatSpinnerController, Float> updater = (sc, v) -> { setModified(true); };
+
+        spinnerMap.put("leftX",
             new FloatSpinnerController("leftX", leftXField, leftXDec, leftXInc, 0.05F, "%.2f", updater));
-         spinnerMap.get("leftX").initialize();
-         spinnerMap.put("leftY",
-            new FloatSpinnerController("leftY", leftYField, leftYDec, leftYInc, 0.05F, "%.2f", updater));
-         spinnerMap.get("leftY").initialize();
-         spinnerMap.put("leftZ",
+        spinnerMap.get("leftX").initialize();
+        spinnerMap.put("leftY",
+           new FloatSpinnerController("leftY", leftYField, leftYDec, leftYInc, 0.05F, "%.2f", updater));
+        spinnerMap.get("leftY").initialize();
+        spinnerMap.put("leftZ",
             new FloatSpinnerController("leftZ", leftZField, leftZDec, leftZInc, 0.05F, "%.2f", updater));
-         spinnerMap.get("leftZ").initialize();
-         spinnerMap.put("leftB",
+        spinnerMap.get("leftZ").initialize();
+        spinnerMap.put("leftB",
             new FloatSpinnerController("leftB", leftBField, leftBDec, leftBInc, 0.05F, "%.2f", updater));
-         spinnerMap.get("leftB").initialize();
-         spinnerMap.put("rightX",
+        spinnerMap.get("leftB").initialize();
+        spinnerMap.put("rightX",
             new FloatSpinnerController("rightX", rightXField, rightXDec, rightXInc, 0.05F, "%.2f", updater));
-         spinnerMap.get("rightX").initialize();
-         spinnerMap.put("rightY",
+        spinnerMap.get("rightX").initialize();
+        spinnerMap.put("rightY",
             new FloatSpinnerController("rightY", rightYField, rightYDec, rightYInc, 0.05F, "%.2f", updater));
-         spinnerMap.get("rightY").initialize();
-         spinnerMap.put("rightZ",
+        spinnerMap.get("rightY").initialize();
+        spinnerMap.put("rightZ",
             new FloatSpinnerController("rightZ", rightZField, rightZDec, rightZInc, 0.05F, "%.2f", updater));
-         spinnerMap.get("rightZ").initialize();
-         spinnerMap.put("rightB",
+        spinnerMap.get("rightZ").initialize();
+        spinnerMap.put("rightB",
             new FloatSpinnerController("rightB", rightBField, rightBDec, rightBInc, 0.05F, "%.2f", updater));
-         spinnerMap.get("rightB").initialize();
+        spinnerMap.get("rightB").initialize();
+
+        headParametersPane.setVisible(false);
     }
     
     @Override
@@ -235,8 +237,10 @@ public class HeadParametersController implements Initializable, Page {
     @Override
     public void displayPage(RootPrinter printer) {
         this.printer = printer;
-        startUpdates();
-        headParametersPane.setVisible(true);
+        if (!headParametersPane.isVisible()) {
+            startUpdates();
+            headParametersPane.setVisible(true);
+        }
     }
 
     @Override
@@ -245,6 +249,11 @@ public class HeadParametersController implements Initializable, Page {
         headParametersPane.setVisible(false);
     }
 
+    @Override
+    public boolean isVisible() {
+        return headParametersPane.isVisible();
+    }
+    
     public void preparePage()
     {
         headTitleBold.setText("");

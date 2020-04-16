@@ -15,6 +15,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -42,7 +43,7 @@ public class RootServer extends Updater {
     private static final String SET_SERVER_NAME_COMMAND = "/api/admin/setServerName";
     private static final String SET_WIFI_CREDENTIALS_COMMAND = "/api/admin/setWiFiCredentials";
     private static final String LIST_PRINTERS_COMMAND = "/api/discovery/listPrinters";
-    private static final String WHO_ARE_YOU_COMMAND = "/api/discovery/whoareyou?pc";
+    private static final String WHO_ARE_YOU_COMMAND = "/api/discovery/whoareyou?pc=no&rid=yes&ru=yes";
     protected final ObjectMapper mapper = new ObjectMapper();
     protected final ExecutorService executorService;
     protected SimpleStringProperty pinProperty = new SimpleStringProperty("");
@@ -214,7 +215,7 @@ public class RootServer extends Updater {
         return executorService.submit(backgroundTask);
     }
 
-    public <R> Future<R> runRequestTask(String command, boolean isGetRequest, int readTimeout, String content, BiFunction<byte[], ObjectMapper, R> responseMapper) {
+    public <R> Future<R> runRequestTask(String command, boolean isGetRequest, int readTimeout, String content, BiFunction<byte[], ObjectMapper, R> responseMapper, Consumer<Exception> exceptionReporter) {
         return executorService.submit(() -> {
             R response = null;
             try {
@@ -223,9 +224,16 @@ public class RootServer extends Updater {
                     //System.out.println("Calling response mapper for \"" + command + "\"");
                     response = responseMapper.apply(requestData, mapper);
                 }
+                else if (exceptionReporter != null) {
+                    exceptionReporter.accept(null);
+                }
+                    
             }
             catch (Exception ex) {
                 System.err.println("Error whilst requesting \"" + command + "\" from @" + hostAddress + ":" + hostPort + " - " + ex);
+                if (exceptionReporter != null) {
+                    exceptionReporter.accept(ex);
+                }
             }
             return response;
         });
@@ -268,7 +276,8 @@ public class RootServer extends Updater {
                     System.err.println("Error whilst decoding printer list from @" + hostAddress + ":" + hostPort + " - " + ex);
                 }
                 return currentPrinterMap;
-            });
+            },
+            null);
     }
 
     public Future<ServerStatusResponse> runRequestServerStatusTask() {
@@ -277,15 +286,19 @@ public class RootServer extends Updater {
                 ServerStatusResponse serverStatus = null;
                 try {
                     if (requestData.length > 0) {
-                        //System.out.println("Updating server status");
+                        //String s = new String(requestData);
+                        //System.out.println("Updating server status - \"" + s + "\"");
                         serverStatus = mapper.readValue(requestData, ServerStatusResponse.class);
                         currentStatusProperty.set(serverStatus);
                     }
                 }
                 catch (IOException ex) {
-                    System.err.println("Error whilst decoding printer list from @" + hostAddress + ":" + hostPort + " - " + ex);
+                    System.err.println("Error whilst decoding server status from @" + hostAddress + ":" + hostPort + " - " + ex);
                 }
                 return serverStatus;
+            },
+            (Exception ex) -> {
+                currentStatusProperty.set(null);
             });
     }
     
@@ -294,7 +307,8 @@ public class RootServer extends Updater {
         return runRequestTask(UPDATE_PIN_COMMAND, false, READ_TIMEOUT_SHORT, data,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 return null;
-            });
+            },
+            null);
     }
 
     public Future<Void> runResetPINTask(String serial) {
@@ -302,7 +316,8 @@ public class RootServer extends Updater {
         return runRequestTask(RESET_PIN_COMMAND, false, READ_TIMEOUT_SHORT, data,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 return null;
-            });
+            },
+            null);
     }
     
     public Future<WifiStatusResponse> runRequestWifiStatusTask() {
@@ -320,7 +335,8 @@ public class RootServer extends Updater {
                     System.err.println("Error whilst decoding printer list from @" + hostAddress + ":" + hostPort + " - " + ex);
                 }
                 return wifiStatus;
-            });
+            },
+            null);
     }
     
     public Future<Void> runSetServerNameTask(String serverName) {
@@ -328,7 +344,8 @@ public class RootServer extends Updater {
         return runRequestTask(SET_SERVER_NAME_COMMAND, false, READ_TIMEOUT_SHORT, data,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 return null;
-            });
+            },
+            null);
     }
     
     public Future<Void> runEnableDisableWifiTask(boolean enableWifi) {
@@ -337,7 +354,8 @@ public class RootServer extends Updater {
         return runRequestTask(ENABLE_DISABLE_WIFI_COMMAND, false, READ_TIMEOUT_LONG, data,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 return null;
-            });
+            },
+            null);
     }
     
     public Future<Void> runSetWiFiCredentialsTask(String ssid, String password) {
@@ -345,7 +363,8 @@ public class RootServer extends Updater {
         return runRequestTask(SET_WIFI_CREDENTIALS_COMMAND, false, READ_TIMEOUT_LONG, data,
             (byte[] requestData, ObjectMapper jMapper) -> {
                 return null;
-            });
+            },
+            null);
     }
 
     @Override

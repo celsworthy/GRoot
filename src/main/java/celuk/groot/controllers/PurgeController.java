@@ -129,13 +129,13 @@ public class PurgeController implements Initializable, Page {
     @FXML
     void leftButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showMainMenu(this, printer);
+            rootController.showMainMenu(printer);
     }
     
     @FXML
     void middleButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showHomePage(this, printer);
+            rootController.showHomePage(printer);
     }
 
     @FXML
@@ -242,6 +242,7 @@ public class PurgeController implements Initializable, Page {
         m2Pane.setVisible(false);
         m2Pane.setManaged(false);
         rightButton.setDisable(true);
+        purgePane.setVisible(false);
     }
     
     @Override
@@ -264,8 +265,10 @@ public class PurgeController implements Initializable, Page {
     @Override
     public void displayPage(RootPrinter printer) {
         this.printer = printer;
-        startUpdates();
-        purgePane.setVisible(true);
+        if (!purgePane.isVisible()) {
+            startUpdates();
+            purgePane.setVisible(true);
+        }
     }
     
     @Override
@@ -273,7 +276,12 @@ public class PurgeController implements Initializable, Page {
         stopUpdates();
         purgePane.setVisible(false);
     }
-
+    
+    @Override
+    public boolean isVisible() {
+        return purgePane.isVisible();
+    }
+    
     private void setSpinnerData(String fieldName, double value, double minValue, double maxValue) {
         IntegerSpinnerController spinner = spinnerMap.get(fieldName);
         if (spinner != null)
@@ -397,6 +405,6 @@ public class PurgeController implements Initializable, Page {
         }
         
         printer.runPurgeTask(targetData);
-        rootController.showHomePage(this, printer);
+        rootController.showHomePage(printer);
     }
 }

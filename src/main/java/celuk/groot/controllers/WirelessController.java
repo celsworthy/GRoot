@@ -89,9 +89,9 @@ public class WirelessController implements Initializable, Page {
     void leftButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
             if (printer == null)
-                rootController.showServerSettingsMenu(this);
+                rootController.showServerSettingsMenu();
             else
-                rootController.showSettingsMenu(this, printer);
+                rootController.showSettingsMenu(printer);
         }
     }
     
@@ -99,9 +99,9 @@ public class WirelessController implements Initializable, Page {
     void middleButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
             if (printer == null)
-                rootController.showPrinterSelectPage(this);
+                rootController.showPrinterSelectPage();
             else
-                rootController.showHomePage(this, printer);
+                rootController.showHomePage(printer);
         }
     }
 
@@ -199,7 +199,7 @@ public class WirelessController implements Initializable, Page {
             VBox.setVgrow(keyboardPane, Priority.ALWAYS);
         }
         catch (IOException ex) {
-            System.out.println(ex);
+            System.err.println(ex);
             ex.printStackTrace(System.err);
             System.exit(1);
         }
@@ -215,9 +215,10 @@ public class WirelessController implements Initializable, Page {
         ssidClear.setUserData(ssidField);
         passwordClear.setUserData(passwordField);
         
+        wirelessPane.setVisible(false);        
         middleButton.setVisible(false);
+
         ssidField.textProperty().addListener(fieldListener);
-        
     }
     
     @Override
@@ -237,8 +238,10 @@ public class WirelessController implements Initializable, Page {
     @Override
     public void displayPage(RootPrinter printer) {
         this.printer = printer;
-        startUpdates();
-        wirelessPane.setVisible(true);
+        if (!wirelessPane.isVisible()) {
+            startUpdates();
+            wirelessPane.setVisible(true);
+        }
     }
 
     @Override
@@ -247,6 +250,11 @@ public class WirelessController implements Initializable, Page {
         wirelessPane.setVisible(false);
     }
     
+    @Override
+    public boolean isVisible() {
+        return wirelessPane.isVisible();
+    }
+
     private void reconfigure()
     {
         boolean newWifiEnabled = wirelessOn.isSelected();

@@ -89,7 +89,7 @@ public class ResetPINController implements Initializable, Page {
     @FXML
     void leftButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
-            rootController.showLoginPage(this, printer);
+            rootController.showLoginPage(printer);
         }
     }
     
@@ -100,7 +100,7 @@ public class ResetPINController implements Initializable, Page {
             serialField.getText().length() == 6) {
             
             rootController.getRootServer().runResetPINTask(serialField.getText());
-            rootController.showLoginPage(this, printer);
+            rootController.showLoginPage(printer);
         }
     }
 
@@ -149,6 +149,7 @@ public class ResetPINController implements Initializable, Page {
         nineKey.setUserData(KeyCode.DIGIT9);
         backspaceKey.setUserData(KeyCode.BACK_SPACE);
 
+        resetPINPane.setVisible(false);
         rightButton.setVisible(false);
     }
     
@@ -164,13 +165,20 @@ public class ResetPINController implements Initializable, Page {
     @Override
     public void displayPage(RootPrinter printer) {
         this.printer = printer;
-        startUpdates();
-        resetPINPane.setVisible(true);
+        if (!resetPINPane.isVisible()) {
+            startUpdates();
+            resetPINPane.setVisible(true);
+        }
     }
 
     @Override
     public void hidePage() {
         stopUpdates();
         resetPINPane.setVisible(false);
+    }
+    
+    @Override
+    public boolean isVisible() {
+        return resetPINPane.isVisible();
     }
 }

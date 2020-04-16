@@ -162,16 +162,16 @@ public class ConsoleController implements Initializable, Page {
     void leftButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button) {
             if (returnToControl)
-                rootController.showControlPage(this, printer);
+                rootController.showControlPage(printer);
             else
-                rootController.showMainMenu(this, printer);
+                rootController.showMainMenu(printer);
         }
     }
     
     @FXML
     void middleButtonAction(ActionEvent event) {
         if (rootController != null && event.getSource() instanceof Button)
-            rootController.showHomePage(this, printer);
+            rootController.showHomePage(printer);
     }
 
     @FXML
@@ -200,6 +200,7 @@ public class ConsoleController implements Initializable, Page {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         translateLabels(spaceKey);
+        
         gcodeField.setPromptText(I18n.t("console.enterGCode"));
         zeroKey.setUserData(KeyCode.DIGIT0);
         oneKey.setUserData(KeyCode.DIGIT1);
@@ -231,7 +232,7 @@ public class ConsoleController implements Initializable, Page {
         spaceKey.setUserData(KeyCode.SPACE);
         
         //gcodeHistory.getSelectionModel().selectedItemProperty().addListener(historyListener);
-
+        consolePane.setVisible(false);
         rightButton.setVisible(false);
     }
     
@@ -247,8 +248,10 @@ public class ConsoleController implements Initializable, Page {
     @Override
     public void displayPage(RootPrinter printer) {
         this.printer = printer;
-        startUpdates();
-        consolePane.setVisible(true);
+        if (!consolePane.isVisible()) {
+            startUpdates();
+            consolePane.setVisible(true);
+        }
         gcodeField.requestFocus();
         gcodeField.clear();
     }
@@ -257,6 +260,11 @@ public class ConsoleController implements Initializable, Page {
     public void hidePage() {
         stopUpdates();
         consolePane.setVisible(false);
+    }
+    
+    @Override
+    public boolean isVisible() {
+        return consolePane.isVisible();
     }
 
     public void setReturnToControl(boolean returnToControl) {

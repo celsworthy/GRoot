@@ -24,7 +24,7 @@ public class SettingsMenuController extends MenuController {
     protected void menu1Action(ActionEvent event) {
         if (validButtonAction(event)) {
             //System.out.println("settings menu 1");
-            rootController.showIdentityMenu(this, printer);
+            rootController.showIdentityMenu(printer);
         }
     }
 
@@ -32,7 +32,7 @@ public class SettingsMenuController extends MenuController {
     protected void menu2Action(ActionEvent event) {
         if (validButtonAction(event)) {
             //System.out.println("settings menu 2");
-            rootController.showWirelessPage(this, printer);
+            rootController.showWirelessPage(printer);
         }
     }
 
@@ -40,7 +40,7 @@ public class SettingsMenuController extends MenuController {
     protected void menu3Action(ActionEvent event) {
         if (validButtonAction(event)) {
             //System.out.println("settings menu 3");
-            rootController.showSecurityMenu(this, printer);
+            rootController.showSecurityMenu(printer);
         }
     }
 
@@ -49,7 +49,7 @@ public class SettingsMenuController extends MenuController {
         if (validButtonAction(event)) {
             //System.out.println("settings menu 4");
             printer.runTidyPrintJobDirsTask();
-            rootController.showHomePage(this, printer);
+            rootController.showHomePage(printer);
         }
     }
 
@@ -57,7 +57,7 @@ public class SettingsMenuController extends MenuController {
     protected void menu5Action(ActionEvent event) {
         if (validButtonAction(event)) {
             //System.out.println("settings menu 5");
-            rootController.showAboutPage(this, printer);
+            rootController.showAboutPage(printer);
         }
     }
 }
