@@ -332,7 +332,7 @@ public class PurgeController implements Initializable, Page {
                 m1Pane.setManaged(true);
                 m1CheckBox.selectedProperty().set(true);
                 disableNodes(panel1Nodes, false);
-                m1PreviousTemp = (int)Math.round(headData.getLeftNozzleLastFTemp());
+                m1PreviousTemp = (int)Math.round(headData.getRightNozzleLastFTemp());
                 if (m1PreviousTemp > -1)
                     m1PrevTempValue.setText(Integer.toString(m1PreviousTemp));
                 else
@@ -341,8 +341,8 @@ public class PurgeController implements Initializable, Page {
                 m1NewTemp = (int)Math.round(attachedFilaments[0].getFilamentTemperature());
                 m1NewTempValue.setText(Integer.toString(m1NewTemp));
                 double t = attachedFilaments[0].getFilamentTemperature();
-                if (headData.getLeftNozzleLastFTemp() > 0)
-                    t = 0.5F * (headData.getLeftNozzleLastFTemp() + t);
+                if (headData.getRightNozzleLastFTemp() > 0)
+                    t = 0.5F * (headData.getRightNozzleLastFTemp() + t);
                 setSpinnerData("m1PurgeTemp", t, Math.max(0.5 * t, 50.0), Math.min(2.0 * t, 300.0));
             }
             else {
@@ -362,7 +362,7 @@ public class PurgeController implements Initializable, Page {
                 m2Pane.setDisable(false);
                 disableNodes(panel2Nodes, false);
                 m2CheckBox.selectedProperty().set(true);
-                m2PreviousTemp = (int)Math.round(headData.getRightNozzleLastFTemp());
+                m2PreviousTemp = (int)Math.round(headData.getLeftNozzleLastFTemp());
                 if (m2PreviousTemp > -1)
                     m2PrevTempValue.setText(Integer.toString(m2PreviousTemp));
                 else
@@ -371,8 +371,8 @@ public class PurgeController implements Initializable, Page {
                 m2NewTemp = (int)Math.round(attachedFilaments[1].getFilamentTemperature());
                 m2NewTempValue.setText(Integer.toString(m2NewTemp));
                 double t = attachedFilaments[1].getFilamentTemperature();
-                if (headData.getRightNozzleLastFTemp() > 0)
-                    t = 0.5F * (headData.getRightNozzleLastFTemp() + t);
+                if (headData.getLeftNozzleLastFTemp() > 0)
+                    t = 0.5F * (headData.getLeftNozzleLastFTemp() + t);
                 setSpinnerData("m2PurgeTemp", t, Math.max(0.5 * t, 50.0), Math.min(2.0 * t, 300.0));
             }
             else {

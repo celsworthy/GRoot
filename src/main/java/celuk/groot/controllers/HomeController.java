@@ -447,31 +447,32 @@ public class HomeController implements Initializable, Page {
                 leftNozzleTempLabel.setManaged(false);
                 leftNozzleTitleLabel.setVisible(false);
                 leftNozzleTitleLabel.setManaged(false);
-                leftNozzleTempLabel.setText("");
+                leftNozzleTitleLabel.setText("");
                 rightNozzleTempLabel.setVisible(false);
                 rightNozzleTempLabel.setManaged(false);
                 rightNozzleTitleLabel.setVisible(false);
                 rightNozzleTitleLabel.setManaged(false);
-                rightNozzleTempLabel.setText("");
+                leftNozzleTitleLabel.setText("");
                 break;
             case 1:
-                leftNozzleTempLabel.setVisible(true);
-                leftNozzleTempLabel.setManaged(true);
-                leftNozzleTitleLabel.setVisible(true);
-                leftNozzleTitleLabel.setManaged(true);
+                leftNozzleTempLabel.setVisible(false);
+                leftNozzleTempLabel.setManaged(false);
+                leftNozzleTitleLabel.setVisible(false);
+                leftNozzleTitleLabel.setManaged(false);
+                leftNozzleTitleLabel.setText("");
                 
-                rightNozzleTempLabel.setVisible(false);
-                rightNozzleTempLabel.setManaged(false);
-                rightNozzleTitleLabel.setVisible(false);
-                rightNozzleTitleLabel.setManaged(false);
+                rightNozzleTempLabel.setVisible(true);
+                rightNozzleTempLabel.setManaged(true);
+                rightNozzleTitleLabel.setVisible(true);
+                rightNozzleTitleLabel.setManaged(true);
 
                 if (printerStatus.getHeadTypeCode().equalsIgnoreCase("RBX01-SM") || 
                     printerStatus.getHeadTypeCode().equalsIgnoreCase("RBX01-S2"))
-                    leftNozzleTitleLabel.setText(nozzlesTitle);
+                    rightNozzleTitleLabel.setText(nozzlesTitle);
                 else
-                    leftNozzleTitleLabel.setText(nozzleTitle);
+                    rightNozzleTitleLabel.setText(nozzleTitle);
                 if (printerStatus.getNozzleTemperature()[0] > 0.0)
-                    leftNozzleTemperature = Integer.toString(printerStatus.getNozzleTemperature()[0]) + "°C";
+                    rightNozzleTemperature = Integer.toString(printerStatus.getNozzleTemperature()[0]) + "°C";
                 break;
             case 2:
                 leftNozzleTempLabel.setVisible(true);

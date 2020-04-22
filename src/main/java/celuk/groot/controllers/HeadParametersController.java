@@ -319,9 +319,9 @@ public class HeadParametersController implements Initializable, Page {
             headHoursField.setText(String.format("%d %s", (int)headData.getHourCount(), I18n.t("unit.hours")));
             maxTempField.setText(String.format("%d %s",(int)headData.getMaxTemp(), I18n.t("unit.temp")));
 
-            setSpinnerData("leftX", headData.getLeftNozzleXOffset(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
-            setSpinnerData("leftY", headData.getLeftNozzleYOffset(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
-            setSpinnerData("leftZ", headData.getLeftNozzleZOverrun(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
+            setSpinnerData("rightX", headData.getRightNozzleXOffset(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
+            setSpinnerData("rightY", headData.getRightNozzleYOffset(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
+            setSpinnerData("rightZ", headData.getRightNozzleZOverrun(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
         }
         else
         {
@@ -330,34 +330,34 @@ public class HeadParametersController implements Initializable, Page {
             headHoursField.setText("");
             maxTempField.setText("");
 
-            spinnerMap.get("leftX").setVisible(false);
-            spinnerMap.get("leftY").setVisible(false);
-            spinnerMap.get("leftZ").setVisible(false);
-        }
-        
-        if (valveFitted) {
-            setSpinnerData("leftB", headData.getLeftNozzleBOffset(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
-        }
-        else {
-            spinnerMap.get("leftB").setVisible(false);
-        }
-        
-        if (nozzleCount > 1) {
-            setSpinnerData("rightX", headData.getRightNozzleXOffset(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
-            setSpinnerData("rightY", headData.getRightNozzleYOffset(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
-            setSpinnerData("rightZ", headData.getRightNozzleZOverrun(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
-            if (valveFitted) {
-                setSpinnerData("rightB", headData.getRightNozzleBOffset(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
-            }
-            else {
-                spinnerMap.get("rightB").setVisible(false);
-            }
-        }
-        else {
             spinnerMap.get("rightX").setVisible(false);
             spinnerMap.get("rightY").setVisible(false);
             spinnerMap.get("rightZ").setVisible(false);
+        }
+        
+        if (valveFitted) {
+            setSpinnerData("rightB", headData.getLeftNozzleBOffset(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
+        }
+        else {
             spinnerMap.get("rightB").setVisible(false);
+        }
+        
+        if (nozzleCount > 1) {
+            setSpinnerData("leftX", headData.getLeftNozzleXOffset(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
+            setSpinnerData("leftY", headData.getLeftNozzleYOffset(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
+            setSpinnerData("leftZ", headData.getLeftNozzleZOverrun(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
+            if (valveFitted) {
+                setSpinnerData("leftB", headData.getLeftNozzleBOffset(), MIN_SPINNER_VALUE, MAX_SPINNER_VALUE);
+            }
+            else {
+                spinnerMap.get("leftB").setVisible(false);
+            }
+        }
+        else {
+            spinnerMap.get("leftX").setVisible(false);
+            spinnerMap.get("leftY").setVisible(false);
+            spinnerMap.get("leftZ").setVisible(false);
+            spinnerMap.get("leftB").setVisible(false);
         }
     }
     
@@ -376,18 +376,18 @@ public class HeadParametersController implements Initializable, Page {
 
     private void saveHeadData() {
         HeadEEPROMData headData = printer.getCurrentHeadEEPROMDataProperty().get().duplicate();
-        headData.setLeftNozzleXOffset(spinnerMap.get("leftX").value);
-        headData.setLeftNozzleYOffset(spinnerMap.get("leftY").value);
-        headData.setLeftNozzleZOverrun(spinnerMap.get("leftZ").value);
+        headData.setRightNozzleXOffset(spinnerMap.get("rightX").value);
+        headData.setRightNozzleYOffset(spinnerMap.get("rightY").value);
+        headData.setRightNozzleZOverrun(spinnerMap.get("rightZ").value);
         if (valveFitted)
-            headData.setLeftNozzleBOffset(spinnerMap.get("leftB").value);
+            headData.setRightNozzleBOffset(spinnerMap.get("rightB").value);
         if (nozzleCount > 1)
         {
-            headData.setRightNozzleXOffset(spinnerMap.get("rightX").value);
-            headData.setRightNozzleYOffset(spinnerMap.get("rightY").value);
-            headData.setRightNozzleZOverrun(spinnerMap.get("rightZ").value);
+            headData.setLeftNozzleXOffset(spinnerMap.get("leftX").value);
+            headData.setLeftNozzleYOffset(spinnerMap.get("leftY").value);
+            headData.setLeftNozzleZOverrun(spinnerMap.get("leftZ").value);
             if (valveFitted)
-                headData.setRightNozzleBOffset(spinnerMap.get("rightB").value);
+                headData.setLeftNozzleBOffset(spinnerMap.get("leftB").value);
         }
         printer.runSetHeadEEPROMDataTask(headData);
         setModified(false);

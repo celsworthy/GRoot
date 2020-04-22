@@ -72,7 +72,7 @@
                                  <HBox.margin>
                                     <Insets right="5.0" />
                                  </HBox.margin></ImageView>
-                              <Label fx:id="m1Title" styleClass="panel-title" text="common.leftNozzle" />
+                              <Label fx:id="m1Title" styleClass="panel-title" text="common.rightNozzle" />
                               <Label fx:id="m1Description" text="common.material1">
                                  <styleClass>
                                     <String fx:value="material-1" />
@@ -162,7 +162,7 @@
                                  <HBox.margin>
                                     <Insets right="5.0" />
                                  </HBox.margin></ImageView>
-                              <Label fx:id="m2Title" styleClass="panel-title" text="common.rightNozzle" />
+                              <Label fx:id="m2Title" styleClass="panel-title" text="common.leftNozzle" />
                               <Label fx:id="m2Description" text="common.material2">
                                  <styleClass>
                                     <String fx:value="material-2" />

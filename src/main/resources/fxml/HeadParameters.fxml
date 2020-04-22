@@ -147,7 +147,7 @@
               </rowConstraints>
                <children>
                   <Button fx:id="leftBDec" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#decAction" styleClass="head-params-left-dec" GridPane.rowIndex="8" />
-                  <TextField id="leftB" fx:id="rightBField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                  <TextField id="leftB" fx:id="leftBField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="1" GridPane.rowIndex="8">
                      <GridPane.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </GridPane.margin></TextField>
@@ -166,31 +166,31 @@
                   <Button fx:id="rightXInc" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#incAction" styleClass="head-params-right-inc" GridPane.columnIndex="6" GridPane.rowIndex="2" />
                   <Button fx:id="rightYInc" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#incAction" styleClass="head-params-right-inc" GridPane.columnIndex="6" GridPane.rowIndex="4" />
                   <Button fx:id="rightZInc" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#incAction" styleClass="head-params-right-inc" GridPane.columnIndex="6" GridPane.rowIndex="6" />
-                  <TextField id="leftX" fx:id="rightXField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <TextField id="leftX" fx:id="leftXField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </GridPane.margin></TextField>
-                  <TextField id="leftY" fx:id="rightYField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <TextField id="leftY" fx:id="leftYField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </GridPane.margin></TextField>
-                  <TextField id="leftZ" fx:id="rightZField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                  <TextField id="leftZ" fx:id="leftZField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="1" GridPane.rowIndex="6">
                      <GridPane.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </GridPane.margin></TextField>
-                  <TextField id="rightY" fx:id="leftYField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                  <TextField id="rightY" fx:id="rightYField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="5" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </GridPane.margin></TextField>
-                  <TextField id="rightZ" fx:id="leftZField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="5" GridPane.rowIndex="6">
+                  <TextField id="rightZ" fx:id="rightZField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="5" GridPane.rowIndex="6">
                      <GridPane.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </GridPane.margin></TextField>
-                  <TextField id="rightX" fx:id="leftXField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                  <TextField id="rightX" fx:id="rightXField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="5" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </GridPane.margin></TextField>
-                  <TextField id="rightB" fx:id="leftBField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="5" GridPane.rowIndex="8">
+                  <TextField id="rightB" fx:id="rightBField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="head-params-field" GridPane.columnIndex="5" GridPane.rowIndex="8">
                      <GridPane.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </GridPane.margin></TextField>
@@ -230,22 +230,22 @@
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin></Pane>
-                  <Label fx:id="rightNozzleTitle" styleClass="head-params-left-title" text="common.rightNozzle" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT">
+                  <Label fx:id="leftNozzleTitle" styleClass="head-params-left-title" text="common.leftNozzle" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT">
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label fx:id="rightNozzleSubtitle" styleClass="head-params-left-subtitle" text="common.material2" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+                  <Label fx:id="leftNozzleSubtitle" styleClass="head-params-left-subtitle" text="common.material2" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label fx:id="leftNozzleTitle" styleClass="head-params-right-title" text="common.leftNozzle" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.halignment="LEFT">
+                  <Label fx:id="rightNozzleTitle" styleClass="head-params-right-title" text="common.rightNozzle" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.halignment="LEFT">
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label fx:id="leftNozzleSubtitle" styleClass="head-params-right-subtitle" text="common.material1" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+                  <Label fx:id="rightNozzleSubtitle" styleClass="head-params-right-subtitle" text="common.material1" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" />
                      </GridPane.margin>
