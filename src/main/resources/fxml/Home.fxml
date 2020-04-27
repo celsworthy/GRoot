@@ -145,22 +145,22 @@
                <children>
                   <Label fx:id="leftNozzleTempLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="-" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <styleClass>
-                        <String fx:value="material-1" />
+                        <String fx:value="material-2" />
                         <String fx:value="temperature-text" />
                      </styleClass></Label>
                   <Label fx:id="leftNozzleTitleLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="common.leftNozzle" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <styleClass>
-                        <String fx:value="material-1" />
+                        <String fx:value="material-2" />
                         <String fx:value="temperature-title" />
                      </styleClass></Label>
                   <Label fx:id="rightNozzleTempLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="-" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <styleClass>
-                        <String fx:value="material-2" />
+                        <String fx:value="material-1" />
                         <String fx:value="temperature-text" />
                      </styleClass></Label>
                   <Label fx:id="rightNozzleTitleLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="common.rightNozzle" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <styleClass>
-                        <String fx:value="material-2" />
+                        <String fx:value="material-1" />
                         <String fx:value="temperature-title" />
                      </styleClass></Label>
                   <Label fx:id="bedTempLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="-" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
