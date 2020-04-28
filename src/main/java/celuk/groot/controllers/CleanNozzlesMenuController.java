@@ -11,15 +11,15 @@ public class CleanNozzlesMenuController extends MenuController {
         super.initialize(url, rb);
         menuPane.getStylesheets().add("styles/CleanNozzlesMenu.css");
         translateMenuText("cleanNozzlesMenu.title",
-                          "cleanNozzlesMenu.leftNozzle",
-                          "cleanNozzlesMenu.rightNozzle");
+                          "cleanNozzlesMenu.rightNozzle",
+                          "cleanNozzlesMenu.leftNozzle");
         rightButton.setVisible(false);
     }
 
     @Override
     protected void menu1Action(ActionEvent event) {
         if (validButtonAction(event)) {
-            //System.out.println("clean left nozzle menu 1");
+            //System.out.println("clean right nozzle menu 2");
             printer.runCleanNozzleTask(2);
             rootController.showHomePage(printer);
         }
@@ -28,7 +28,7 @@ public class CleanNozzlesMenuController extends MenuController {
     @Override
     protected void menu2Action(ActionEvent event) {
         if (validButtonAction(event)) {
-            //System.out.println("clean right nozzle menu 2");
+            //System.out.println("clean left nozzle menu 1");
             printer.runCleanNozzleTask(1);
             rootController.showHomePage(printer);
         }
