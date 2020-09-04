@@ -20,6 +20,7 @@ import javafx.scene.layout.StackPane;
 
 public class RootStackController implements Initializable {
 
+    private static final int MAX_POLL_COUNT = 3;
     private static final String FXML_RESOURCE_PATH = "/fxml/";
 
     @FXML
@@ -80,16 +81,21 @@ public class RootStackController implements Initializable {
     private ErrorAlertController errorManager = null;
     private RootPrinter currentPrinter = null;
     private boolean isUpgrading = false;
+    private int pollCount = 0;
     
     private ChangeListener<ServerStatusResponse> serverStatusListener = (ob, ov, nv) -> {
         //System.out.println("RootStackController::ServeStatusListener()");
 
         // isUpgrading remains true when contact is lost (i.e. status is null)
         // so the page keeps showing "Upgrading" when contact is lost.
-        if (nv != null)
+        if (nv != null) {
+            pollCount = 0;
             isUpgrading = (nv.getUpgradeStatus() != null &&
                            nv.getUpgradeStatus().equalsIgnoreCase("upgrading"));
-        if (nv == null || isUpgrading) {
+        }
+        else if (pollCount <= MAX_POLL_COUNT)
+            ++pollCount;
+        if (pollCount > MAX_POLL_COUNT || isUpgrading) {
             Platform.runLater(() -> {
                 currentPrinter = null;
                 hidePages(waitingPage);
