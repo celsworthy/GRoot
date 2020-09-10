@@ -202,10 +202,10 @@ public class RootServer extends Updater {
         } 
         catch (java.net.SocketTimeoutException ex) {
             long t2 = System.currentTimeMillis();
-            System.err.println("Timeout whilst making request \"" + request + "\" from @" + hostAddress + ":" + hostPort + " - time taken = " + Long.toString(t2 - t1));
+            //System.err.println("Timeout whilst making request \"" + request + "\" from @" + hostAddress + ":" + hostPort + " - time taken = " + Long.toString(t2 - t1));
         }
         catch (IOException ex) {
-            System.err.println("Error whilst making request \"" + request + "\" from @" + hostAddress + ":" + hostPort + " - " + ex);
+            //System.err.println("Error whilst making request \"" + request + "\" from @" + hostAddress + ":" + hostPort + " - " + ex);
         }
         
         return requestData;
