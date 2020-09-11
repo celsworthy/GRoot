@@ -143,6 +143,7 @@ public class RootPrinter extends Updater {
                         if (statusResponse.getPrinterStatusEnumValue().startsWith("PRINTING_PROJECT")
                             || statusResponse.getPrinterStatusEnumValue().startsWith("RUNNING_MACRO")
                             || statusResponse.getPrinterStatusEnumValue().startsWith("PAUSED")
+                            || statusResponse.getPrinterStatusEnumValue().startsWith("SELFIE_PAUSE")
                             || statusResponse.getPrinterStatusEnumValue().startsWith("PAUSE_PENDING")
                             || statusResponse.getPrinterStatusEnumValue().startsWith("RESUME_PENDING")
                             || statusResponse.getPrinterStatusEnumValue().startsWith("HEATING"))
