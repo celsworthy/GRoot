@@ -557,6 +557,7 @@ public class HomeController implements Initializable, Page {
                 playing = true;
                 break;
             case "PAUSED":
+			case "SELFIE_PAUSE":
             case "PAUSE_PENDING":
                 paused = true;
                 break;
@@ -595,6 +596,7 @@ public class HomeController implements Initializable, Page {
         if ((printerStatus.getPrinterStatusEnumValue().startsWith("PRINTING_PROJECT")
                 || printerStatus.getPrinterStatusEnumValue().startsWith("RUNNING_MACRO")
                 || printerStatus.getPrinterStatusEnumValue().startsWith("PAUSED")
+                || printerStatus.getPrinterStatusEnumValue().startsWith("SELFIE_PAUSE")
                 || printerStatus.getPrinterStatusEnumValue().startsWith("PAUSE_PENDING")
                 || printerStatus.getPrinterStatusEnumValue().startsWith("RESUME_PENDING"))
                 && printerStatus.getTotalDurationSeconds() >= 0
