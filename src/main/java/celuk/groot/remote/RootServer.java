@@ -51,6 +51,7 @@ public class RootServer extends Updater {
     private final SimpleBooleanProperty currentPrinterMapHeartbeatProperty = new SimpleBooleanProperty(false);
     private final SimpleBooleanProperty authorisedProperty = new SimpleBooleanProperty(false);
     private final SimpleObjectProperty<ServerStatusResponse> currentStatusProperty = new SimpleObjectProperty<>(null);
+    private final SimpleBooleanProperty currentStatusHeartbeatProperty = new SimpleBooleanProperty(false);
     private final SimpleObjectProperty<WifiStatusResponse> wifiStatusProperty = new SimpleObjectProperty<>(null);
     private final ObservableMap<String, RootPrinter> currentPrinterMap = FXCollections.observableMap(new HashMap<>());
     
@@ -95,7 +96,11 @@ public class RootServer extends Updater {
     public SimpleObjectProperty<ServerStatusResponse> getCurrentStatusProperty() {
         return currentStatusProperty;
     }
-
+    
+    public SimpleBooleanProperty getCurrentStatusHeartbeatProperty() {
+        return currentStatusHeartbeatProperty;
+    }
+    
     public SimpleObjectProperty<WifiStatusResponse> getWifiStatusProperty() {
         return wifiStatusProperty;
     }
@@ -290,6 +295,7 @@ public class RootServer extends Updater {
                         //System.out.println("Updating server status - \"" + s + "\"");
                         serverStatus = mapper.readValue(requestData, ServerStatusResponse.class);
                         currentStatusProperty.set(serverStatus);
+                        currentStatusHeartbeatProperty.set(!currentStatusHeartbeatProperty.get());
                     }
                 }
                 catch (IOException ex) {
@@ -299,6 +305,7 @@ public class RootServer extends Updater {
             },
             (Exception ex) -> {
                 currentStatusProperty.set(null);
+                currentStatusHeartbeatProperty.set(!currentStatusHeartbeatProperty.get());
             });
     }
     
