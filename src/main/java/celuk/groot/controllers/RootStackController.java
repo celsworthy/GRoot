@@ -83,15 +83,16 @@ public class RootStackController implements Initializable {
     private boolean isUpgrading = false;
     private int pollCount = 0;
     
-    private ChangeListener<ServerStatusResponse> serverStatusListener = (ob, ov, nv) -> {
+    private ChangeListener<Boolean> serverStatusHeartbeatListener = (ob, ov, nv) -> {
         //System.out.println("RootStackController::ServeStatusListener()");
 
         // isUpgrading remains true when contact is lost (i.e. status is null)
         // so the page keeps showing "Upgrading" when contact is lost.
-        if (nv != null) {
+        ServerStatusResponse status = server.getCurrentStatusProperty().get();
+        if (status != null) {
             pollCount = 0;
-            isUpgrading = (nv.getUpgradeStatus() != null &&
-                           nv.getUpgradeStatus().equalsIgnoreCase("upgrading"));
+            isUpgrading = (status.getUpgradeStatus() != null &&
+                           status.getUpgradeStatus().equalsIgnoreCase("upgrading"));
         }
         else if (pollCount <= MAX_POLL_COUNT)
             ++pollCount;
@@ -142,7 +143,7 @@ public class RootStackController implements Initializable {
 
         server.getCurrentPrinterMapHeartbeatProperty().addListener(printerMapHeartbeatListener);
         server.getAuthorisedProperty().addListener(authorisedListener);
-        server.getCurrentStatusProperty().addListener(serverStatusListener);
+        server.getCurrentStatusHeartbeatProperty().addListener(serverStatusHeartbeatListener);
         errorManager = new ErrorAlertController(server);
         errorManager.prepareDialog();
 
