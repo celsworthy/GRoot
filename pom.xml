@@ -4,7 +4,7 @@
 
     <groupId>celuk</groupId>
     <artifactId>GRoot</artifactId>
-    <version>4.02.00</version>
+    <version>4.03.00</version>
     <packaging>jar</packaging>
 
     <name>GRoot</name>
@@ -81,7 +81,7 @@
         <dependency>
             <groupId>celuk.language</groupId>
             <artifactId>Language</artifactId>
-            <version>1.0</version>
+            <version>1.1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.beust/jcommander -->
         <dependency>
